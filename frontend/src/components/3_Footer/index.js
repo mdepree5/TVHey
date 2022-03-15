@@ -1,16 +1,14 @@
 import './Footer.css';
 
 const Footer = () => {
-  const Top = () => <div style={{cursor: 'pointer'}} onClick={() => window.scroll({top: 0, left: 0, behavior: 'smooth'})}>Top</div>
   const Foot = ({children}) => <div className='footer'>{children}</div>
   const GitHub = () => <a href='https://github.com/mdepree5'>Github</a>
-  const AppAcademy = () => <a href='https://www.appacademy.io/'>App Academy</a>
+  const LinkedIn = () => <a href='https://www.linkedin.com/in/mitch-depree-4a5686155/'>LinkedIn</a>
 
   return (
     <Foot>
-      <Top/>
       <GitHub/>
-      <AppAcademy/>
+      <LinkedIn/>
     </Foot>
   )
 }

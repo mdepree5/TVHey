@@ -16,7 +16,6 @@
   width: 33%;
   display: flex;
   flex-direction: row;
-  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   padding: 0;
@@ -44,10 +43,10 @@
   color: white;
 }
 
-.nav-top a{
+/* .nav-top a{
   color: white;
-}
-
+} */
+/* 
 .nav-not-top{
   background-color: white;
   box-shadow: 0 1px 10px rgb(218, 218, 218);
@@ -57,4 +56,4 @@
 
 .nav-not-top a{
   color: black;
-}
+} */
