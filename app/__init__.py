@@ -10,8 +10,8 @@ from .models import db, User
 
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
-# from .api.channel_routes import channel_routes
-# from .api.message_routes import message_routes
+from .api.channel_routes import channel_routes
+from .api.message_routes import message_routes
 
 from .seeds import seed_commands
 from .config import Config
@@ -37,8 +37,8 @@ app.config.from_object(Config)
 # todo ——————————————————————————————————————————————————————————————————————————————————
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
-# app.register_blueprint(channel_routes, url_prefix='/api/channels')
-# app.register_blueprint(message_routes, url_prefix='/api/messages')
+app.register_blueprint(channel_routes, url_prefix='/api/channels')
+app.register_blueprint(message_routes, url_prefix='/api/messages')
 # todo ——————————————————————————————————————————————————————————————————————————————————
 db.init_app(app)
 Migrate(app, db)
