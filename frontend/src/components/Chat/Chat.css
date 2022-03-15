@@ -1,0 +1,23 @@
+.messages-container{
+  display: flex;
+  flex-direction: column;
+  border: solid black 1px;
+  width: 20em;
+  height: 10em;
+  overflow-wrap: break-word;
+}
+
+.messages-card{
+  display: flex;
+  flex-direction: row;
+  /* border-bottom: solid black 1px; */
+  width: 100%;
+
+}
+
+.line{
+  border-top: solid gray 0.1em;
+  margin-left: auto;
+  margin-right: auto;
+}
+

@@ -1,0 +1,14 @@
+.list-container{
+  display: flex;
+  border: solid black 1px;
+}
+
+.container-header{
+  display: flex;
+  border: solid black 1px;
+
+}
+.container-body{
+  display: flex;
+  border: solid black 1px;
+}
