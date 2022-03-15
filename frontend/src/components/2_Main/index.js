@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
+// import { useDispatch, useSelector } from 'react-redux';
+// import { authenticate } from "../../store/session";
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { authenticate } from "../../store/session";
 
 import LoginForm from "../../components/0_Session/LoginForm";
 import SignUpForm from "../../components/0_Session/SignUpForm";
@@ -10,18 +10,22 @@ import UsersList from "../../components/UsersList";
 import User from "../../components/User";
 import Chat from "../../components/Chat"
 
+import { loginDemo } from '../../store/session';
 import LogoutButton from '../../components/0_Session/LogoutButton';
 import LeftNav from '../4_LeftNav';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import './Main.css'
 
-const UnAuthenticatedApp = () => (
+const UnAuthenticatedApp = () => {
+
+  return (
   <div className='main-page'>
     <div>The Unauthenticated App</div>
       <NavLink to="/login" exact={true} activeClassName="active">Login</NavLink>
       <div style={{width: '20px'}}/>
       <NavLink to="/sign-up" exact={true} activeClassName="active">Sign Up</NavLink>
       <div style={{width: '20px'}}/>
+      <button>Demo</button>
     <Switch>
       <Route exact path="/login"><LoginForm /></Route>
       <Route exact path="/sign-up"><SignUpForm /></Route>
@@ -29,6 +33,7 @@ const UnAuthenticatedApp = () => (
     </Switch>
   </div>
   )
+}
 
   export const ListContainer = ({flexDirection='column', children, width='100%', height='100%'}) => <div style={{flexDirection, width, height}} className='list-container'>{children}</div>
   

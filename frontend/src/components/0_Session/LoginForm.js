@@ -3,6 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login, loginDemo } from '../../store/session';
 
+export const DemoLoginButton = () => (
+  <button onClick={async() => await loginDemo()}>Demo</button>
+)
+
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
@@ -13,19 +17,10 @@ const LoginForm = () => {
   const sessionUser = useSelector(state => state?.session?.user);
   if (sessionUser) return <Redirect to='/' />;
 
-  const handleDemo = async () => await loginDemo().then(res => {
-    console.log(res);
-    // if(!res.errors) setAuthenticated(true);
-    // else setErrors(res.errors);
-    return <Redirect to="/" />;
-  })
-
   const onLogin = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
-    if (data) {
-      setErrors(data);
-    }
+    if (data) setErrors(data);
   };
 
   const updateEmail = (e) => setEmail(e.target.value);
@@ -59,7 +54,6 @@ const LoginForm = () => {
           onChange={updatePassword}
         />
         <button type='submit'>Login</button>
-        <button className='login-demo-button' onClick={handleDemo}>Demo</button>
       </div>
     </form>
   );

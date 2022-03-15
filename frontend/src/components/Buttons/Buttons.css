@@ -1,0 +1,23 @@
+button{
+  color: white;
+}
+
+/* button:hover {
+    color: white;
+} */
+
+.delete:hover{
+  opacity: .5;
+}
+
+
+.delete{
+  padding: 5px 10px 5px 10px;
+  border-radius: 5px;
+  background-color: red;
+  color: #fcfcfc;
+  border: 1px solid #ff7676d2;
+  z-index: 0;
+  margin-left: 5px;
+  cursor: pointer;
+}
