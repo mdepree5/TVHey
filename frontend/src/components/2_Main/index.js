@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect, useParams } from "react-router-dom";
+import Split from 'react-split';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import LoginForm from "../../components/0_Session/LoginForm";
 import SignUpForm from "../../components/0_Session/SignUpForm";
@@ -8,7 +9,7 @@ import Navigation from '../1_Navigation/index';
 // import LeftNav from '../4_LeftNav';
 import Chat from "../../components/Chat";
 
-import {getChannel, getChannels} from '../../store/channel';
+import {getChannels} from '../../store/channel';
 import {loginDemo} from '../../store/session';
 import './Main.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -34,39 +35,61 @@ export const UnAuthenticatedApp = () => {
           <Route><Redirect to="/login" /></Route>
         </Switch>
       </div>
+
+      <div style={{height:'100px'}}></div>
+      <div style={{height:'100px'}}></div>
+
+      <Split className='split-tester'
+        cursor="row-resize"
+        direction="horizontal"
+        sizes={[25, 75]}
+        gutterSize={5}
+        dragInterval={1}
+      >
+        <div className='tester-box'>HEY</div>
+        <div className='tester-box'>THERE</div>
+      </Split>
+
+      <div style={{height:'100px'}}></div>
     </div>
   )
 }
   
 export const AuthenticatedApp = () => {
+
+
   const dispatch = useDispatch();
   useEffect(() => { dispatch(getChannels()) }, [dispatch]);
   // const [lastSite, setLastSite] = useState('');
   return (
     <div className='page-container'>
       <Navigation/>
-      <div className='main-page row-list'>
+      <Split className='main-page row-list'
+        cursor="row-resize"
+        direction="horizontal"
+        sizes={[25, 75]}
+        gutterSize={5}
+        dragInterval={1}
+      >
         <LeftNav />
         <RightPage />
-      </div>
+      </Split>
     </div>
   )
 }
 
-const AddButton = ({name, symbolOnly=false, width='50%'}) => <button style={{width}} onClick={()=>alert(`Open create new ${name} form`)}>+ {symbolOnly ? '' : ` Add ${name}`}</button>
-
-export const ContainerHeader = ({flexDirection='row', children}) => <div style={{flexDirection}} className='container-header'>{children}</div>
-export const ContainerBody = ({flexDirection='column', children}) => <div style={{flexDirection}} className='container-body'>{children}</div>
 
 const LeftNav = () => {
   const channelsObj = useSelector(state => state?.channel);
   const channels = channelsObj && Object.values(channelsObj);
 
+  const AddButton = ({name, symbolOnly=false, width='50%'}) => <button style={{width}} onClick={()=>alert(`Open create new ${name} form`)}>+ {symbolOnly ? '' : ` Add ${name}`}</button>
+
   return (
     <div className='left-nav'>
       <div className='header'>List Header! <button>New</button></div>
-      <div style={{height:'100px'}}></div>
-      <div style={{height:'100px'}}></div>
+      <div style={{height:'100px'}}/>
+      <div style={{height:'100px'}}/>
 
       <div className='col-list'>
         <button onClick={() => alert('Show/Hide')}>{'v>'} Channels</button>

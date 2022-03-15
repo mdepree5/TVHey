@@ -8,6 +8,7 @@
   border: 1px solid blue;
   /* height: 100%; */
   height: calc(100vh - 90px);
+  padding: 50px;
 }
 
 /* .main-page > * > .header{ */
@@ -25,9 +26,7 @@
 .right-page{
   display: flex;
   flex-direction: column;
-
   border: solid 1px purple;
-  padding: 10px;
   height: 100%;
 }
 
@@ -36,9 +35,34 @@
   /* padding-left: 10px; */
 }
 
-
 #unauthenticated-header{
   flex-direction: row;
   height: 30px;
 }
 
+.gutter{
+  background-color: gray;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.gutter.gutter-horizontal{
+  cursor: col-resize;
+}
+.gutter.gutter-vertical{
+  cursor: row-resize;
+}
+
+.split-tester{
+  height: 200px;
+  width: 600px;
+  border: 2px solid red;
+  display: flex;
+  flex-direction: row;
+}
+
+.tester-box{
+  height: 50px;
+  width: 50px;
+  border: 1px solid blue;
+}
