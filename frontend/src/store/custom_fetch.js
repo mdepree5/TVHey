@@ -1,4 +1,4 @@
-export const apiFetch = route => (action, endpoint='', config = {method: 'GET'}) => async (dispatch) => {
+const apiFetch = route => (endpoint='', action, config = {method: 'GET'}) => async (dispatch) => {
   // const fetchMethod = (config.method === 'GET') ? fetch : csrfFetch
   
   await fetch(`http://localhost:3000/api/${route}/${endpoint}`, config)
@@ -13,6 +13,8 @@ export const apiFetch = route => (action, endpoint='', config = {method: 'GET'})
     return Promise.reject(data)
   })
 }
+
+export default apiFetch;
 
 // export const apiFetch = (endpoint, config = {method: 'GET'}, action) => async (dispatch) => {
 //   // const fetchMethod = (config.method === 'GET') ? fetch : csrfFetch

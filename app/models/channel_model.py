@@ -8,8 +8,6 @@ class Channel(db.Model):
   host_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   title = db.Column(db.String(100), nullable=False)
   topic = db.Column(db.String(255), nullable=False)
-  dependencies = db.Column(db.Text, nullable=False)
-  media_url = db.Column(db.String(255), nullable=True)
   created_at = db.Column(db.DateTime(), nullable=False, default=datetime.now())
   updated_at = db.Column(db.DateTime(), nullable=True, default=datetime.now())
 

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect, useParams } from "react-router-dom";
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import LoginForm from "../../components/0_Session/LoginForm";
@@ -8,7 +8,8 @@ import Navigation from '../1_Navigation/index';
 // import LeftNav from '../4_LeftNav';
 import Chat from "../../components/Chat";
 
-import { loginDemo } from '../../store/session';
+import {getChannels} from '../../store/channel';
+import {loginDemo} from '../../store/session';
 import './Main.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
 
@@ -42,6 +43,18 @@ export const AuthenticatedApp = () => {
 
   // const {channelId} = useParams()
   // console.log('MAIN PARAM', channelId)
+  const dispatch = useDispatch();
+  // const { cheatsheetId } = useParams();
+  const sessionUser = useSelector((state) => state?.session?.user)
+
+
+  console.log('SESSION USER', sessionUser)
+  const channelsObj = useSelector(state => state?.channel);
+  const channels = channelsObj && Object.values(channelsObj);
+
+  console.log('CHANNELS', channels)
+  useEffect(() => { dispatch(getChannels()) }, [ dispatch])
+
   // todo ——————————————————————————————————————————————————————————————————————————————————
   // todo                 Dispatch for state, pass on to leftNav and messages
   // todo ——————————————————————————————————————————————————————————————————————————————————
