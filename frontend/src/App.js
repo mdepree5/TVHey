@@ -16,7 +16,7 @@ const App = () => {
   return (
   <>
     <Navigation/>
-    {/* <Main /> */}
+    <Main authenticated={sessionUser}/>
     <Footer/>
   </>
   );
