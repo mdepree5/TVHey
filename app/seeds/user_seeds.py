@@ -2,11 +2,11 @@ from app.models import db, User
 
 def seed_users():
   demo = User(
-    username='Demo', email='demo@aa.io', password='password')
+    username='Demo', email='demo@aa.io', password='password', display_name='', image_url='')
   marnie = User(
-    username='marnie', email='marnie@aa.io', password='password')
+    username='marnie', email='marnie@aa.io', password='password', display_name='', image_url='')
   bobbie = User(
-    username='bobbie', email='bobbie@aa.io', password='password')
+    username='bobbie', email='bobbie@aa.io', password='password', display_name='', image_url='')
 
   db.session.add(demo)
   db.session.add(marnie)
