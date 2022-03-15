@@ -29,7 +29,6 @@ const Navigation = () => {
     </LeftNav>
 
     <MidNav>
-      <div>The Authenticated App</div>
       <LogoutButton />
     </MidNav>
 
