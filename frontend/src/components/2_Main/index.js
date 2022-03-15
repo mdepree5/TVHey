@@ -76,12 +76,13 @@ const UnAuthenticatedApp = ({authenticated, setAuthenticated}) => (
 
 const Main = () => {
   const dispatch = useDispatch();
-  const [authenticated, setAuthenticated] = useState(false);
-  console.log('authenticated?', authenticated)
+  // const [authenticated, setAuthenticated] = useState(false);
+  // console.log('authenticated?', authenticated)
   
-  const sessionUser = useSelector(state => state?.session?.user);
-  console.log('SESSION USER', sessionUser);
-  if (sessionUser) setAuthenticated(true);
+  const authenticated = true
+  // const sessionUser = useSelector(state => state?.session?.user);
+  // console.log('SESSION USER', sessionUser);
+  // if (sessionUser) setAuthenticated(true);
   
   useEffect(() => { dispatch(authenticate()) }, [dispatch])
 
@@ -90,12 +91,15 @@ const Main = () => {
   return (
     <MainContainer>
       {authenticated ? 
-        <AuthenticatedApp authenticated={authenticated} setAuthenticated={setAuthenticated}/> : 
-        <UnAuthenticatedApp authenticated={authenticated} setAuthenticated={setAuthenticated}/> 
+        <AuthenticatedApp authenticated={authenticated}/> : 
+        <UnAuthenticatedApp authenticated={authenticated}/> 
+        //<AuthenticatedApp authenticated={authenticated} setAuthenticated={setAuthenticated}/> : 
+        //<UnAuthenticatedApp authenticated={authenticated} setAuthenticated={setAuthenticated}/>
       }
     </MainContainer>      
   )
 }
+
 
 // const PageNotFound = () => (
 //   <div className='page-not-found'>

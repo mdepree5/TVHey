@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { login } from '../../store/session';
+import { login, loginDemo } from '../../store/session';
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const user = useSelector(state => state.session.user);
+  
   const dispatch = useDispatch();
+
+  const sessionUser = useSelector(state => state?.session?.user);
+  if (sessionUser) return <Redirect to='/' />;
+
+  const handleDemo = async () => await loginDemo().then(res => {
+    console.log(res);
+    // if(!res.errors) setAuthenticated(true);
+    // else setErrors(res.errors);
+    return <Redirect to="/" />;
+  })
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -18,21 +28,13 @@ const LoginForm = () => {
     }
   };
 
-  const updateEmail = (e) => {
-    setEmail(e.target.value);
-  };
+  const updateEmail = (e) => setEmail(e.target.value);
+  const updatePassword = (e) => setPassword(e.target.value);
 
-  const updatePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  if (user) {
-    return <Redirect to='/' />;
-  }
 
   return (
     <form onSubmit={onLogin}>
-      <div>
+      <div className='errors'>
         {errors.map((error, ind) => (
           <div key={ind}>{error}</div>
         ))}
@@ -57,6 +59,7 @@ const LoginForm = () => {
           onChange={updatePassword}
         />
         <button type='submit'>Login</button>
+        <button className='login-demo-button' onClick={handleDemo}>Demo</button>
       </div>
     </form>
   );

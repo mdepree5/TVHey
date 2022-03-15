@@ -13,8 +13,8 @@ class User(db.Model, UserMixin):
   image_url = db.Column(db.String(255), nullable=True)
   hashed_password = db.Column(db.String(255), nullable=False)
   
-  channels = db.relationship('Cheatsheet', back_populates='users')
-  messages = db.relationship('Comment', back_populates="users")
+  channels = db.relationship('Channel', back_populates='users')
+  messages = db.relationship('Message', back_populates="users")
 
   @property
   def password(self):
