@@ -51,7 +51,13 @@ def sign_up():
     user = User(
       username=form.data['username'],
       email=form.data['email'],
-      password=form.data['password']
+      password=form.data['password'],
+      # todo ——————————————————————————————————————————————————————————————————————————————————
+      # todo       SET DEFAULT DISPLAY_NAME
+      # todo       SET DEFAULT IMAGE_URL
+      display_name=form.data['username'],
+      image_url=''
+      # todo ——————————————————————————————————————————————————————————————————————————————————
     )
     db.session.add(user)
     db.session.commit()
@@ -59,6 +65,9 @@ def sign_up():
     return user.to_dict()
   return {'errors': validation_errors_to_error_messages(form.errors)}
 
+# todo ——————————————————————————————————————————————————————————————————————————————————
+# todo       WRITE A PUT METHOD FOR USER TO EDIT THEM/ADD AN IMAGE
+# todo ——————————————————————————————————————————————————————————————————————————————————
 
 @auth_routes.route('/unauthorized')
 def unauthorized():
