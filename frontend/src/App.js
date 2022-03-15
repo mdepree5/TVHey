@@ -12,10 +12,9 @@ const App = () => {
   console.log('APP.js session user', sessionUser);
 
   return (
-    <div className='main-container'> 
+    <div > 
       {sessionUser ? <AuthenticatedApp /> : <UnAuthenticatedApp />}
     </div>
   );
 }
-
 export default App;

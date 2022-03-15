@@ -34,6 +34,7 @@ const LeftNav = () => {
 
   return (
     <ListContainer width='40%' >
+      <div className='main-header'>List Container!</div>
       <div style={{height: '100px'}}></div>
       <div style={{height: '100px'}}></div>
 
