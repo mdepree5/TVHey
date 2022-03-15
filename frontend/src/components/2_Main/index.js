@@ -20,21 +20,22 @@ export const UnAuthenticatedApp = () => {
 
   return (
     <div style={{width: '60%', marginLeft:'auto', marginRight:'auto'}}>
+      <div style={{height:'100px'}}></div>
       <div>Sign In to TVHey</div>
       
-      <ListContainer id='unauthenticated-header'>
+      <div className='row-list' id='unauthenticated-header'>
         <NavLink to="/login" exact={true} activeClassName="active">Login</NavLink>
         <button onClick={async() => await dispatch(loginDemo())}>Demo</button>
         <NavLink to="/sign-up" exact={true} activeClassName="active">Sign Up</NavLink>
-      </ListContainer>
+      </div>
 
-      <ListContainer id='main-page'>
+      <div className='row-list' id='main-page'>
         <Switch>
           <Route exact path="/login"><LoginForm /></Route>
           <Route exact path="/sign-up"><SignUpForm /></Route>
           <Route><Redirect to="/login" /></Route>
         </Switch>
-      </ListContainer>
+      </div>
     </div>
   )
 }
@@ -64,7 +65,7 @@ export const AuthenticatedApp = () => {
       </ListContainer>
       </ListContainer>
 
-      
+
       <Footer/>
     </div>
   )

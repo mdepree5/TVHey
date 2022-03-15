@@ -11,11 +11,14 @@ body, html{
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.list-container{
+.row-list{
   display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
+  flex-direction: row;
+}
+
+.row-column{
+  display: flex;
+  flex-direction: row;
 }
 
 a{

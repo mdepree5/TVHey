@@ -6,7 +6,15 @@
   height: 100vh;
 }
 
+.row-list{
+  display: flex;
+  flex-direction: row;
+}
+
 .main-header{
+  display: flex;
+  flex-direction: row;
+
   border: solid 1px red;
   padding: 10px;
 }
