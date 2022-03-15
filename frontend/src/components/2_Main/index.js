@@ -42,6 +42,9 @@ export const AuthenticatedApp = () => {
 
   // const {channelId} = useParams()
   // console.log('MAIN PARAM', channelId)
+  // todo ——————————————————————————————————————————————————————————————————————————————————
+  // todo                 Dispatch for state, pass on to leftNav and messages
+  // todo ——————————————————————————————————————————————————————————————————————————————————
 
   return (
     <div className='page-container'>
@@ -54,9 +57,39 @@ export const AuthenticatedApp = () => {
   )
 }
 
+const channels = [ {id: 1, privateStatus: false, name: '2021-10-18-online'}, {id: 2, privateStatus: false, name: '2021-10-18-online-lecture-questions'}, {id: 3, privateStatus: true, name: 'python-group-8-october'} ]
+
+const AddButton = ({name, symbolOnly=false, width='50%'}) => <button style={{width}} onClick={()=>alert(`Open create new ${name} form`)}>+ {symbolOnly ? '' : ` Add ${name}`}</button>
+
+export const ContainerHeader = ({flexDirection='row', children}) => <div style={{flexDirection}} className='container-header'>{children}</div>
+export const ContainerBody = ({flexDirection='column', children}) => <div style={{flexDirection}} className='container-body'>{children}</div>
+
+const LeftNav = () => {
+  return (
+    <div className='left-nav'>
+      <div className='header'>List Header! <button>New</button></div>
+      <div style={{height:'100px'}}></div>
+      <div style={{height:'100px'}}></div>
+
+      <div className='col-list'>
+        <button onClick={() => alert('Show/Hide')}>{'v>'} Channels</button>
+
+        <div className='col-list'>
+          {channels?.map(channel => (
+            <NavLink to={`/channels/${channel?.id}`} key={channel?.id} activeClassName='active' >
+              {channel?.privateStatus ? 'π' : '#'} {channel?.name}
+            </NavLink>
+          ))}
+          <AddButton name='Channel'/>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const RightPage = () => (
   <div className='main-container'>
-    <div className='main-header'>List Container!</div>
+    <div className='header'>List Container!</div>
     <div className='main-body'>
       <Switch>
         <Route exact path="/" ><div>MODAL WITH "HEY WELCOME TO SLACK START WRITING HERE!!"</div><button>CLICK ME TO START WRITING</button></Route>
@@ -68,45 +101,3 @@ const RightPage = () => (
     </div>
   </div>
 )
-
-const channels = [
-  {id: 1, privateStatus: false, name: '2021-10-18-online'},
-  {id: 2, privateStatus: false, name: '2021-10-18-online-lecture-questions'},
-  {id: 3, privateStatus: true, name: 'python-group-8-october'},
-]
-
-const privateSymbol = privateStatus => privateStatus ? 'π' : '#'
-
-const AddButton = ({name, symbolOnly=false, width='50%'}) => <button style={{width}} onClick={()=>alert(`Open create new ${name} form`)}>+ {symbolOnly ? '' : ` Add ${name}`}</button>
-const DropButton = ({width='50%'}) => <button style={{width}} onClick={() => alert('Show/Hide')}>v</button>
-
-export const ContainerHeader = ({flexDirection='row', children}) => <div style={{flexDirection}} className='container-header'>{children}</div>
-export const ContainerBody = ({flexDirection='column', children}) => <div style={{flexDirection}} className='container-body'>{children}</div>
-
-const LeftNav = () => {
-  return (
-    <div className='left-nav'>
-      <div className='main-header'>List Header! <button>New</button></div>
-      <div style={{height:'100px'}}></div>
-      <div style={{height:'100px'}}></div>
-
-      <div className='col-list'>
-        <ContainerHeader>
-          <div>Channels _______</div>
-          <DropButton width='5%'/>
-        </ContainerHeader>
-
-        <ContainerBody>
-          {channels.map(channel => (
-            <NavLink to={`/channels/${channel?.id}`} key={channel?.id} activeClassName='active' >
-              {privateSymbol(channel?.privateStatus)} {channel?.name}
-            </NavLink>
-          ))}
-          <AddButton name='Channel'/>
-        </ContainerBody>
-      </div>
-    </div>
-  )
-}
-
-export default LeftNav;

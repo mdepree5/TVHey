@@ -24,3 +24,15 @@ body, html{
 a{
   color: skyblue;
 }
+
+button{
+  background: none;
+  outline: none;
+  border: none;
+  border: solid rgb(0, 162, 255) 0.15em;
+  border-radius: 1em;
+  color: inherit;
+  font: inherit;
+  padding: 0.2em;
+  cursor: pointer;
+}

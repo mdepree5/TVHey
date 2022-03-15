@@ -2,25 +2,27 @@
   display: flex;
   flex-direction: column; 
   align-items: center;
-  /* height: 100vh; */
 }
 
 .main-page{
   border: 1px solid blue;
+  /* height: 100%; */
   height: calc(100vh - 90px);
 }
 
+.main-page > * > .header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+
+  color: red;
+  border: solid 1px red;
+  padding: 5px;
+}
 
 .main-container{
   height: 100%;
-}
-
-.main-header{
-  display: flex;
-  flex-direction: row;
-
-  border: solid 1px red;
-  padding: 10px;
 }
 
 .main-body{
@@ -32,6 +34,10 @@
   height: 100%;
 }
 
+.left-nav{
+  width: 40%;
+  /* padding-left: 10px; */
+}
 
 
 #unauthenticated-header{
