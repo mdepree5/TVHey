@@ -39,23 +39,9 @@ export const UnAuthenticatedApp = () => {
 }
   
 export const AuthenticatedApp = () => {
-  // const [lastSite, setLastSite] = useState('');
-
-  // const {channelId} = useParams()
-  // console.log('MAIN PARAM', channelId)
   const dispatch = useDispatch();
-  // const { cheatsheetId } = useParams();
-
-  const channelsObj = useSelector(state => state?.channel);
-  const channels = channelsObj && Object.values(channelsObj);
-
-  console.log('CHANNELS', channels)
-  useEffect(() => { dispatch(getChannels()) }, [dispatch])
-
-  // todo ——————————————————————————————————————————————————————————————————————————————————
-  // todo                 Dispatch for state, pass on to leftNav and messages
-  // todo ——————————————————————————————————————————————————————————————————————————————————
-
+  useEffect(() => { dispatch(getChannels()) }, [dispatch]);
+  // const [lastSite, setLastSite] = useState('');
   return (
     <div className='page-container'>
       <Navigation/>
@@ -67,14 +53,15 @@ export const AuthenticatedApp = () => {
   )
 }
 
-const channels = [ {id: 1, privateStatus: false, name: '2021-10-18-online'}, {id: 2, privateStatus: false, name: '2021-10-18-online-lecture-questions'}, {id: 3, privateStatus: true, name: 'python-group-8-october'} ]
-
 const AddButton = ({name, symbolOnly=false, width='50%'}) => <button style={{width}} onClick={()=>alert(`Open create new ${name} form`)}>+ {symbolOnly ? '' : ` Add ${name}`}</button>
 
 export const ContainerHeader = ({flexDirection='row', children}) => <div style={{flexDirection}} className='container-header'>{children}</div>
 export const ContainerBody = ({flexDirection='column', children}) => <div style={{flexDirection}} className='container-body'>{children}</div>
 
 const LeftNav = () => {
+  const channelsObj = useSelector(state => state?.channel);
+  const channels = channelsObj && Object.values(channelsObj);
+
   return (
     <div className='left-nav'>
       <div className='header'>List Header! <button>New</button></div>
@@ -87,7 +74,7 @@ const LeftNav = () => {
         <div className='col-list'>
           {channels?.map(channel => (
             <NavLink to={`/channels/${channel?.id}`} key={channel?.id} activeClassName='active' >
-              {channel?.privateStatus ? 'π' : '#'} {channel?.name}
+              {channel?.privateStatus ? 'π' : '#'} {channel?.title}
             </NavLink>
           ))}
           <AddButton name='Channel'/>

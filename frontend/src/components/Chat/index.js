@@ -18,8 +18,8 @@ const Chat = () => {
   const {channelId} = useParams()
   const channel = useSelector(state => state?.channel[ channelId ]);
 
-  console.log('CHAT SELECTED CHANNEL', channel)
-  useEffect(() => { dispatch(getChannel(channelId)) }, [dispatch, channelId])
+  // console.log('CHAT SELECTED CHANNEL', channel)
+  // useEffect(() => { dispatch(getChannel(channelId)) }, [dispatch, channelId])
 
 
   useEffect(() => {
