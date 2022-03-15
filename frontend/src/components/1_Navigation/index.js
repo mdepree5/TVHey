@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import {NavLink} from 'react-router-dom';
 // import { useSelector } from 'react-redux';
+
+import LogoutButton from '../../components/0_Session/LogoutButton';
+
 import './Navigation.css'
 
 const Navigation = () => {
@@ -26,14 +29,13 @@ const Navigation = () => {
     </LeftNav>
 
     <MidNav>
-      <NavLink to='/steps'>Steps</NavLink>
-      {/* <div>- ----- -</div>
-      <NavLink to='/route2'>Route 2</NavLink> */}
+      <div>The Authenticated App</div>
+      <LogoutButton />
     </MidNav>
 
     <RightNav>
       {/* <NavLink to={`/users/${sessionUser.id}`}>My Page</NavLink> */}
-      <div>My Page</div>
+      <NavLink to="/users" exact={true} activeClassName="active">Users</NavLink>
     </RightNav>
   </NavBar>
   )

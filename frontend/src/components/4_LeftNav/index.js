@@ -7,12 +7,12 @@ const channels = [
   {id: 3, privateStatus: true, name: 'python-group-8-october'},
 ]
 
-const dms = [
-  {id: 1, name: 'Alex Smaldone, Joan Buck'},
-  {id: 2, name: 'Alex Smaldone, Joan Buck, Casey Spears'},
-  {id: 3, name: 'Geoffrey Otieno (he/him/his)'},
-  {id: 4, name: 'James Tuttle'},
-]
+// const dms = [
+//   {id: 1, name: 'Alex Smaldone, Joan Buck'},
+//   {id: 2, name: 'Alex Smaldone, Joan Buck, Casey Spears'},
+//   {id: 3, name: 'Geoffrey Otieno (he/him/his)'},
+//   {id: 4, name: 'James Tuttle'},
+// ]
 
 
 export const SpacedLine = ({width, thickness=2, margin=null}) => (<><br /><div style={{borderTop: `solid black ${thickness}px`, marginLeft: 'auto', marginRight: 'auto', width, margin}} className="line" /><br /></>)
@@ -30,11 +30,13 @@ export const ContainerBody = ({flexDirection='column', children}) => <div style=
 
 const LeftNav = () => {
   const ChannelsContainer = ListContainer
-  const DMsContainer = ListContainer
+  // const DMsContainer = ListContainer
 
   return (
     <ListContainer width='40%' >
-      
+      <div style={{height: '100px'}}></div>
+      <div style={{height: '100px'}}></div>
+
       <ChannelsContainer>
         <ContainerHeader>
           <div>Channels ______________________</div>
@@ -54,7 +56,7 @@ const LeftNav = () => {
       <SpacedLine width='50%' margin='0' thickness='5' />
       
       
-      <DMsContainer>
+      {/* <DMsContainer>
         <ContainerHeader>
           <div>Direct Messages _____________________</div>
           {<AddButton name='DM' symbolOnly='true' width='5%'/>}
@@ -67,7 +69,7 @@ const LeftNav = () => {
             </NavLink>
           ))}
         </ContainerBody>
-      </DMsContainer>
+      </DMsContainer> */}
 
     </ListContainer>
   )

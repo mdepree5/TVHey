@@ -3,15 +3,19 @@ import { useDispatch } from 'react-redux';
 // import { authenticate } from "../../store/session";
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 
+import Navigation from '../1_Navigation/index';
+import Footer from '../3_Footer/index';
+
 import LoginForm from "../../components/0_Session/LoginForm";
 import SignUpForm from "../../components/0_Session/SignUpForm";
 import ProtectedRoute from "../../components/0_Session/ProtectedRoute";
 import UsersList from "../../components/UsersList";
 import User from "../../components/User";
-import Chat from "../../components/Chat"
+import Chat from "../../components/Chat";
+
 
 import { loginDemo } from '../../store/session';
-import LogoutButton from '../../components/0_Session/LogoutButton';
+
 import LeftNav from '../4_LeftNav';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import './Main.css'
@@ -35,31 +39,38 @@ const UnAuthenticatedApp = () => {
 }
 
   export const ListContainer = ({flexDirection='column', children, width='100%', height='100%'}) => <div style={{flexDirection, width, height}} className='list-container'>{children}</div>
+  export const ChannelContainer = ({flexDirection='column', children, width='100%', height='100%'}) => <div style={{flexDirection, width, height}} className='list-container'>{children}</div>
   
   const AuthenticatedApp = () => (
-    <div className='main-page'>
+    <>
+      <Navigation/>
       <ListContainer flexDirection='row' height='48px'>
-        <div>The Authenticated App</div>
-        <LogoutButton />
-        <NavLink to="/users" exact={true} activeClassName="active">Users</NavLink>
+        
+        
       </ListContainer>
+
       <ListContainer flexDirection='row'>
         <LeftNav />
-
+      
+      <ChannelContainer>
         <Switch>
           <ProtectedRoute exact path="/" ><div>MODAL WITH "HEY WELCOME TO SLACK START WRITING HERE!!"</div><button>CLICK ME TO START WRITING</button></ProtectedRoute>
           <ProtectedRoute exact path="/users" ><UsersList/></ProtectedRoute>
           <ProtectedRoute exact path="/users/:userId" ><User /></ProtectedRoute>
 
           <ProtectedRoute exact path="/channels/:channelId" ><div>Load Channel Here</div><Chat/></ProtectedRoute>
-          <ProtectedRoute exact path="/dms/:dmId" ><div>Load DM Here</div><Chat/></ProtectedRoute>
-          
+          {/* <ProtectedRoute exact path="/dms/:dmId" ><div>Load DM Here</div><Chat/></ProtectedRoute> */}
           <Route><Redirect to='/' /></Route>
           {/* <Route><PageNotFound/></Route> */}
 
         </Switch>
+
+
+      
+      </ChannelContainer>
       </ListContainer>
-    </div>
+      <Footer/>
+    </>
   )
 
 
