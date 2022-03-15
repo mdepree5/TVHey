@@ -12,8 +12,6 @@ import Chat from "../../components/Chat";
 import { loginDemo } from '../../store/session';
 import './Main.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
-// export const ListContainer = ({flexDirection='column', children, width='100%', height='100%'}) => <div style={{flexDirection, width, height}} className='list-container'>{children}</div>
-export const ListContainer = ({id, children}) => <div id={id} className='list-container'>{children}</div>
 
 export const UnAuthenticatedApp = () => {
   const dispatch = useDispatch();
@@ -49,24 +47,25 @@ export const AuthenticatedApp = () => {
   return (
     <div className='page-container'>
       <Navigation/>
-
-      <ListContainer id='main-page'>
-        <LeftNav />
-      
-      <ListContainer>
-        <div className='main-header'>List Container!</div>
-        <Switch>
-          <Route exact path="/" ><div>MODAL WITH "HEY WELCOME TO SLACK START WRITING HERE!!"</div><button>CLICK ME TO START WRITING</button></Route>
-          <Route exact path="/channels/:channelId" ><Chat /></Route>
-          <Route><Redirect to='/channels/1' /></Route>
-          {/* <Route><Redirect to={`/${lastSite}`} /></Route> */}
-          {/* <Route><Redirect to='/' /></Route> */}
-        </Switch>
-      </ListContainer>
-      </ListContainer>
-
-
+      <Main/>
       <Footer/>
     </div>
   )
 }
+
+const Main = () => (
+  <div className='main-page row-list'>
+    <LeftNav />
+
+    <div>
+      <div className='main-header'>List Container!</div>
+      <Switch>
+        <Route exact path="/" ><div>MODAL WITH "HEY WELCOME TO SLACK START WRITING HERE!!"</div><button>CLICK ME TO START WRITING</button></Route>
+        <Route exact path="/channels/:channelId" ><Chat /></Route>
+        <Route><Redirect to='/channels/1' /></Route>
+        {/* <Route><Redirect to={`/${lastSite}`} /></Route> */}
+        {/* <Route><Redirect to='/' /></Route> */}
+      </Switch>
+    </div>
+  </div>
+)

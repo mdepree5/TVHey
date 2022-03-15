@@ -3,12 +3,7 @@
   flex-direction: column; 
   align-items: center;
   justify-content: center;
-  height: 100vh;
-}
-
-.row-list{
-  display: flex;
-  flex-direction: row;
+  /* height: 100vh; */
 }
 
 .main-header{
@@ -24,10 +19,9 @@
   height: 30px;
 }
 
-#main-page{
-  height: calc(100vh - 80px);
-  flex-direction: row;
+.main-page{
+  /* height: calc(100vh - 80px); */
   border: 1px solid blue;
-  height: 100%;
+  /* height: 100%; */
   padding: 100px;
 }
