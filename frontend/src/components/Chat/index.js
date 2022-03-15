@@ -38,6 +38,7 @@ const Chat = () => {
           </MessageCard>
         ))}
       </MessagesContainer>
+      
       <form onSubmit={sendChat}>
         <input value={chatInput} onChange={updateChatInput} />
         <button type="submit">{'>'}</button>

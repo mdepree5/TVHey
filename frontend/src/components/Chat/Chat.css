@@ -1,5 +1,6 @@
 .messagess{
-  height: calc(100% - 80px);
+  /* height: calc(100% - 80px); */
+  height: 100%;
   width: 90%;
   border: 2px solid green;
   margin-left: auto;

@@ -16,9 +16,9 @@ body, html{
   flex-direction: row;
 }
 
-.row-column{
+.col-list{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 a{
