@@ -15,9 +15,9 @@ const removeUser = () => ({ type: REMOVE_USER })
 // todo ——————————————————————————————————————————————————————————————————————————————————
 export const authenticate = () => api('', setUser);
 export const login = (email, password) => api('login', setUser, {method: 'POST', body: JSON.stringify({email, password})});
+export const loginDemo = () => api('login', setUser, {method: 'POST', body: JSON.stringify({email: 'demo@aa.io', password: 'password'})});
 export const logout = () => api('logout', removeUser);
 export const signUp = (username, email, password) => api('signup', setUser, {method: 'POST', body: JSON.stringify({username, email, password})});
-
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Reducer —
 // todo ——————————————————————————————————————————————————————————————————————————————————

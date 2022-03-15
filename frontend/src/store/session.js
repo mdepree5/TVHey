@@ -32,6 +32,15 @@ export const login = (email, password) => async (dispatch) => {
   } else return ['An error occurred. Please try again.']
 }
 
+export const loginDemo = async () => {
+  const response = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({email: 'demo@aa.io', password: 'password'})
+  });
+  return await response.json();
+}
+
 export const logout = () => async (dispatch) => {
   const response = await fetch('/api/auth/logout', {headers: {'Content-Type': 'application/json'}});
   if (response.ok) dispatch(removeUser());
