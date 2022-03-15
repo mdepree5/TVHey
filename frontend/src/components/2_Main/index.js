@@ -20,7 +20,7 @@ import LeftNav from '../4_LeftNav';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import './Main.css'
 
-const UnAuthenticatedApp = () => {
+export const UnAuthenticatedApp = () => {
   const dispatch = useDispatch();
 
   return (
@@ -41,28 +41,19 @@ const UnAuthenticatedApp = () => {
   export const ListContainer = ({flexDirection='column', children, width='100%', height='100%'}) => <div style={{flexDirection, width, height}} className='list-container'>{children}</div>
   export const ChannelContainer = ({flexDirection='column', children, width='100%', height='100%'}) => <div style={{flexDirection, width, height}} className='list-container'>{children}</div>
   
-  const AuthenticatedApp = () => (
+export const AuthenticatedApp = () => (
     <>
       <Navigation/>
-      <ListContainer flexDirection='row' height='48px'>
-        
-        
-      </ListContainer>
 
       <ListContainer flexDirection='row'>
         <LeftNav />
       
       <ChannelContainer>
+        <div style={{color: 'red', padding:'10px', border: '2px solid red'}}>Channel Container!</div>
         <Switch>
           <ProtectedRoute exact path="/" ><div>MODAL WITH "HEY WELCOME TO SLACK START WRITING HERE!!"</div><button>CLICK ME TO START WRITING</button></ProtectedRoute>
-          <ProtectedRoute exact path="/users" ><UsersList/></ProtectedRoute>
-          <ProtectedRoute exact path="/users/:userId" ><User /></ProtectedRoute>
-
           <ProtectedRoute exact path="/channels/:channelId" ><div>Load Channel Here</div><Chat/></ProtectedRoute>
-          {/* <ProtectedRoute exact path="/dms/:dmId" ><div>Load DM Here</div><Chat/></ProtectedRoute> */}
           <Route><Redirect to='/' /></Route>
-          {/* <Route><PageNotFound/></Route> */}
-
         </Switch>
 
 
@@ -72,28 +63,3 @@ const UnAuthenticatedApp = () => {
       <Footer/>
     </>
   )
-
-
-const Main = ({authenticated}) => {
-  const MainContainer = ({children}) => <div className='main-container'>{children}</div>
-
-  return (
-    <MainContainer>
-      {authenticated ? 
-        <AuthenticatedApp /> : 
-        <UnAuthenticatedApp /> 
-      }
-    </MainContainer>      
-  )
-}
-
-
-// const PageNotFound = () => (
-//   <div className='page-not-found'>
-//     <br />
-//     {/* <img id='not-found-image' src='https://monopolynb.s3.amazonaws.com/page-not-found.png' alt='page-not-found' /> */}
-//     <h2>Page Not found</h2>
-//   </div>
-// )
-
-export default Main

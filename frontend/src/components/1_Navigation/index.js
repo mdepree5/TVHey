@@ -34,8 +34,7 @@ const Navigation = () => {
     </MidNav>
 
     <RightNav>
-      {/* <NavLink to={`/users/${sessionUser.id}`}>My Page</NavLink> */}
-      <NavLink to="/users" exact={true} activeClassName="active">Users</NavLink>
+      <button onClick={() => alert('open user profile modal')}>User</button>
     </RightNav>
   </NavBar>
   )
