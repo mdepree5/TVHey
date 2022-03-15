@@ -1,61 +1,63 @@
 import apiFetch from './custom_fetch';
-const api = apiFetch('channels')
+const api = apiFetch('messages')
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Actions —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const CREATE = 'channels/create';
-const GET_ALL = 'channels/get_all';
-const GET_ONE = 'channels/get_one';
-const UPDATE = 'channels/update';
-const DELETE = 'channels/delete';
+const CREATE = 'messages/create';
+const GET_ALL = 'messages/get_all';
+const GET_ONE = 'messages/get_one';
+const UPDATE = 'messages/update';
+const DELETE = 'messages/delete';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Creators —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const create = channel => ({ type: CREATE, channel });
-const getAll = channels => ({ type: GET_ALL, channels });
-const getOne = channel => ({ type: GET_ONE, channel });
-const update = channel => ({ type: UPDATE, channel });
-const destroy = channelId => ({ type: DELETE, channelId });
+const create = message => ({ type: CREATE, message });
+const getAll = messages => ({ type: GET_ALL, messages });
+const getOne = message => ({ type: GET_ONE, message });
+const update = message => ({ type: UPDATE, message });
+const destroy = messageId => ({ type: DELETE, messageId });
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Thunks —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-export const createChannel = channel => api('', create, {method: 'POST', body: JSON.stringify(channel)});
-export const getChannels = () => api('', getAll)
-export const getChannel = channelId => api(channelId, getOne);
-export const updateChannel = (channel, channelId) => api(channelId, update, {method: 'PUT', body: JSON.stringify(channel)});
-export const deleteChannel = channelId => api(channelId, destroy, {method: 'DELETE'});
+export const createMessage = message => api('', create, {method: 'POST', body: JSON.stringify(message)});
+export const getMessages = () => api('', getAll)
+export const getMessage = messageId => api(messageId, getOne);
+export const updateMessage = (message, messageId) => api(messageId, update, {method: 'PUT', body: JSON.stringify(message)});
+export const deleteMessage = messageId => api(messageId, destroy, {method: 'DELETE'});
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Reducer —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const channelReducer = (state = {}, action) => {
+const messageReducer = (state = {}, action) => {
   switch (action.type) {
     case CREATE: {
       const newState = state; //* => persist state for error handling
-      newState[action.channel.id] = action.channel;
+      console.log('MESSAGE REDUX', newState)
+      newState[action.message.id] = action.message;
+      console.log('MESSAGE REDUX', newState)
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case GET_ALL: {
       const newState = {}; //* => reset state to populate fresh query
-      action.channels['all_channels'].forEach(channel => newState[channel.id] = channel);
+      action.messages['all_messages'].forEach(message => newState[message.id] = message);
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case GET_ONE: {
       const newState = state;
-      newState[action.channel.id] = action.channel;
+      newState[action.message.id] = action.message;
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case UPDATE: {
       const newState = state;
-      newState[action.channel.id] = action.channel;
+      newState[action.message.id] = action.message;
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case DELETE: {
       const newState = state;
-      delete newState[action.channelId.id];
+      delete newState[action.messageId.id];
       return newState;
     }
 // ???? ——————————————————————————————————————————————————————————————————————————————————
@@ -64,4 +66,4 @@ const channelReducer = (state = {}, action) => {
   }
 };
 
-export default channelReducer;
+export default messageReducer;

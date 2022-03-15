@@ -30,7 +30,7 @@ def create_message():
       content = form.data['content'],
       created_at = datetime.now(),
       updated_at = datetime.now()
-      )
+    )
 
     db.session.add(new_message)
     db.session.commit()

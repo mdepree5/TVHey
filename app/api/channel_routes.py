@@ -41,11 +41,6 @@ def create_channel():
 @channel_routes.route("/", methods=["GET"])
 def get_all_channels():
   all_channels = Channel.query.all()
-  
-  print('debugger')
-  print(all_channels)
-  print('debugger')
-  
   return {"all_channels": [channel.to_dict() for channel in all_channels]}
 # todo ——————————————————————————————————————————————————————————————————————————————————
 @channel_routes.route("/<int:channelId>", methods=["GET"])        

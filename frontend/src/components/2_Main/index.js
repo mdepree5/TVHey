@@ -8,7 +8,7 @@ import Navigation from '../1_Navigation/index';
 // import LeftNav from '../4_LeftNav';
 import Chat from "../../components/Chat";
 
-import {getChannels} from '../../store/channel';
+import {getChannel, getChannels} from '../../store/channel';
 import {loginDemo} from '../../store/session';
 import './Main.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -45,15 +45,12 @@ export const AuthenticatedApp = () => {
   // console.log('MAIN PARAM', channelId)
   const dispatch = useDispatch();
   // const { cheatsheetId } = useParams();
-  const sessionUser = useSelector((state) => state?.session?.user)
 
-
-  console.log('SESSION USER', sessionUser)
   const channelsObj = useSelector(state => state?.channel);
   const channels = channelsObj && Object.values(channelsObj);
 
   console.log('CHANNELS', channels)
-  useEffect(() => { dispatch(getChannels()) }, [ dispatch])
+  useEffect(() => { dispatch(getChannels()) }, [dispatch])
 
   // todo ——————————————————————————————————————————————————————————————————————————————————
   // todo                 Dispatch for state, pass on to leftNav and messages
@@ -100,17 +97,17 @@ const LeftNav = () => {
   )
 }
 
-const RightPage = () => (
-  <div className='main-container'>
-    <div className='header'>List Container!</div>
-    <div className='main-body'>
+const RightPage = () => {
+  return (
+    <div className='right-page'>
       <Switch>
         <Route exact path="/" ><div>MODAL WITH "HEY WELCOME TO SLACK START WRITING HERE!!"</div><button>CLICK ME TO START WRITING</button></Route>
         <Route exact path="/channels/:channelId" ><Chat /></Route>
         <Route><Redirect to='/channels/1' /></Route>
-        {/* <Route><Redirect to={`/${lastSite}`} /></Route> */}
-        {/* <Route><Redirect to='/' /></Route> */}
       </Switch>
     </div>
-  </div>
-)
+  )
+}
+
+// <Route><Redirect to={`/${lastSite}`} /></Route>
+// <Route><Redirect to='/' /></Route>

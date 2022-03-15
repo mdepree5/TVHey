@@ -1,14 +1,26 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
-
+// todo ——————————————————————————————————————————————————————————————————————————————————
+import {getChannel} from '../../store/channel';
+import {createMessage} from '../../store/message';
 import './Chat.css';
+// todo ——————————————————————————————————————————————————————————————————————————————————
 let socket;
 
 const Chat = () => {
   const [chatInput, setChatInput] = useState("");
   const [messages, setMessages] = useState([]);
-  const sessionUser = useSelector(state => state.session.user)
+  const sessionUser = useSelector(state => state?.session?.user)
+
+  const dispatch = useDispatch();
+  const {channelId} = useParams()
+  const channel = useSelector(state => state?.channel[ channelId ]);
+
+  console.log('CHAT SELECTED CHANNEL', channel)
+  useEffect(() => { dispatch(getChannel(channelId)) }, [dispatch, channelId])
+
 
   useEffect(() => {
     socket = io(); // open socket connection and create websocket
@@ -18,9 +30,15 @@ const Chat = () => {
 
   const updateChatInput = (e) => setChatInput(e.target.value)
 
-  const sendChat = (e) => {
+  const sendChat = async (e) => {
     e.preventDefault()
-    socket.emit('chat', { user: sessionUser.username, msg: chatInput });
+    socket.emit('chat', { user: sessionUser?.username, msg: chatInput });
+    
+    const mes = {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput};
+    console.log('MESSAGE Obj to send to da back', mes)
+    const mess = await dispatch(createMessage(mes));
+    // if(mess.errors) alert(`ERRORS ${mess.errors}`)
+    if(mess) alert(`HEY ${mess}`)
     // alert(`Message sent to the backend with content of: ${chatInput}`)
     setChatInput('')
   }
@@ -30,6 +48,8 @@ const Chat = () => {
 
   return (sessionUser && (
     <div className='messagess'>
+      <div className='header'>{channel?.title}</div>
+
       <MessagesContainer>
         {messages.map((message, ind) => (
           <MessageCard key={ind}>
@@ -38,10 +58,10 @@ const Chat = () => {
           </MessageCard>
         ))}
       </MessagesContainer>
-      
-      <form onSubmit={sendChat}>
+
+      <form onSubmit={sendChat} >
         <input value={chatInput} onChange={updateChatInput} />
-        <button type="submit">{'>'}</button>
+        <button type="submit" disabled={!chatInput}>{'>'}</button>
       </form>
     </div>
   )
