@@ -7,9 +7,14 @@ class User(db.Model, UserMixin):
   __tablename__ = 'users'
 
   id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(40), nullable=False, unique=True)
   email = db.Column(db.String(255), nullable=False, unique=True)
+  username = db.Column(db.String(50), nullable=False, unique=True)
+  display_name = db.Column(db.String(100), nullable=False)
+  image_url = db.Column(db.String(255), nullable=True)
   hashed_password = db.Column(db.String(255), nullable=False)
+  
+  channels = db.relationship('Cheatsheet', back_populates='users')
+  messages = db.relationship('Comment', back_populates="users")
 
   @property
   def password(self):
@@ -25,6 +30,8 @@ class User(db.Model, UserMixin):
   def to_dict(self):
     return {
       'id': self.id,
+      'email': self.email,
       'username': self.username,
-      'email': self.email
+      'display_name': self.display_name,
+      'image_url': self.image_url,
     }
