@@ -1,5 +1,5 @@
 // import React, { useState, useEffect } from "react";
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // import { authenticate } from "../../store/session";
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 
@@ -17,15 +17,14 @@ import LeftNav from '../4_LeftNav';
 import './Main.css'
 
 const UnAuthenticatedApp = () => {
+  const dispatch = useDispatch();
 
   return (
   <div className='main-page'>
     <div>The Unauthenticated App</div>
       <NavLink to="/login" exact={true} activeClassName="active">Login</NavLink>
-      <div style={{width: '20px'}}/>
       <NavLink to="/sign-up" exact={true} activeClassName="active">Sign Up</NavLink>
-      <div style={{width: '20px'}}/>
-      <button>Demo</button>
+      <button onClick={async() => await dispatch(loginDemo())}>Demo</button>
     <Switch>
       <Route exact path="/login"><LoginForm /></Route>
       <Route exact path="/sign-up"><SignUpForm /></Route>

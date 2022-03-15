@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { login, loginDemo } from '../../store/session';
-
-export const DemoLoginButton = () => (
-  <button onClick={async() => await loginDemo()}>Demo</button>
-)
+import { login } from '../../store/session';
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
@@ -14,19 +10,18 @@ const LoginForm = () => {
   
   const dispatch = useDispatch();
 
-  const sessionUser = useSelector(state => state?.session?.user);
-  if (sessionUser) return <Redirect to='/' />;
-
   const onLogin = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) setErrors(data);
   };
-
+  
   const updateEmail = (e) => setEmail(e.target.value);
   const updatePassword = (e) => setPassword(e.target.value);
-
-
+  
+  
+  const sessionUser = useSelector(state => state?.session?.user);
+  if (sessionUser) return <Redirect to='/' />;
   return (
     <form onSubmit={onLogin}>
       <div className='errors'>
