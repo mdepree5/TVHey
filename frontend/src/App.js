@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {authenticate} from './store/session';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-
+import {authenticate} from './store/session';
 import {UnAuthenticatedApp, AuthenticatedApp} from './components/2_Main';
-
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const App = () => {
   const dispatch = useDispatch();
