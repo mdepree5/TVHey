@@ -21,6 +21,7 @@
   border: solid black 1px;
   /* width: 20em;
   height: 10em; */
+  /* overflow: 'auto' */
   overflow-wrap: break-word;
 }
 
@@ -30,6 +31,8 @@
   border-bottom: solid black 1px;
   margin-top: 5px;
   margin-bottom: 5px;
+
+  height: 200px;
   width: 100%;
 }
 

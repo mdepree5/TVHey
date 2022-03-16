@@ -97,7 +97,7 @@ const RightPage = () => {
   return (
     <div className='right-page'>
       <Switch>
-        <Route exact path="/" ><div>MODAL WITH "HEY WELCOME TO SLACK START WRITING HERE!!"</div><button>CLICK ME TO START WRITING</button></Route>
+        <Route exact path="/" ><PseudoHome/></Route>
         <Route exact path="/channels/:channelId" ><Chat /></Route>
         <Route><Redirect to='/' /></Route>
         {/* <Route><Redirect to='/channels/1' /></Route> */}
@@ -105,6 +105,13 @@ const RightPage = () => {
     </div>
   )
 }
+
+const PseudoHome = () => (
+  <div style={{width: '50%', border: 'solid 2px pink'}}>
+    MODAL WITH "HEY WELCOME TO SLACK START WRITING HERE!!"
+    <button>CLICK ME TO START WRITING</button>
+  </div>
+)
 
 // <Route><Redirect to={`/${lastSite}`} /></Route>
 // <Route><Redirect to='/' /></Route>

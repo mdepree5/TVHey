@@ -53,28 +53,24 @@ const Chat = () => {
     setChatInput('');
   }
 
-  const MessagesContainer = ({children}) => <div style={{overflow: 'auto'}} className='messages-container'>{children}</div>
-  const MessageCard = ({children}) => <div className='message-card'>{children}</div>
+  
 
   return (sessionUser && (
     <div className='chat'>
       <div className='header'>{channel?.privateStatus ? 'π' : '#'} {channel?.title}</div>
 
       <div className='messagez'>
-        <MessagesContainer>
-          {messages.map((message, ind) => (
-            <MessageCard key={ind}>
-              <img style={{height: '2em', width: '2em'}} src="https://img.pokemondb.net/sprites/black-white/normal/pidgey.png" alt="Pidgey"/>
-              <div>{`${message?.author}: ${message?.content}`}</div>
-            </MessageCard>
-          ))}
-        </MessagesContainer>
-
-        <form onSubmit={sendChat} >
-          <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${channel?.privateStatus ? 'π' : '#'} ${channel?.title}`} />
-          <button type="submit" disabled={!chatInput}>{'>'}</button>
-        </form>
+        {messages.map((message, ind) => (
+          <div className='message-card' key={ind}>
+            <img style={{height: '2em', width: '2em'}} src="https://img.pokemondb.net/sprites/black-white/normal/pidgey.png" alt="Pidgey"/>
+            <div>{`${message?.author}: ${message?.content}`}</div>
+          </div>
+        ))}
       </div>
+      <form onSubmit={sendChat} >
+        <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${channel?.privateStatus ? 'π' : '#'} ${channel?.title}`} />
+        <button type="submit" disabled={!chatInput}>{'>'}</button>
+      </form>
     </div>
   )
   )
