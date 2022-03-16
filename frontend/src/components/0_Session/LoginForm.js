@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login } from '../../store/session';
+import {FormInput, FormErrors} from '../Utils/forms';
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
@@ -16,40 +17,15 @@ const LoginForm = () => {
     if (data) setErrors(data);
   };
   
-  const updateEmail = (e) => setEmail(e.target.value);
-  const updatePassword = (e) => setPassword(e.target.value);
-  
-  
   const sessionUser = useSelector(state => state?.session?.user);
   if (sessionUser) return <Redirect to='/' />;
   return (
     <form onSubmit={onLogin}>
-      <div className='errors'>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
-      </div>
-      <div>
-        <label htmlFor='email'>Email</label>
-        <input
-          name='email'
-          type='text'
-          placeholder='Email'
-          value={email}
-          onChange={updateEmail}
-        />
-      </div>
-      <div>
-        <label htmlFor='password'>Password</label>
-        <input
-          name='password'
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={updatePassword}
-        />
-        <button type='submit'>Login</button>
-      </div>
+      
+      <FormInput name='Email' state={email} setState={setEmail}/>
+      <FormInput name='Password' state={password} setState={setPassword}/>
+      <button type='submit'>Login</button>
+      <FormErrors errors={errors}/>
     </form>
   );
 };
