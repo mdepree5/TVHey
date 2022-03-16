@@ -1,6 +1,6 @@
 import './Form.css';
 
-export const FormInput = ({ type, name, state, setState }) => {
+export const FormInput = ({ required, type, name, state, setState }) => {
   const formatName = name.toLowerCase().split(' ').join('-');
 
   return (
@@ -12,6 +12,7 @@ export const FormInput = ({ type, name, state, setState }) => {
         type={type || 'text'}
         value={state}
         onChange={e => setState(e.target.value)}
+        required={required || false}
       />
     </div>
   )

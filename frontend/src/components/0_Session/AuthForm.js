@@ -39,7 +39,7 @@ const AuthForm = ({signup}) => {
       {signup && <FormInput name='Username' state={username} setState={setUsername} />}
       <FormInput name='Email' state={email} setState={setEmail}/>
       <FormInput type='password' name='Password' state={password} setState={setPassword}/>
-      {signup && <FormInput type='password' name='Confirm Password' state={repeatPassword} setState={setRepeatPassword}/> }
+      {signup && <FormInput required={true} type='password' name='Confirm Password' state={repeatPassword} setState={setRepeatPassword}/> }
       <button type='submit'>Sign Up</button>
       <FormErrors errors={errors}/>
     </form>

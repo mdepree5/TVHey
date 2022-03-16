@@ -6,14 +6,8 @@ import {UnAuthenticatedApp, AuthenticatedApp} from './components/2_Main';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const App = () => {
   const dispatch = useDispatch();
-  // useEffect(() => {dispatch(authenticate())}, [dispatch]);
-  useEffect(() => {
-    const user = dispatch(authenticate())
-    if (user?.errors) alert(user?.errors)
-  }, [dispatch]);
-
   const sessionUser = useSelector(state => state?.session?.user);
-  // useEffect(() => {(async() => await dispatch(authenticate()))()}, [dispatch]);
+  useEffect(() => {dispatch(authenticate())}, [dispatch]);
 
   return <>{sessionUser ? <AuthenticatedApp/> : <UnAuthenticatedApp/>}</>
 }
