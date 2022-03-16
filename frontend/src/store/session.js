@@ -15,7 +15,11 @@ export const authenticate = () => async (dispatch) => {
   const response = await fetch('/api/auth/', {headers: {'Content-Type': 'application/json'}});
   if (response.ok) {
     const data = await response.json();
-    if (data.errors) return;
+    if (data.errors) {
+      alert(data.errors)
+      console.log(data.errors)
+      return data.errors;
+    }
     dispatch(setUser(data));
   }
 }

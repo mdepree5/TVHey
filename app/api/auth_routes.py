@@ -19,7 +19,8 @@ def validation_errors_to_error_messages(validation_errors):
 def authenticate():
   if current_user.is_authenticated:
     return current_user.to_dict()
-  return {'errors': ['Unauthorized']}, 401
+  return {'errors': ['Initial unauthenticated app render']}, 212
+  # return {'errors': ['Unauthorized']}, 401
 
 
 @auth_routes.route('/login', methods=['POST'])
@@ -71,3 +72,4 @@ def sign_up():
 @auth_routes.route('/unauthorized')
 def unauthorized():
   return {'errors': ['Unauthorized']}, 401
+  # return {'errors': ['Unauthorized']}, 212
