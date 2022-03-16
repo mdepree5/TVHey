@@ -11,23 +11,36 @@ import './Chat.css';
 let socket;
 
 const Chat = () => {
+// **** ————————————————————————————————————————————————————————————————————————————STABLE
   const dispatch = useDispatch();
   const {channelId} = useParams();
-  console.log('CHANNELID', channelId);
-  
   const sessionUser = useSelector(state => state?.session?.user);
-  const channel = useSelector(state => state?.channel?.channels[channelId]);
+  
+  console.log('CHAT CHANNELID', channelId);
+  console.log('CHAT SESSIONUSER', sessionUser);
+
+  
+  const channelstate = useSelector(state => state?.channel);
+  const channels = Object.values(channelstate?.channels);
+  const selectedChannel = channelstate?.channels[channelId]
+  
+  console.log('CHAT CHANNELSARR', channels);
+  console.log('CHAT SELECTEDCHANNEL', selectedChannel);
+// **** ——————————————————————————————————————————————————————————————————————————————————
+  
+// !!!! ——————————————————————————————————————————————————————————————————————————UNSTABLE
   const messagesObj =  useSelector(state => state?.channel?.messages);
   
   useEffect(() => { dispatch(getChannel(channelId)) }, [dispatch, channelId]);
-
+  
   const messageArr = Object.values(messagesObj);
   console.log('CHAT COMPONENT MESSAGES', messageArr)
-
+  
   const [chatInput, setChatInput] = useState('');
   // const [messages, setMessages] = useState(messageArr);
   const [messages, setMessages] = useState([...messageArr]);
   console.log('STATE : MESSAGES', messages)
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
 
   useEffect(() => {
     socket = io(); // open socket connection and create websocket
@@ -57,7 +70,7 @@ const Chat = () => {
 
   return (sessionUser && (
     <>
-      <div className='header'>{channel?.privateStatus ? 'π' : '#'} {channel?.title}</div>
+      <div className='header'>{selectedChannel?.privateStatus ? 'π' : '#'} {selectedChannel?.title}</div>
 
       <div className='message-container'>
         {messages.map((message, ind) => (
@@ -69,7 +82,7 @@ const Chat = () => {
       </div>
 
       <form onSubmit={sendChat} >
-        <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${channel?.privateStatus ? 'π' : '#'} ${channel?.title}`} />
+        <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${selectedChannel?.privateStatus ? 'π' : '#'} ${selectedChannel?.title}`} />
         <button type="submit" disabled={!chatInput}>{'>'}</button>
       </form>
     </>

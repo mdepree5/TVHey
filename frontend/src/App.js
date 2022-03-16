@@ -7,6 +7,7 @@ import {UnAuthenticatedApp, AuthenticatedApp} from './components/2_Main';
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {dispatch(authenticate())}, [dispatch]);
+  // useEffect(() => {(async() => await dispatch(authenticate()))()}, [dispatch]);
   const sessionUser = useSelector(state => state?.session?.user);
 
   return <>{sessionUser ? <AuthenticatedApp/> : <UnAuthenticatedApp/>}</>

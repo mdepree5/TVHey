@@ -39,7 +39,9 @@ export const UnAuthenticatedApp = () => {
 }
   
 export const AuthenticatedApp = () => {
-  // const [lastSite, setLastSite] = useState('');
+  const dispatch = useDispatch();
+  useEffect(() => {(async() => await dispatch(getChannels()))()}, [dispatch]);
+  // useEffect(() => { dispatch(getChannels()) }, [dispatch]);
 
   return (
     <div className='page-container'>
@@ -60,12 +62,10 @@ export const AuthenticatedApp = () => {
 
 
 const LeftNav = () => {
-  const dispatch = useDispatch();
-  useEffect(() => { dispatch(getChannels()) }, [dispatch]);
+  const channelstate = useSelector(state => state?.channel);
+  const channels = Object.values(channelstate?.channels);
 
-  const channelsObj = useSelector(state => state?.channel?.channels);
-  const channels = Object.values(channelsObj);
-  console.log('LEFT NAV', channels);
+  console.log('LEFT NAV CHANNELSARR', channels);
 
   const AddButton = ({name, symbolOnly=false, width='50%'}) => <button style={{width}} onClick={()=>alert(`Open create new ${name} form`)}>+ {symbolOnly ? '' : ` Add ${name}`}</button>
 
@@ -92,7 +92,6 @@ const LeftNav = () => {
 }
 
 const RightPage = () => {
-
 
   return (
     <div className='right-page'>
