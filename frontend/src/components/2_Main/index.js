@@ -41,13 +41,12 @@ export const UnAuthenticatedApp = () => {
   
 export const AuthenticatedApp = () => {
   const dispatch = useDispatch();
-  useEffect(() => {(async() => await dispatch(getChannels()))()}, [dispatch]);
-  // useEffect(() => { dispatch(getChannels()) }, [dispatch]);
+  useEffect(() => { dispatch(getChannels()) }, [dispatch]);
 
   return (
     <div className='page-container'>
       <Navigation/>
-      <Split className='main-page row-list'
+      <Split className='row-list main-page'
         cursor="row-resize"
         direction="horizontal"
         sizes={[25, 75]}

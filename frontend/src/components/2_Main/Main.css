@@ -1,10 +1,15 @@
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Global                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
 .page-container{
   height: 100%;
   display: flex;
   flex-direction: column; 
   align-items: center;
 }
-
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             UnAuthenticated App                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
 #unauthenticated-app{
   justify-content: center;
   width: 60%;
@@ -12,15 +17,23 @@
   margin-right: auto;
 }
 
+#unauthenticated-header{
+  flex-direction: row;
+  align-items: center;
+  height: 30px;
+}
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Authenticated App                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
 .main-page{
   border: 1px solid blue;
-  /* height: calc(100vh - 60px); */
+  /* ! Refactor this height at the end!! */
+  /* ! Refactor this height at the end!! */
   height: calc(100vh - 200px);
-  /* padding: 50px; */
-  /* margin-bottom: 0; */
+  /* ! Refactor this height at the end!! */
+  /* ! Refactor this height at the end!! */
 }
 
-/* .main-page > * > .header{ */
 .main-page .header{
   display: flex;
   flex-direction: row;
@@ -29,25 +42,6 @@
 
   color: red;
   border: solid 1px red;
-}
-
-.right-page{
-  display: flex;
-  flex-direction: column;
-  border: solid 3px pink;
-  height: 100%;
-}
-
-.left-nav{
-  width: 40%;
-  border: solid 3px rgb(0, 171, 131);
-  /* padding-left: 10px; */
-}
-
-#unauthenticated-header{
-  flex-direction: row;
-  align-items: center;
-  height: 30px;
 }
 
 .gutter{
@@ -60,14 +54,7 @@
   background-color: orange;
 }
 
-.gutter.gutter-horizontal{
-  cursor: col-resize;
-}
-.gutter.gutter-vertical{
-  cursor: row-resize;
-}
-
-.split-tester{
+/* .split-tester{
   height: 200px;
   width: 600px;
   border: 2px solid red;
@@ -79,4 +66,26 @@
   height: 50px;
   width: 50px;
   border: 1px solid blue;
+} */
+
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Left Nav                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+.left-nav{
+  height: 100%;
+  width: 40%;
+  border: solid 3px rgb(0, 171, 131);
+  /* padding-left: 10px; */
+  overflow: auto;
+  overflow-y: scroll;
+}
+
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Right Page                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+.right-page{
+  display: flex;
+  flex-direction: column;
+  border: solid 3px pink;
+  height: 100%;
 }

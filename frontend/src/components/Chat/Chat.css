@@ -5,7 +5,8 @@
   
   height: 100%;
   overflow: auto;
-  overflow-wrap: break-word;
+  /* overflow-y: scroll; */
+  /* overflow-wrap: break-word; */
 }
 
 .message-card{
