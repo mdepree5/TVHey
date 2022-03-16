@@ -7,6 +7,8 @@ import AuthForm from "../0_Session/AuthForm";
 
 import Navigation from '../1_Navigation/index';
 import Chat from "../../components/Chat";
+import ChannelFormModal from '../Channel/channel_modal';
+
 
 import {getChannels} from '../../store/channel';
 import {loginDemo} from '../../store/session';
@@ -66,8 +68,6 @@ const LeftNav = () => {
 
   console.log('LEFT NAV CHANNELSARR', channels);
 
-  const AddButton = ({name, symbolOnly=false, width='50%'}) => <button style={{width}} onClick={()=>alert(`Open create new ${name} form`)}>+ {symbolOnly ? '' : ` Add ${name}`}</button>
-
   return (
     <div className='left-nav'>
       <div className='header'>TVHey <button>New</button></div>
@@ -83,7 +83,8 @@ const LeftNav = () => {
               {channel?.privateStatus ? 'π' : '#'} {channel?.title}
             </NavLink>
           ))}
-          <AddButton name='Channel' width='100%'/>
+          <ChannelFormModal name='+ Add Channel'  />
+        {/* <ChannelFormModal name='Edit Channel' edit={true} channel={channel} /> */}
         </div>
       </div>
     </div>
