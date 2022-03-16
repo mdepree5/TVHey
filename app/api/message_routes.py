@@ -22,6 +22,9 @@ def validation_errors_to_error_messages(validation_errors):
 def create_message():
   form = MessageForm()
   form['csrf_token'].data = request.cookies['csrf_token']
+  print('debugger')
+  print(form.data)
+  print('debugger')
   
   if form.validate_on_submit():
     new_message = Message(
@@ -31,7 +34,7 @@ def create_message():
       created_at = datetime.now(),
       updated_at = datetime.now()
     )
-
+    
     db.session.add(new_message)
     db.session.commit()
     return {**new_message.to_dict()}

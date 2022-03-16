@@ -19,10 +19,10 @@ const destroy = messageId => ({ type: DELETE, messageId });
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Thunks —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-export const createMessage = message => api('', create, {method: 'POST', body: JSON.stringify(message)});
+export const createMessage = message => api('', create, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(message)});
 export const getMessages = () => api('', getAll)
 export const getMessage = messageId => api(messageId, getOne);
-export const updateMessage = (message, messageId) => api(messageId, update, {method: 'PUT', body: JSON.stringify(message)});
+export const updateMessage = (message, messageId) => api(messageId, update, {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(message)});
 export const deleteMessage = messageId => api(messageId, destroy, {method: 'DELETE'});
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Reducer —
@@ -30,16 +30,16 @@ export const deleteMessage = messageId => api(messageId, destroy, {method: 'DELE
 const messageReducer = (state = {}, action) => {
   switch (action.type) {
     case CREATE: {
-      const newState = state; //* => persist state for error handling
-      console.log('MESSAGE REDUX', newState)
+      const newState = {...state}; //* => persist state for error handling
       newState[action.message.id] = action.message;
-      console.log('MESSAGE REDUX', newState)
+      console.log('MESSAGE REDUX STATE', newState)
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case GET_ALL: {
       const newState = {}; //* => reset state to populate fresh query
       action.messages['all_messages'].forEach(message => newState[message.id] = message);
+      console.log('REDUX GETALL', newState);
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————

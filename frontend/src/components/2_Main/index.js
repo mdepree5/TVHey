@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Switch, NavLink, Redirect, useParams } from "react-router-dom";
+import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import LoginForm from "../../components/0_Session/LoginForm";
@@ -56,11 +56,10 @@ export const UnAuthenticatedApp = () => {
 }
   
 export const AuthenticatedApp = () => {
-
-
   const dispatch = useDispatch();
   useEffect(() => { dispatch(getChannels()) }, [dispatch]);
   // const [lastSite, setLastSite] = useState('');
+
   return (
     <div className='page-container'>
       <Navigation/>
@@ -68,7 +67,7 @@ export const AuthenticatedApp = () => {
         cursor="row-resize"
         direction="horizontal"
         sizes={[25, 75]}
-        gutterSize={5}
+        gutterSize={2}
         dragInterval={1}
       >
         <LeftNav />
@@ -80,8 +79,9 @@ export const AuthenticatedApp = () => {
 
 
 const LeftNav = () => {
-  const channelsObj = useSelector(state => state?.channel);
-  const channels = channelsObj && Object.values(channelsObj);
+  const channelsObj = useSelector(state => state?.channel?.channels);
+  const channels = Object.values(channelsObj);
+  console.log('LEFT NAV', channels);
 
   const AddButton = ({name, symbolOnly=false, width='50%'}) => <button style={{width}} onClick={()=>alert(`Open create new ${name} form`)}>+ {symbolOnly ? '' : ` Add ${name}`}</button>
 
@@ -108,6 +108,8 @@ const LeftNav = () => {
 }
 
 const RightPage = () => {
+
+
   return (
     <div className='right-page'>
       <Switch>

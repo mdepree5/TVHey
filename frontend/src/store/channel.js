@@ -5,6 +5,7 @@ const api = apiFetch('channels')
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const CREATE = 'channels/create';
 const GET_ALL = 'channels/get_all';
+const GET_ALL_MESSAGES = 'channels/get_all_messages';
 const GET_ONE = 'channels/get_one';
 const UPDATE = 'channels/update';
 const DELETE = 'channels/delete';
@@ -13,21 +14,23 @@ const DELETE = 'channels/delete';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const create = channel => ({ type: CREATE, channel });
 const getAll = channels => ({ type: GET_ALL, channels });
+const getAllMessages = channelId => ({ type: GET_ALL_MESSAGES, channelId });
 const getOne = channel => ({ type: GET_ONE, channel });
 const update = channel => ({ type: UPDATE, channel });
 const destroy = channelId => ({ type: DELETE, channelId });
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Thunks —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-export const createChannel = channel => api('', create, {method: 'POST', body: JSON.stringify(channel)});
+export const createChannel = channel => api('', create, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(channel)});
 export const getChannels = () => api('', getAll)
+export const getMessages = channelId => api(`${channelId}/messages`, getAllMessages)
 export const getChannel = channelId => api(channelId, getOne);
-export const updateChannel = (channel, channelId) => api(channelId, update, {method: 'PUT', body: JSON.stringify(channel)});
+export const updateChannel = (channel, channelId) => api(channelId, update, {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(channel)});
 export const deleteChannel = channelId => api(channelId, destroy, {method: 'DELETE'});
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Reducer —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const channelReducer = (state = {}, action) => {
+const channelReducer = (state = {channels:{}, messages:{}}, action) => {
   switch (action.type) {
     case CREATE: {
       const newState = state; //* => persist state for error handling
@@ -36,13 +39,28 @@ const channelReducer = (state = {}, action) => {
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case GET_ALL: {
-      const newState = {}; //* => reset state to populate fresh query
-      action.channels['all_channels'].forEach(channel => newState[channel.id] = channel);
+      // console.log('CHANNEL STATE', state)
+      // console.log('CHANNEL STATE', state.messages)
+      const newState = state;
+      // const messages = newState.messages
+      // console.log('CHANNEL STATE', messages)
+      action.channels['all_channels'].forEach(channel => newState.channels[channel.id] = channel);
+      // console.log('CHANNEL STATE', newState)
+      return newState;
+    };
+// ???? ——————————————————————————————————————————————————————————————————————————————————
+    case GET_ALL_MESSAGES: {
+      const newState = state;
+      // const messages = newState.messages
+      // console.log('CHANNEL STATE', messages)
+      action.channelId['all_messages'].forEach(message => newState.messages[message.id] = message);
+      // console.log('GET ALL MESSAGES', newState)
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case GET_ONE: {
-      const newState = state;
+      const newState = {...state};
+      // console.log('GET ONE', newState)
       newState[action.channel.id] = action.channel;
       return newState;
     };

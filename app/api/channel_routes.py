@@ -72,3 +72,9 @@ def delete_channel(channelId):
   db.session.commit()
 
   return {'id': channelId}
+# todo ——————————————————————————————————————————————————————————————————————————————————
+@channel_routes.route('/<int:channelId>/messages', methods=['GET'])
+def get_messages(channelId):
+  all_messages = Message.query.filter(Message.channel_id == int(channelId)).all()
+
+  return {"all_messages": [message.to_dict() for message in all_messages]}

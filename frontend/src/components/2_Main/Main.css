@@ -46,6 +46,10 @@
   background-position: 50%;
 }
 
+.gutter:hover{
+  background-color: orange;
+}
+
 .gutter.gutter-horizontal{
   cursor: col-resize;
 }
