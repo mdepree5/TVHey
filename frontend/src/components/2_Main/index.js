@@ -84,7 +84,7 @@ const LeftNav = () => {
               {channel?.privateStatus ? 'π' : '#'} {channel?.title}
             </NavLink>
           ))}
-          <AddButton name='Channel'/>
+          <AddButton name='Channel' width='100%'/>
         </div>
       </div>
     </div>
