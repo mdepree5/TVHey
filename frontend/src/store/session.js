@@ -16,9 +16,9 @@ export const authenticate = () => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     if (data.errors) {
-      alert(data.errors)
-      console.log(data.errors)
-      return data.errors;
+      // console.log(data.errors) //=> 'Initial unauthenticated app render' 
+      // return data.errors;
+      return;
     }
     dispatch(setUser(data));
   }
