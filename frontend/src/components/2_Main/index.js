@@ -9,7 +9,6 @@ import Navigation from '../1_Navigation/index';
 import Chat from "../../components/Chat";
 import ChannelFormModal from '../Channel/channel_modal';
 
-import {DeleteChannelButton} from '../Utils/buttons';
 import {getChannels} from '../../store/channel';
 import {loginDemo} from '../../store/session';
 import './Main.css'
@@ -62,11 +61,10 @@ export const AuthenticatedApp = () => {
 
 
 const LeftNav = () => {
-  const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channel);
   const channels = Object.values(channelstate?.channels);
 
-  // console.log('LEFT NAV CHANNELSARR', channels);
+  console.log('LEFT NAV CHANNELSARR', channels);
 
   return (
     <div className='left-nav'>
@@ -79,13 +77,7 @@ const LeftNav = () => {
 
         <div className='col-list'>
           {channels?.map(channel => (
-            <NavLink to={`/channels/${channel?.id}`} key={channel?.id} activeStyle={{backgroundColor:'darkblue', color: 'white'}} >
-              {channel?.privateStatus ? 'π' : '#'} {channel?.title}
-              {sessionUser?.id === channel?.host_id && <>
-                <ChannelFormModal name='^' edit={true} channel={channel} />
-                <DeleteChannelButton channelId={channel?.id}/>
-              </>}
-            </NavLink>
+            <NavLink to={`/channels/${channel?.id}`} key={channel?.id} activeStyle={{backgroundColor:'darkblue', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
           ))}
           <ChannelFormModal name='+ Add Channel' />
         </div>

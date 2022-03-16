@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-
+import ChannelFormModal from '../Channel/channel_modal';
+import {DeleteChannelButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
 import {createMessage} from '../../store/message';
 import './Chat.css';
@@ -16,15 +17,14 @@ const Chat = () => {
   const {channelId} = useParams();
   const sessionUser = useSelector(state => state?.session?.user);
   
-  console.log('CHAT CHANNELID', channelId);
-  console.log('CHAT SESSIONUSER', sessionUser);
+  // console.log('CHAT CHANNELID', channelId);
+  // console.log('CHAT SESSIONUSER', sessionUser);
 
   const channelstate = useSelector(state => state?.channel);
-  const channels = Object.values(channelstate?.channels);
-  const selectedChannel = channelstate?.channels[channelId]
+  const thisChannel = channelstate?.selected;
   
-  console.log('CHAT CHANNELSARR', channels);
-  console.log('CHAT SELECTEDCHANNEL', selectedChannel);
+  // console.log('CHAT CHANNELSARR', channels);
+  // console.log('CHAT SELECTEDCHANNEL', selectedChannel);
 // **** ——————————————————————————————————————————————————————————————————————————————————
   
 // !!!! ——————————————————————————————————————————————————————————————————————————UNSTABLE
@@ -33,12 +33,12 @@ const Chat = () => {
   useEffect(() => { dispatch(getChannel(channelId)) }, [dispatch, channelId]);
   
   const messageArr = Object.values(messagesObj);
-  console.log('CHAT COMPONENT MESSAGES', messageArr)
+  // console.log('CHAT COMPONENT MESSAGES', messageArr)
   
   const [chatInput, setChatInput] = useState('');
   // const [messages, setMessages] = useState(messageArr);
   const [messages, setMessages] = useState([...messageArr]);
-  console.log('STATE : MESSAGES', messages)
+  // console.log('STATE : MESSAGES', messages)
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
 
   useEffect(() => {
@@ -52,7 +52,8 @@ const Chat = () => {
   const sendChat = async (e) => {
     e.preventDefault()
     
-    const mes = {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput};
+    // const mes = {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput};
+    const mes = {author_id: sessionUser?.id, channel_id: channelId, content: chatInput};
     console.log('MESSAGE Obj to send to da back', mes)
     const mess = await dispatch(createMessage(mes));
     console.log('MESS AWAIT!?!?!?!', mess)
@@ -65,11 +66,16 @@ const Chat = () => {
     setChatInput('');
   }
 
-  
 
   return (sessionUser && (
     <>
-      <div className='header'>{selectedChannel?.privateStatus ? 'π' : '#'} {selectedChannel?.title}</div>
+      <div className='header'>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}
+      {/* <div className='header'>{selectedChannel?.privateStatus ? 'π' : '#'} {selectedChannel?.title} */}
+        {sessionUser?.id === thisChannel?.host_id && <>
+          <ChannelFormModal name='^' edit={true} channel={thisChannel} />
+          <DeleteChannelButton channelId={thisChannel?.id}/>
+        </>}
+      </div>
 
       <div className='message-container'>
         {messages.map((message, ind) => (
@@ -81,7 +87,8 @@ const Chat = () => {
       </div>
 
       <form onSubmit={sendChat} >
-        <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${selectedChannel?.privateStatus ? 'π' : '#'} ${selectedChannel?.title}`} />
+        <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`} />
+        {/* <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${selectedChannel?.privateStatus ? 'π' : '#'} ${selectedChannel?.title}`} /> */}
         <button type="submit" disabled={!chatInput}>{'>'}</button>
       </form>
     </>

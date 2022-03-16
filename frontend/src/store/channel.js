@@ -53,13 +53,13 @@ const channelReducer = (state = {selected:null, channels:{}, messages:{}}, actio
     case GET_ONE: {
       const newState = {...state};
       // console.log('GET ONE', newState)
-      newState[action.channel.id] = action.channel;
+      newState.selected = action.channel;
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case UPDATE: {
-      const newState = state;
-      newState[action.channel.id] = action.channel;
+      const newState = {...state};
+      newState.channels[action.channel.id] = action.channel;
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————

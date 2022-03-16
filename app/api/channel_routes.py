@@ -22,11 +22,9 @@ def validation_errors_to_error_messages(validation_errors):
 def create_channel():
   form = ChannelForm()
   form['csrf_token'].data = request.cookies['csrf_token']
-
-  print('debugger')
-  print(form.data)
-  print('debugger')
-  
+  # print('debugger')
+  # print(form.data)
+  # print('debugger')
   if form.validate_on_submit():
     new_channel = Channel(
       host_id = form.data['host_id'],
@@ -35,14 +33,12 @@ def create_channel():
       created_at = datetime.now(),
       updated_at = datetime.now()
     )
-
     db.session.add(new_channel)
     db.session.commit()
-    
-    print('debugger')
-    new = {**new_channel.to_dict()}
-    print(new)
-    print('debugger')
+    # print('debugger')
+    # new = {**new_channel.to_dict()}
+    # print(new)
+    # print('debugger')
     return {**new_channel.to_dict()}
 
   return {'errors': validation_errors_to_error_messages(form.errors)}
@@ -64,11 +60,14 @@ def update_channel(channelId):
   form['csrf_token'].data = request.cookies['csrf_token']
 
   if form.validate_on_submit():
-    channel = channel.query.get(channelId)
+    channel = Channel.query.get(channelId)
     channel.title = form.data['title']
     channel.topic = form.data['topic']
     channel.updated_at = datetime.now()
     db.session.commit()
+    print('debugger')
+    print('IT WENT THRUUU')
+    print('debugger')
     return {**channel.to_dict()}
 
   return {'errors': validation_errors_to_error_messages(form.errors)}
