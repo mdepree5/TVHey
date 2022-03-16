@@ -33,8 +33,10 @@ export const deleteChannel = channelId => api(channelId, destroy, {method: 'DELE
 const channelReducer = (state = {selected:null, channels:{}, messages:{}}, action) => {
   switch (action.type) {
     case CREATE: {
-      const newState = state;
-      newState[action.channel.id] = action.channel;
+      const newState = {...state};
+      newState.channels[action.channel.id] = action.channel;
+      newState.selected = action.channel;
+      console.log('REDUX STATECREATE NEWSTATE', newState)
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
@@ -44,7 +46,7 @@ const channelReducer = (state = {selected:null, channels:{}, messages:{}}, actio
       // console.log('REDUX SPREAD STATE', newState)
       // action.channels['all_channels'].forEach(channel => newState[channel.id] = channel);
       action.channels['all_channels'].forEach(channel => newState.channels[channel.id] = channel);
-      console.log('REDUX STATE WITH CHANNELS???', newState)
+      // console.log('REDUX STATE WITH CHANNELS???', newState)
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————

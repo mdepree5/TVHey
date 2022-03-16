@@ -23,6 +23,10 @@ def create_channel():
   form = ChannelForm()
   form['csrf_token'].data = request.cookies['csrf_token']
 
+  print('debugger')
+  print(form.data)
+  print('debugger')
+  
   if form.validate_on_submit():
     new_channel = Channel(
       host_id = form.data['host_id'],
@@ -34,6 +38,11 @@ def create_channel():
 
     db.session.add(new_channel)
     db.session.commit()
+    
+    print('debugger')
+    new = {**new_channel.to_dict()}
+    print(new)
+    print('debugger')
     return {**new_channel.to_dict()}
 
   return {'errors': validation_errors_to_error_messages(form.errors)}

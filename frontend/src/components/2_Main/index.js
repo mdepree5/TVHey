@@ -66,7 +66,7 @@ const LeftNav = () => {
   const channelstate = useSelector(state => state?.channel);
   const channels = Object.values(channelstate?.channels);
 
-  console.log('LEFT NAV CHANNELSARR', channels);
+  // console.log('LEFT NAV CHANNELSARR', channels);
 
   return (
     <div className='left-nav'>
@@ -83,7 +83,7 @@ const LeftNav = () => {
               {channel?.privateStatus ? 'π' : '#'} {channel?.title}
             </NavLink>
           ))}
-          <ChannelFormModal name='+ Add Channel'  />
+          <ChannelFormModal name='+ Add Channel' />
         {/* <ChannelFormModal name='Edit Channel' edit={true} channel={channel} /> */}
         </div>
       </div>

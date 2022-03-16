@@ -31,13 +31,18 @@ const ChannelForm = ({ name, edit, channel, closeModal }) => {
       return 'Failed to update';
     }
 
+    console.log('CHANNEL DATA TO BACKEND', channelData)
     const created = await dispatch(createChannel(channelData));
+    await console.log('CREATED', created);
     if (created?.errors) setErrors(created?.errors);
-    if (created?.id) {
-      history.push(`/channels/${created?.id}`);
-      return closeModal();
-    }
-    return 'Failed to Create';
+    
+    return closeModal();
+    // if (created?.id) return closeModal();
+    // if (created?.id) {
+    //   history.push(`/channels/${created?.id}`);
+    //   return closeModal();
+    // }
+    // return 'Failed to Create';
   }
 
   return (
