@@ -1,3 +1,5 @@
+import './Form.css';
+
 export const FormInput = ({ type, name, state, setState }) => {
   const formatName = name.toLowerCase().split(' ').join('-');
 

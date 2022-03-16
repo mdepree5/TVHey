@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-import LoginForm from "../../components/0_Session/LoginForm";
-import SignUpForm from "../../components/0_Session/SignUpForm";
+import AuthForm from "../0_Session/AuthForm";
+
 import Navigation from '../1_Navigation/index';
-// import LeftNav from '../4_LeftNav';
 import Chat from "../../components/Chat";
 
 import {getChannels} from '../../store/channel';
@@ -29,8 +28,8 @@ export const UnAuthenticatedApp = () => {
 
       <div className='row-list' id='main-page'>
         <Switch>
-          <Route exact path="/login"><LoginForm /></Route>
-          <Route exact path="/sign-up"><SignUpForm /></Route>
+          <Route exact path="/login"><AuthForm /></Route>
+          <Route exact path="/sign-up"><AuthForm signup={true} /></Route>
           <Route><Redirect to="/login" /></Route>
         </Switch>
       </div>
