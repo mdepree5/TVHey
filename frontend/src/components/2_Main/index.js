@@ -56,8 +56,6 @@ export const UnAuthenticatedApp = () => {
 }
   
 export const AuthenticatedApp = () => {
-  const dispatch = useDispatch();
-  useEffect(() => { dispatch(getChannels()) }, [dispatch]);
   // const [lastSite, setLastSite] = useState('');
 
   return (
@@ -79,6 +77,9 @@ export const AuthenticatedApp = () => {
 
 
 const LeftNav = () => {
+  const dispatch = useDispatch();
+  useEffect(() => { dispatch(getChannels()) }, [dispatch]);
+
   const channelsObj = useSelector(state => state?.channel?.channels);
   const channels = Object.values(channelsObj);
   console.log('LEFT NAV', channels);
@@ -115,6 +116,7 @@ const RightPage = () => {
       <Switch>
         <Route exact path="/" ><div>MODAL WITH "HEY WELCOME TO SLACK START WRITING HERE!!"</div><button>CLICK ME TO START WRITING</button></Route>
         <Route exact path="/channels/:channelId" ><Chat /></Route>
+        {/* <Route><Redirect to='/' /></Route> */}
         <Route><Redirect to='/channels/1' /></Route>
       </Switch>
     </div>

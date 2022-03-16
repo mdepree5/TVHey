@@ -39,22 +39,8 @@ const channelReducer = (state = {channels:{}, messages:{}}, action) => {
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case GET_ALL: {
-      // console.log('CHANNEL STATE', state)
-      // console.log('CHANNEL STATE', state.messages)
       const newState = state;
-      // const messages = newState.messages
-      // console.log('CHANNEL STATE', messages)
       action.channels['all_channels'].forEach(channel => newState.channels[channel.id] = channel);
-      // console.log('CHANNEL STATE', newState)
-      return newState;
-    };
-// ???? ——————————————————————————————————————————————————————————————————————————————————
-    case GET_ALL_MESSAGES: {
-      const newState = state;
-      // const messages = newState.messages
-      // console.log('CHANNEL STATE', messages)
-      action.channelId['all_messages'].forEach(message => newState.messages[message.id] = message);
-      // console.log('GET ALL MESSAGES', newState)
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
@@ -76,6 +62,15 @@ const channelReducer = (state = {channels:{}, messages:{}}, action) => {
       delete newState[action.channelId.id];
       return newState;
     }
+// ???? ——————————————————————————————————————————————————————————————————————————————————
+    case GET_ALL_MESSAGES: {
+      const newState = state;
+      // const messages = newState.messages
+      // console.log('CHANNEL STATE', messages)
+      action.channelId['all_messages'].forEach(message => newState.messages[message.id] = message);
+      // console.log('GET ALL MESSAGES', newState)
+      return newState;
+    };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     default:
       return state;
