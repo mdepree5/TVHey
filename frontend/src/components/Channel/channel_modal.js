@@ -7,7 +7,7 @@ function ChannelFormModal({name='Create', edit=false, channel=null}) {
   const [showModal, setShowModal] = useState(false);
 
   return (<>
-    <button className='publish-modal-button' onClick={e => setShowModal(true)}>{name}</button>
+    <button className={edit ? 'edit' : ''} onClick={e => setShowModal(true)}>{name}</button>
     {showModal && (
       <Modal onClose={() => setShowModal(false)}>
         <ChannelForm name={name} edit={edit} channel={channel} closeModal={() => setShowModal(false)} />

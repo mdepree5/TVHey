@@ -1,7 +1,9 @@
-import { useHistory } from 'react-router-dom';
-// import { deleteChannel } from "../../store/channels";
-import { useDispatch } from "react-redux";
+import {useHistory} from 'react-router-dom';
+import {useDispatch} from "react-redux";
+// todo ——————————————————————————————————————————————————————————————————————————————————
+import {deleteChannel} from '../../store/channel';
 import './Buttons.css'
+// todo ——————————————————————————————————————————————————————————————————————————————————
 
 export const DeleteButton = ({ thisId, deleteThunk, config }) => {
   const dispatch = useDispatch()
@@ -19,8 +21,6 @@ export const DeleteButton = ({ thisId, deleteThunk, config }) => {
   )
 }
 
-
-// export const ChannelDeleteButton = ({ channelId }) => (
-//   <DeleteButton thisId={channelId} deleteThunk={deleteChannel} config={{  buttonName: 'Delete Channel', newRoute: '/' }} />
-// )
-
+export const DeleteChannelButton = ({ channelId }) => (
+  <DeleteButton thisId={channelId} deleteThunk={deleteChannel} config={{  buttonName: 'x', newRoute: '/' }} />
+)

@@ -19,7 +19,6 @@ const Chat = () => {
   console.log('CHAT CHANNELID', channelId);
   console.log('CHAT SESSIONUSER', sessionUser);
 
-  
   const channelstate = useSelector(state => state?.channel);
   const channels = Object.values(channelstate?.channels);
   const selectedChannel = channelstate?.channels[channelId]

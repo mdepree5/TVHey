@@ -64,8 +64,8 @@ const channelReducer = (state = {selected:null, channels:{}, messages:{}}, actio
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case DELETE: {
-      const newState = state;
-      delete newState[action.channelId.id];
+      const newState = {...state};
+      delete newState.channels[action.channelId.id];
       return newState;
     }
 // ???? ——————————————————————————————————————————————————————————————————————————————————
