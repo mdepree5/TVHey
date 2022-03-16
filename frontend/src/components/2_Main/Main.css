@@ -6,9 +6,10 @@
 
 .main-page{
   border: 1px solid blue;
-  /* height: 100%; */
-  height: calc(100vh - 90px);
-  padding: 50px;
+  /* height: calc(100vh - 60px); */
+  height: calc(100vh - 200px);
+  /* padding: 50px; */
+  /* margin-bottom: 0; */
 }
 
 /* .main-page > * > .header{ */
@@ -20,7 +21,6 @@
 
   color: red;
   border: solid 1px red;
-  padding: 5px;
 }
 
 .right-page{

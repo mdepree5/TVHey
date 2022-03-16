@@ -61,7 +61,7 @@ const Chat = () => {
         </MessagesContainer>
 
         <form onSubmit={sendChat} >
-          <input value={chatInput} onChange={updateChatInput} />
+          <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${channel?.privateStatus ? 'π' : '#'} ${channel?.title}`} />
           <button type="submit" disabled={!chatInput}>{'>'}</button>
         </form>
       </div>

@@ -87,7 +87,7 @@ const LeftNav = () => {
 
   return (
     <div className='left-nav'>
-      <div className='header'>List Header! <button>New</button></div>
+      <div className='header'>TVHey <button>New</button></div>
       <div style={{height:'100px'}}/>
       <div style={{height:'100px'}}/>
 
