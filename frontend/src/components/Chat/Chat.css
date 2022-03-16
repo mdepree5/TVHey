@@ -1,27 +1,10 @@
-.chat{
-  display: flex;
-  flex-direction: column;
-  /* justify-content: ; */
-
-  height: 100%;
-}
-
-.messagez{
+.message-container{
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   
-  /* border: 2px solid green; */
   height: 100%;
-}
-
-.messages-container{
-  display: flex;
-  flex-direction: column;
-  border: solid black 1px;
-  /* width: 20em;
-  height: 10em; */
-  /* overflow: 'auto' */
+  overflow: auto;
   overflow-wrap: break-word;
 }
 
@@ -41,7 +24,3 @@
   margin-left: auto;
   margin-right: auto;
 }
-
-/* .message-input{
-  border: 1px solid yellow;
-} */

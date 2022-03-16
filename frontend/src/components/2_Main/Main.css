@@ -34,12 +34,13 @@
 .right-page{
   display: flex;
   flex-direction: column;
-  border: solid 1px purple;
+  border: solid 3px pink;
   height: 100%;
 }
 
 .left-nav{
   width: 40%;
+  border: solid 3px rgb(0, 171, 131);
   /* padding-left: 10px; */
 }
 

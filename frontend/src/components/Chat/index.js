@@ -56,10 +56,10 @@ const Chat = () => {
   
 
   return (sessionUser && (
-    <div className='chat'>
+    <>
       <div className='header'>{channel?.privateStatus ? 'π' : '#'} {channel?.title}</div>
 
-      <div className='messagez'>
+      <div className='message-container'>
         {messages.map((message, ind) => (
           <div className='message-card' key={ind}>
             <img style={{height: '2em', width: '2em'}} src="https://img.pokemondb.net/sprites/black-white/normal/pidgey.png" alt="Pidgey"/>
@@ -67,11 +67,12 @@ const Chat = () => {
           </div>
         ))}
       </div>
+
       <form onSubmit={sendChat} >
         <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${channel?.privateStatus ? 'π' : '#'} ${channel?.title}`} />
         <button type="submit" disabled={!chatInput}>{'>'}</button>
       </form>
-    </div>
+    </>
   )
   )
 };
