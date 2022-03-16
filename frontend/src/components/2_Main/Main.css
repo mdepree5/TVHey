@@ -39,6 +39,9 @@
   flex-direction: row;
   align-items: center;
   height: 40px;
+  
+  position: sticky;
+  top: 0;
 
   color: red;
   border: solid 1px red;
@@ -88,4 +91,8 @@
   flex-direction: column;
   border: solid 3px pink;
   height: 100%;
+
+  /* overflow: auto;
+  overflow-y: scroll; */
 }
+
