@@ -1,7 +1,15 @@
 .page-container{
+  height: 100%;
   display: flex;
   flex-direction: column; 
   align-items: center;
+}
+
+#unauthenticated-app{
+  justify-content: center;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .main-page{
@@ -37,6 +45,7 @@
 
 #unauthenticated-header{
   flex-direction: row;
+  align-items: center;
   height: 30px;
 }
 

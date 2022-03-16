@@ -11,12 +11,8 @@
   flex-direction: column;
   justify-content: flex-end;
   
-  /* height: calc(100% - 80px); */
-  /* width: 100%; */
+  /* border: 2px solid green; */
   height: 100%;
-  border: 2px solid green;
-  /* margin-left: auto;
-  margin-right: auto; */
 }
 
 .messages-container{

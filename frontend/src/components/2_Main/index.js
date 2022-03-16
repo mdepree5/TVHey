@@ -18,8 +18,7 @@ export const UnAuthenticatedApp = () => {
   const dispatch = useDispatch();
 
   return (
-    <div style={{width: '60%', marginLeft:'auto', marginRight:'auto'}}>
-      <div style={{height:'100px'}}></div>
+    <div className='page-container' id='unauthenticated-app' >
       <div>Sign In to TVHey</div>
       
       <div className='row-list' id='unauthenticated-header'>
@@ -35,22 +34,6 @@ export const UnAuthenticatedApp = () => {
           <Route><Redirect to="/login" /></Route>
         </Switch>
       </div>
-
-      <div style={{height:'100px'}}></div>
-      <div style={{height:'100px'}}></div>
-
-      <Split className='split-tester'
-        cursor="row-resize"
-        direction="horizontal"
-        sizes={[25, 75]}
-        gutterSize={5}
-        dragInterval={1}
-      >
-        <div className='tester-box'>HEY</div>
-        <div className='tester-box'>THERE</div>
-      </Split>
-
-      <div style={{height:'100px'}}></div>
     </div>
   )
 }
@@ -97,7 +80,7 @@ const LeftNav = () => {
 
         <div className='col-list'>
           {channels?.map(channel => (
-            <NavLink to={`/channels/${channel?.id}`} key={channel?.id} activeClassName='active' >
+            <NavLink to={`/channels/${channel?.id}`} key={channel?.id} activeStyle={{backgroundColor:'darkblue', color: 'white'}} >
               {channel?.privateStatus ? 'π' : '#'} {channel?.title}
             </NavLink>
           ))}
@@ -116,8 +99,8 @@ const RightPage = () => {
       <Switch>
         <Route exact path="/" ><div>MODAL WITH "HEY WELCOME TO SLACK START WRITING HERE!!"</div><button>CLICK ME TO START WRITING</button></Route>
         <Route exact path="/channels/:channelId" ><Chat /></Route>
-        {/* <Route><Redirect to='/' /></Route> */}
-        <Route><Redirect to='/channels/1' /></Route>
+        <Route><Redirect to='/' /></Route>
+        {/* <Route><Redirect to='/channels/1' /></Route> */}
       </Switch>
     </div>
   )
