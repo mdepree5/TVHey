@@ -2,15 +2,15 @@ from app.models import db, User
 
 def seed_users():
   feige = User(
-    username='kevin', email='feige@marvel.studios', password='pres', display_name='Kevin Feige', image_url='')
+    username='kevin', email='feige@marvel.studios', password='pres', display_name='Kevin Feige', image_url='https://capstone-slack-clone.s3.amazonaws.com/users/feige.png')
   alligator_loki = User(
-    username='alligatorLoki', email='alligator@lo.ki', password='thetrueloki', display_name='Alligator Loki', image_url='')
+    username='alligatorLoki', email='alligator@lo.ki', password='thetrueloki', display_name='Alligator Loki', image_url='https://capstone-slack-clone.s3.amazonaws.com/users/alligator_loki.png')
   thor = User(
-    username='thor', email='thor@as.gard', password='lordofthunder', display_name='Thor', image_url='')
+    username='thor', email='thor@as.gard', password='lordofthunder', display_name='Thor', image_url='https://capstone-slack-clone.s3.amazonaws.com/users/thor.jpg')
   loki = User(
-    username='loki', email='loki@lo.ki', password='kneel!', display_name='Loki', image_url='')
+    username='loki', email='loki@lo.ki', password='kneel!', display_name='Loki', image_url='https://capstone-slack-clone.s3.amazonaws.com/users/loki.png')
   korg = User(
-    username='korg', email='korg@pileof.rocks', password='heyman', display_name='Korg', image_url='')
+    username='korg', email='korg@pileof.rocks', password='heyman', display_name='Korg', image_url='https://capstone-slack-clone.s3.amazonaws.com/users/korg.png')
 
   db.session.add(feige)
   db.session.add(alligator_loki)
