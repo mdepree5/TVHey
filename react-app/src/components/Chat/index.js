@@ -27,7 +27,7 @@ const Chat = () => {
   
   useEffect(() => {
     const channel = dispatch(getChannel(channelId))
-    if (!channel) history.goBack();
+    // if (!channel) history.goBack();
   }, [dispatch, channelId]);
   useEffect(() => {dispatch(getMessages2(channelId))}, [dispatch, channelId]);
   // useEffect(() => {setTimeout(() => {alert('MessagesArr', messagesArr)}, 2000)}, [])
