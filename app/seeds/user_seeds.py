@@ -2,7 +2,7 @@ from app.models import db, User
 
 def seed_users():
   demo = User(
-    username='Demo', email='demo@aa.io', password='password', display_name='', image_url='')
+    username='alligatorLoki', email='alligator@lo.ki', password='password', display_name='Alligator Loki', image_url='')
   marnie = User(
     username='marnie', email='marnie@aa.io', password='password', display_name='', image_url='')
   bobbie = User(
