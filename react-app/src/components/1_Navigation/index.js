@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {NavLink} from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 
+import {Dropdown} from '../Utils/dropdown';
 import LogoutButton from '../../components/0_Session/LogoutButton';
 
 import './Navigation.css'
@@ -33,7 +34,7 @@ const Navigation = () => {
     </MidNav>
 
     <RightNav>
-      <button onClick={() => alert('open user profile modal')}>User</button>
+      <Dropdown/>
     </RightNav>
   </NavBar>
   )

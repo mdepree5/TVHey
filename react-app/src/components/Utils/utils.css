@@ -26,7 +26,10 @@
 /* todo             Dropdown                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .dropdown{
+  background-color: gray;
+  top: 44px;
   position: absolute;
+  width: 200px;
   z-index: 3;
 }
 .dropdown > * {

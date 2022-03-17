@@ -2,17 +2,20 @@ import {useEffect, useState} from 'react';
 import './utils.css';
 
 export const Dropdown = () => {
-
   const [showDropdown, setShowDropdown] = useState(false);
 
-  // useEffect(()=> setShowDropdown(false), []);
-  useEffect(()=> setShowDropdown(false), [showDropdown]);
+  useEffect(()=> {
+    if (!showDropdown) return;
+    const closeDropdown = () => setShowDropdown(false);
+    document.addEventListener('click', closeDropdown)
+    document.removeEventListener('click', closeDropdown)
+  }, [showDropdown]);
 
 
   return (
     <>
-      <button onCLick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}>
-        USER
+      <button onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}>
+        User
       </button>
       {showDropdown && (
         <div className='dropdown'>
