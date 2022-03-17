@@ -48,8 +48,9 @@ const Chat = () => {
       dispatch(createMessage(message));
     });
 
+    
     return () => socket.disconnect(); // when component unmounts, disconnect
-  }, [dispatch])
+  }, [])
 
   const chatRef = useRef();
   

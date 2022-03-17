@@ -18,4 +18,7 @@ socketio = SocketIO(cors_allowed_origins=origins)
 # handle chat messages
 @socketio.on('send')
 def handle_chat(data):
+  print('debugger from websocket')
+  print(data)
+  print('debugger from websocket')
   emit('send', data, broadcast=True)
