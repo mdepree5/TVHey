@@ -78,7 +78,10 @@ const Chat = () => {
         {messagesArr?.map((message, ind) => (
           <div className='message-card' key={ind}>
             {/* <img style={{height: '2em', width: '2em'}} src="https://img.pokemondb.net/sprites/black-white/normal/pidgey.png" alt="Pidgey"/> */}
-            <img style={{height: '2em', width: '2em'}} src={message?.} alt="user"/>
+            {/*  ——————————————————————————————————————————————————————————————————————————————  */}
+            {/*  Here I'll probably want to see if I can alt={preloadedImage} or alt={custom css component that also uses the author's first initial}  */}
+            {/*  ——————————————————————————————————————————————————————————————————————————————  */}
+            <img style={{height: '2em', width: '2em'}} src={message?.author_image} alt="user"/>
             <div>{`${message?.author}: ${message?.content}`}</div>
           </div>
         ))}
