@@ -63,7 +63,6 @@ const Chat = () => {
   const sendChat = async (e) => {
     e.preventDefault()  
     const chatInput = (chatRef.current.value)
-    console.log('CHAT MESSAGE VALUE', chatInput)
 
     const mes = {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput};
     // !!!! ——————————————————————————————————————————————————————————————————————————————
@@ -112,24 +111,30 @@ export default Chat;
 
 const MessageCard = ({message, ind}) => {
   const [toggleEdit, setToggleEdit] = useState(false);
+  const [input, setInput] = useState(message?.content);
+  const updateChatRef = useRef();
 
+  const handleEdit = () => {
+    const updateChatInput = (updateChatRef.current.value)
+    console.log('handle Edit')
+    console.log(updateChatInput)
+    setToggleEdit(false)
+  }
 
   return toggleEdit ? (
-    <form  onSubmit={()=> console.log('message card form')}>
-      <input placeholder='Update message' />
+  <form  onSubmit={handleEdit}>
+    <input ref={updateChatRef} value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}} placeholder='Update message'/>
+    <div className='row-list edit-message-buttons'>
       <button type='button' onClick={() => setToggleEdit(false)}>Cancel</button>
-      <button type='button' onClick={console.log('delete')}>Delete</button>
-    </form>
+      <button type='submit'>Save</button>
+    </div>
+  </form>
   ) : (
-    <div>
-    {/* <div className='message-card' key={ind}> */}
-    {/* <img style={{height: '2em', width: '2em'}} src="https://img.pokemondb.net/sprites/black-white/normal/pidgey.png" alt="Pidgey"/> */}
-    {/*  ——————————————————————————————————————————————————————————————————————————————  */}
-    {/*  Here I'll probably want to see if I can alt={preloadedImage} or alt={custom css component that also uses the author's first initial}  */}
-    {/*  ——————————————————————————————————————————————————————————————————————————————  */}
-    <img style={{height: '2em', width: '2em'}} src={message?.author_image} alt="user"/>
-    <div>{`${message?.author}: ${message?.content}`}</div>
-    <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
+    <div className='row-list'>
+      <img style={{height: '2em', width: '2em'}} src={message?.author_image} alt="user"/>
+      <div>{`${message?.author}: ${message?.content}`}</div>
+      <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
+      <button onClick={() => console.log('delete')}>Delete</button>
     </div> 
   )
 }

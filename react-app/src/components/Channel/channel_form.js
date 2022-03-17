@@ -37,10 +37,7 @@ const ChannelForm = ({ name, edit, channel, closeModal }) => {
     }
 
     // console.log('CHANNEL DATA TO BACKEND', channelData)
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
     const created = await dispatch(createChannel(channelData));
-    await console.log('CREATED ————————————————————', created);
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
     if (created?.errors) setErrors(created?.errors);
     return closeModal();
     // if (created?.id) return closeModal();
