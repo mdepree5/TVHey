@@ -77,7 +77,8 @@ const Chat = () => {
       <div className='message-container'>
         {messagesArr?.map((message, ind) => (
           <div className='message-card' key={ind}>
-            <img style={{height: '2em', width: '2em'}} src="https://img.pokemondb.net/sprites/black-white/normal/pidgey.png" alt="Pidgey"/>
+            {/* <img style={{height: '2em', width: '2em'}} src="https://img.pokemondb.net/sprites/black-white/normal/pidgey.png" alt="Pidgey"/> */}
+            <img style={{height: '2em', width: '2em'}} src={message?.} alt="user"/>
             <div>{`${message?.author}: ${message?.content}`}</div>
           </div>
         ))}

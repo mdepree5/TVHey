@@ -1,9 +1,10 @@
 from app.models import db, Channel
 
 def seed_channels():
-  movie_1 = Channel(host_id=1, title='Movie 1', topic='Topic 1')
+  ragnarok = Channel(host_id=1, title='Thor: Ragnarok', topic='Topic 1')
+  
 
-  db.session.add(movie_1)
+  db.session.add(ragnarok)
   db.session.commit()
 
 def undo_channels():

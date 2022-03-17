@@ -1,9 +1,58 @@
 from app.models import db, Message
 
 def seed_messages():
-  movie_1_message_1 = Message(author_id=1, channel_id=1, content='Content')
+  ragnarok_1_1 = Message(author_id=3, channel_id=1, content='I really wish I had my hammer')
+  ragnarok_1_2 = Message(author_id=5, channel_id=1, content='Hammer?')
+  ragnarok_1_3 = Message(author_id=3, channel_id=1, content='Quite unique. It was made from this special metal from the heart of a dying star. And when I spun it really, really fast, it gave me the ability to fly')
+  ragnarok_1_4 = Message(author_id=5, channel_id=1, content='You rode a hammer?')
+  ragnarok_1_5 = Message(author_id=3, channel_id=1, content='No, I didn\'t ride the hammer')
+  ragnarok_1_6 = Message(author_id=5, channel_id=1, content='The hammer rode you on your back?')
+  ragnarok_1_7 = Message(author_id=3, channel_id=1, content='No. I used to spin it really fast, and it would pull me off the...')
+  ragnarok_1_8 = Message(author_id=5, channel_id=1, content='Oh, my God. A hammer pulled you off?')
+  ragnarok_1_9 = Message(author_id=3, channel_id=1, content='The ground. It would pull me off the ground, up into the air, and I would fly. Every time I threw it, it would always come back to me')
+  ragnarok_1_10 = Message(author_id=5, channel_id=1, content='Sounds like you had a pretty special and intimate relationship with this hammer, and that losing it was almost comparable to losing a loved one')
+  ragnarok_1_11 = Message(author_id=3, channel_id=1, content='That\'s a nice way of putting it')
+  
+  
+  ragnarok_2_1 = Message(author_id=3, channel_id=1, content='Hey, let\'s do "Get Help"')
+  ragnarok_2_2 = Message(author_id=4, channel_id=1, content='What?')
+  ragnarok_2_3 = Message(author_id=3, channel_id=1, content='"Get Help"')
+  ragnarok_2_4 = Message(author_id=4, channel_id=1, content='No')
+  ragnarok_2_5 = Message(author_id=3, channel_id=1, content='Come on, you love it')
+  ragnarok_2_6 = Message(author_id=4, channel_id=1, content='I hate it')
+  ragnarok_2_7 = Message(author_id=3, channel_id=1, content='It\'s great, it works every time')
+  ragnarok_2_8 = Message(author_id=4, channel_id=1, content='It\'s humiliating')
+  ragnarok_2_9 = Message(author_id=3, channel_id=1, content='Do you have a better plan?')
+  ragnarok_2_10 = Message(author_id=4, channel_id=1, content='No')
+  ragnarok_2_11 = Message(author_id=3, channel_id=1, content='We\'re doing it')
+  ragnarok_2_12 = Message(author_id=4, channel_id=1, content='We are not doing "Get Help"')
+  
 
-  db.session.add(movie_1_message_1)
+  db.session.add(ragnarok_1_1)
+  db.session.add(ragnarok_1_2)
+  db.session.add(ragnarok_1_3)
+  db.session.add(ragnarok_1_4)
+  db.session.add(ragnarok_1_5)
+  db.session.add(ragnarok_1_6)
+  db.session.add(ragnarok_1_7)
+  db.session.add(ragnarok_1_8)
+  db.session.add(ragnarok_1_9)
+  db.session.add(ragnarok_1_10)
+  db.session.add(ragnarok_1_11)
+  
+  db.session.add(ragnarok_2_1)
+  db.session.add(ragnarok_2_2)
+  db.session.add(ragnarok_2_3)
+  db.session.add(ragnarok_2_4)
+  db.session.add(ragnarok_2_5)
+  db.session.add(ragnarok_2_6)
+  db.session.add(ragnarok_2_7)
+  db.session.add(ragnarok_2_8)
+  db.session.add(ragnarok_2_9)
+  db.session.add(ragnarok_2_10)
+  db.session.add(ragnarok_2_11)
+  db.session.add(ragnarok_2_12)
+  
   db.session.commit()
 
 def undo_messages():

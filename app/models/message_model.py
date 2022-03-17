@@ -22,5 +22,6 @@ class Message(db.Model):
       "content": self.content,
       "created_at": self.created_at,
       "updated_at": self.updated_at,
-      'author': self.users.display_name if self.users.display_name else self.users.username
+      'author_display_name': self.users.display_name if self.users.display_name else self.users.username,
+      'author_image': self.users.image_url
     }
