@@ -30,6 +30,8 @@
   top: 44px;
   position: absolute;
   width: 200px;
+  padding: 8px;
+  border-radius: 10px;
   z-index: 3;
 }
 .dropdown > * {

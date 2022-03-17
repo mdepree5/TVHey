@@ -2,8 +2,10 @@ import {useEffect, useState} from 'react';
 import './utils.css';
 
 export const Dropdown = () => {
+
   const [showDropdown, setShowDropdown] = useState(false);
 
+  // useEffect(()=> setShowDropdown(false), []);
   useEffect(()=> {
     if (!showDropdown) return;
     const closeDropdown = () => setShowDropdown(false);

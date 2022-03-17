@@ -76,13 +76,9 @@ const Chat = () => {
 
       <div className='message-container'>
         {messagesArr?.map((message, ind) => (
-          <div className='message-card' key={ind}>
-            {/* <img style={{height: '2em', width: '2em'}} src="https://img.pokemondb.net/sprites/black-white/normal/pidgey.png" alt="Pidgey"/> */}
-            {/*  ——————————————————————————————————————————————————————————————————————————————  */}
-            {/*  Here I'll probably want to see if I can alt={preloadedImage} or alt={custom css component that also uses the author's first initial}  */}
-            {/*  ——————————————————————————————————————————————————————————————————————————————  */}
-            <img style={{height: '2em', width: '2em'}} src={message?.author_image} alt="user"/>
-            <div>{`${message?.author}: ${message?.content}`}</div>
+          <div key={ind}>
+            <MessageCard message={message} ind={ind}/>
+            {/* {toggleEdit ? <FormComponent setToggleEdit={setToggleEdit}/> : <MessageCard setToggleEdit={setToggleEdit} message={message} ind={ind}/>} */}
           </div>
         ))}
       </div>
@@ -100,5 +96,26 @@ const Chat = () => {
   )
 };
 
-
 export default Chat;
+
+
+const MessageCard = ({message, ind}) => {
+  const [toggleEdit, setToggleEdit] = useState(false);
+
+  return toggleEdit ? (
+    <form >
+      <input placeholder='Update message' />
+      <button onClick={() => setToggleEdit(false)}>Toggle Edit</button>
+    </form>
+  ) : (
+    <div className='message-card' key={ind}>
+    {/* <img style={{height: '2em', width: '2em'}} src="https://img.pokemondb.net/sprites/black-white/normal/pidgey.png" alt="Pidgey"/> */}
+    {/*  ——————————————————————————————————————————————————————————————————————————————  */}
+    {/*  Here I'll probably want to see if I can alt={preloadedImage} or alt={custom css component that also uses the author's first initial}  */}
+    {/*  ——————————————————————————————————————————————————————————————————————————————  */}
+    <img style={{height: '2em', width: '2em'}} src={message?.author_image} alt="user"/>
+    <div>{`${message?.author}: ${message?.content}`}</div>
+    <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
+    </div> 
+  )
+}
