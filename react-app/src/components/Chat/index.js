@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Redirect, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+// import { useParams, Redirect, useHistory } from 'react-router-dom';
 import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import ChannelFormModal from '../Channel/channel_modal';
@@ -14,7 +15,7 @@ let socket;
 const Chat = () => {
 // **** ————————————————————————————————————————————————————————————————————————————STABLE
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
   const { channelId } = useParams();
 
   const sessionUser = useSelector(state => state?.session?.user);
@@ -26,7 +27,8 @@ const Chat = () => {
   // console.log('Message Arr', messagesArr);
   
   useEffect(() => {
-    const channel = dispatch(getChannel(channelId))
+    dispatch(getChannel(channelId))
+    // const channel = dispatch(getChannel(channelId)))
     // if (!channel) history.goBack();
   }, [dispatch, channelId]);
   useEffect(() => {dispatch(getMessages2(channelId))}, [dispatch, channelId]);
