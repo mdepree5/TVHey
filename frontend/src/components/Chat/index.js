@@ -50,8 +50,8 @@ const Chat = () => {
 
     const mes = {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput};
     // console.log('Message obj send to backend', mes)
-    // !!!! ——————————————————————————————————————————————————————————————————————————————————
     const createdMessage = await dispatch(createMessage(mes));
+    // !!!! ——————————————————————————————————————————————————————————————————————————————————
     console.log('CREATED MESSAGE ——————————————————————————', createdMessage);
     // if(createdMessage.errors) alert(`ERRORS ${createdMessage.errors}`)
     if(createdMessage) alert(`HEY ${createdMessage}`);

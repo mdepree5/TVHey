@@ -46,7 +46,7 @@ export const AuthenticatedApp = () => {
     <div className='page-container'>
       <Navigation/>
       <Split className='row-list main-page'
-        cursor="row-resize"
+        cursor="col-resize"
         direction="horizontal"
         sizes={[25, 75]}
         gutterSize={2}
