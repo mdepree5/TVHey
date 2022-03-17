@@ -85,10 +85,7 @@ const Chat = () => {
 
       <div className='message-container'>
         {messagesArr?.map((message, ind) => (
-          <div className='message-card' key={ind}>
-            <MessageCard message={message} ind={ind}/>
-            {/* {toggleEdit ? <FormComponent setToggleEdit={setToggleEdit}/> : <MessageCard setToggleEdit={setToggleEdit} message={message} ind={ind}/>} */}
-          </div>
+          <MessageCard message={message} ind={ind} sessionUser={sessionUser}/>
         ))}
       </div>
 
@@ -109,7 +106,7 @@ const Chat = () => {
 export default Chat;
 
 
-const MessageCard = ({message, ind}) => {
+const MessageCard = ({message, ind, sessionUser}) => {
   const [toggleEdit, setToggleEdit] = useState(false);
   const [input, setInput] = useState(message?.content);
   const updateChatRef = useRef();
@@ -122,7 +119,7 @@ const MessageCard = ({message, ind}) => {
   }
 
   return toggleEdit ? (
-  <form  onSubmit={handleEdit}>
+  <form id={ind} className='col-list message-card' onSubmit={handleEdit}>
     <input ref={updateChatRef} value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}} placeholder='Update message'/>
     <div className='row-list edit-message-buttons'>
       <button type='button' onClick={() => setToggleEdit(false)}>Cancel</button>
@@ -130,9 +127,15 @@ const MessageCard = ({message, ind}) => {
     </div>
   </form>
   ) : (
-    <div className='row-list'>
+    <div id={ind} className='row-list message-card'>
       <img style={{height: '2em', width: '2em'}} src={message?.author_image} alt="user"/>
       <div>{`${message?.author}: ${message?.content}`}</div>
+      {/*//! FOR if you own it or not  */}
+      {/* {message?.author_id === sessionUser.id && <>
+        <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
+        <button onClick={() => console.log('delete')}>Delete</button>
+      </>} */}
+      {/*//! FOR if you own it or not  */}
       <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
       <button onClick={() => console.log('delete')}>Delete</button>
     </div> 

@@ -13,14 +13,18 @@
 }
 
 .message-card{
-  display: flex;
-  flex-direction: row;
-  border-bottom: solid black 1px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-
-  height: 200px;
+  min-height: 100px;
   width: 100%;
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: solid black 1px;
+  align-items: center;
+}
+
+.message-card > * {
+  margin-left: 2px;
+  margin-right: 2px;
 }
 
 .line{
