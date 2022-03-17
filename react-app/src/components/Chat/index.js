@@ -41,8 +41,12 @@ const Chat = () => {
   useEffect(() => {
     socket = io(); // open socket connection and create websocket
     // listen for chat events. when we recieve a chat, dispatch createMessage()
-  
-    socket.on("send", message => dispatch(createMessage(message)));
+    socket.on("send", message => {
+      console.log('HEY———————————————————')
+      console.log(message)
+      console.log('HEY———————————————————')
+      dispatch(createMessage(message));
+    });
 
     return () => socket.disconnect(); // when component unmounts, disconnect
   }, [dispatch])
@@ -55,17 +59,11 @@ const Chat = () => {
     console.log('CHAT MESSAGE VALUE', chatInput)
 
     const mes = {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput};
-    // console.log('Message obj send to backend', mes)
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
-    const createdMessage = await dispatch(createMessage(mes));
-    console.log('CREATED MESSAGE ——————————————————————————', createdMessage);
-    // if(createdMessage.errors) alert(`ERRORS ${createdMessage.errors}`)
-    if(createdMessage) alert(`HEY ${createdMessage}`);
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
-    
-    socket.emit('send', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
-    // socket.emit('chat', { author: sessionUser?.username, content: chatInput });
-    // setChatInput('');
+    // !!!! ——————————————————————————————————————————————————————————————————————————————
+    // const createdMessage = await dispatch(createMessage(mes));
+    // console.log(createdMessage);
+    // !!!! ——————————————————————————————————————————————————————————————————————————————
+    socket.emit('send', mes);
     chatRef.current.value = '';
   }
 
