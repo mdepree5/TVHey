@@ -22,8 +22,8 @@ const ChannelForm = ({ name, edit, channel, closeModal }) => {
     const channelData = {...channel, host_id, title, topic}
 
     if (edit) {
-      const updated = await dispatch(updateChannel(channelData, channel?.id));
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
+      const updated = await dispatch(updateChannel(channelData, channel?.id));
       console.log('UPDATED ———————————————————————', updated)
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
       if (updated?.errors) setErrors(updated?.errors);
@@ -37,8 +37,8 @@ const ChannelForm = ({ name, edit, channel, closeModal }) => {
     }
 
     // console.log('CHANNEL DATA TO BACKEND', channelData)
-    const created = await dispatch(createChannel(channelData));
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
+    const created = await dispatch(createChannel(channelData));
     await console.log('CREATED ————————————————————', created);
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
     if (created?.errors) setErrors(created?.errors);

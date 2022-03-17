@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect, useHistory } from 'react-router-dom';
 import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import ChannelFormModal from '../Channel/channel_modal';
@@ -14,17 +14,21 @@ let socket;
 const Chat = () => {
 // **** ————————————————————————————————————————————————————————————————————————————STABLE
   const dispatch = useDispatch();
+  const history = useHistory();
   const { channelId } = useParams();
-  
+
   const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channel);
   const messagestate =  useSelector(state => state?.message);
   
   const thisChannel = channelstate?.selected;
   const messagesArr = Object.values(messagestate?.messages);
-  console.log('Message Arr', messagesArr);
+  // console.log('Message Arr', messagesArr);
   
-  useEffect(() => {dispatch(getChannel(channelId))}, [dispatch, channelId]);
+  useEffect(() => {
+    const channel = dispatch(getChannel(channelId))
+    if (!channel) history.goBack();
+  }, [dispatch, channelId]);
   useEffect(() => {dispatch(getMessages2(channelId))}, [dispatch, channelId]);
   // useEffect(() => {setTimeout(() => {alert('MessagesArr', messagesArr)}, 2000)}, [])
   // const [chatInput, setChatInput] = useState('');
@@ -50,19 +54,18 @@ const Chat = () => {
 
     const mes = {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput};
     // console.log('Message obj send to backend', mes)
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
     const createdMessage = await dispatch(createMessage(mes));
-    // !!!! ——————————————————————————————————————————————————————————————————————————————————
     console.log('CREATED MESSAGE ——————————————————————————', createdMessage);
     // if(createdMessage.errors) alert(`ERRORS ${createdMessage.errors}`)
     if(createdMessage) alert(`HEY ${createdMessage}`);
-    // !!!! ——————————————————————————————————————————————————————————————————————————————————
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
     
     socket.emit('send', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
     // socket.emit('chat', { author: sessionUser?.username, content: chatInput });
     // setChatInput('');
     chatRef.current.value = '';
   }
-
 
   return (sessionUser && (
     <>
@@ -95,6 +98,7 @@ const Chat = () => {
   )
   )
 };
+
 
 export default Chat;
 
