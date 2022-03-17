@@ -2,7 +2,7 @@ import {useHistory} from 'react-router-dom';
 import {useDispatch} from "react-redux";
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import {deleteChannel} from '../../store/channel';
-import './Buttons.css'
+import './utils.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
 
 export const DeleteButton = ({ thisId, deleteThunk, config }) => {
