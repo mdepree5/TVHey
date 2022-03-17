@@ -24,7 +24,7 @@ const apiFetch = route => (endpoint='', action, config = {method: 'GET'}) => asy
     if (response.ok) {
       const data = await response.json()
       await dispatch(action(data));
-      console.log('API FETCH', data)
+      // console.log('API FETCH', data)
       return data;
     } // else if (response.status < 500 && data.errors) return data.errors; 
     return response;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
@@ -6,7 +6,7 @@ import { io } from 'socket.io-client';
 import ChannelFormModal from '../Channel/channel_modal';
 import {DeleteChannelButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
-import {createMessage} from '../../store/message';
+import {createMessage, getMessages2} from '../../store/message';
 import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 let socket;
@@ -14,56 +14,53 @@ let socket;
 const Chat = () => {
 // **** ————————————————————————————————————————————————————————————————————————————STABLE
   const dispatch = useDispatch();
-  const {channelId} = useParams();
+  const { channelId } = useParams();
+  
   const sessionUser = useSelector(state => state?.session?.user);
-  
-  // console.log('CHAT CHANNELID', channelId);
-  // console.log('CHAT SESSIONUSER', sessionUser);
-
   const channelstate = useSelector(state => state?.channel);
+  const messagestate =  useSelector(state => state?.message);
+  
   const thisChannel = channelstate?.selected;
+  const messagesArr = Object.values(messagestate?.messages);
+  console.log('Message Arr', messagesArr);
   
-  // console.log('CHAT CHANNELSARR', channels);
-  // console.log('CHAT SELECTEDCHANNEL', selectedChannel);
+  useEffect(() => {dispatch(getChannel(channelId))}, [dispatch, channelId]);
+  useEffect(() => {dispatch(getMessages2(channelId))}, [dispatch, channelId]);
+  // useEffect(() => {setTimeout(() => {alert('MessagesArr', messagesArr)}, 2000)}, [])
+  // const [chatInput, setChatInput] = useState('');
+  
 // **** ——————————————————————————————————————————————————————————————————————————————————
-  
-// !!!! ——————————————————————————————————————————————————————————————————————————UNSTABLE
-  const messagesObj =  useSelector(state => state?.channel?.messages);
-  
-  useEffect(() => { dispatch(getChannel(channelId)) }, [dispatch, channelId]);
-  
-  const messageArr = Object.values(messagesObj);
-  // console.log('CHAT COMPONENT MESSAGES', messageArr)
-  
-  const [chatInput, setChatInput] = useState('');
-  // const [messages, setMessages] = useState(messageArr);
-  const [messages, setMessages] = useState([...messageArr]);
-  // console.log('STATE : MESSAGES', messages)
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
+
 
   useEffect(() => {
     socket = io(); // open socket connection and create websocket
-    socket.on('chat', (chat) => setMessages(messages => [...messages, chat]))
+    // listen for chat events. when we recieve a chat, dispatch createMessage()
+  
+    socket.on("send", message => dispatch(createMessage(message)));
+
     return () => socket.disconnect(); // when component unmounts, disconnect
-  }, [])
+  }, [dispatch])
 
-  const updateChatInput = (e) => setChatInput(e.target.value)
-
+  const chatRef = useRef();
+  
   const sendChat = async (e) => {
-    e.preventDefault()
-    
-    // const mes = {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput};
-    const mes = {author_id: sessionUser?.id, channel_id: channelId, content: chatInput};
-    console.log('MESSAGE Obj to send to da back', mes)
-    const mess = await dispatch(createMessage(mes));
-    console.log('MESS AWAIT!?!?!?!', mess)
-    // if(mess.errors) alert(`ERRORS ${mess.errors}`)
-    if(mess) alert(`HEY ${mess}`);
-    // alert(`Message sent to the backend with content of: ${chatInput}`)
-    
-    socket.emit('chat', { author: sessionUser?.username, content: chatInput });
+    e.preventDefault()  
+    const chatInput = (chatRef.current.value)
+    console.log('CHAT MESSAGE VALUE', chatInput)
 
-    setChatInput('');
+    const mes = {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput};
+    // console.log('Message obj send to backend', mes)
+    // !!!! ——————————————————————————————————————————————————————————————————————————————————
+    const createdMessage = await dispatch(createMessage(mes));
+    console.log('CREATED MESSAGE ——————————————————————————', createdMessage);
+    // if(createdMessage.errors) alert(`ERRORS ${createdMessage.errors}`)
+    if(createdMessage) alert(`HEY ${createdMessage}`);
+    // !!!! ——————————————————————————————————————————————————————————————————————————————————
+    
+    socket.emit('send', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
+    // socket.emit('chat', { author: sessionUser?.username, content: chatInput });
+    // setChatInput('');
+    chatRef.current.value = '';
   }
 
 
@@ -78,7 +75,7 @@ const Chat = () => {
       </div>
 
       <div className='message-container'>
-        {messages.map((message, ind) => (
+        {messagesArr?.map((message, ind) => (
           <div className='message-card' key={ind}>
             <img style={{height: '2em', width: '2em'}} src="https://img.pokemondb.net/sprites/black-white/normal/pidgey.png" alt="Pidgey"/>
             <div>{`${message?.author}: ${message?.content}`}</div>
@@ -87,9 +84,12 @@ const Chat = () => {
       </div>
 
       <form onSubmit={sendChat} >
-        <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`} />
+        {/* <label htmlFor='chat-input'>Send a message</label> */}
+        <input id='chat-input' ref={chatRef} placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`} />
+        {/* <input value={chatInput} onChange={e => setChatInput(e.target.value)} placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`} /> */}
         {/* <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${selectedChannel?.privateStatus ? 'π' : '#'} ${selectedChannel?.title}`} /> */}
-        <button type="submit" disabled={!chatInput}>{'>'}</button>
+        {/* <button type="submit" disabled={!chatInput}>{'>'}</button> */}
+        <button type="submit" >{'>'}</button>
       </form>
     </>
   )

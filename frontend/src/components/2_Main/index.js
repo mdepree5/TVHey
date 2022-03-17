@@ -64,7 +64,7 @@ const LeftNav = () => {
   const channelstate = useSelector(state => state?.channel);
   const channels = Object.values(channelstate?.channels);
 
-  console.log('LEFT NAV CHANNELSARR', channels);
+  // console.log('LEFT NAV CHANNELSARR', channels);
 
   return (
     <div className='left-nav'>

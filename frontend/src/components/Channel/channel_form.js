@@ -9,9 +9,8 @@ import './Channel.css';
 const ChannelForm = ({ name, edit, channel, closeModal }) => {
   const dispatch = useDispatch();
   // const history = useHistory();
-  
-  console.log('EDIT', edit);
-  console.log('CHANNEL', channel)
+  // console.log('EDIT', edit);
+  // console.log('CHANNEL', channel)
 
   const host_id = useSelector(state => state?.session?.user?.id);
   const [title, setTitle] = useState(edit ? channel?.title : '');
@@ -19,14 +18,14 @@ const ChannelForm = ({ name, edit, channel, closeModal }) => {
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (event) => {
-    console.log('HANDLE SUBMIT!?!?!?! ———————————————————');
     event.preventDefault();
     const channelData = {...channel, host_id, title, topic}
 
     if (edit) {
-      console.log('HELLO!?—————————————————————————————————————————————————')
       const updated = await dispatch(updateChannel(channelData, channel?.id));
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
       console.log('UPDATED ———————————————————————', updated)
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
       if (updated?.errors) setErrors(updated?.errors);
       return closeModal();
       // if (updated?.id) {

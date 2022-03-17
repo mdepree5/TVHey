@@ -5,7 +5,6 @@ const api = apiFetch('channels')
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const CREATE = 'channels/create';
 const GET_ALL = 'channels/get_all';
-const GET_ALL_MESSAGES = 'channels/get_all_messages';
 const GET_ONE = 'channels/get_one';
 const UPDATE = 'channels/update';
 const DELETE = 'channels/delete';
@@ -14,7 +13,6 @@ const DELETE = 'channels/delete';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const create = channel => ({ type: CREATE, channel });
 const getAll = channels => ({ type: GET_ALL, channels });
-const getAllMessages = channelId => ({ type: GET_ALL_MESSAGES, channelId });
 const getOne = channel => ({ type: GET_ONE, channel });
 const update = channel => ({ type: UPDATE, channel });
 const destroy = channelId => ({ type: DELETE, channelId });
@@ -23,7 +21,6 @@ const destroy = channelId => ({ type: DELETE, channelId });
 // todo ——————————————————————————————————————————————————————————————————————————————————
 export const createChannel = channel => api('', create, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(channel)});
 export const getChannels = () => api('', getAll)
-export const getMessages = channelId => api(`${channelId}/messages`, getAllMessages)
 export const getChannel = channelId => api(channelId, getOne);
 export const updateChannel = (channel, channelId) => api(channelId, update, {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(channel)});
 export const deleteChannel = channelId => api(channelId, destroy, {method: 'DELETE'});
@@ -68,15 +65,6 @@ const channelReducer = (state = {selected:null, channels:{}, messages:{}}, actio
       delete newState.channels[action.channelId.id];
       return newState;
     }
-// ???? ——————————————————————————————————————————————————————————————————————————————————
-    case GET_ALL_MESSAGES: {
-      const newState = state;
-      // const messages = newState.messages
-      // console.log('CHANNEL STATE', messages)
-      action.channelId['all_messages'].forEach(message => newState.messages[message.id] = message);
-      // console.log('GET ALL MESSAGES', newState)
-      return newState;
-    };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     default:
       return state;
