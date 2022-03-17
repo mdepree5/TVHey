@@ -57,7 +57,7 @@ const messageReducer = (state = {messages:{}}, action) => {
     case GET_ALL: {
       const newState = {messages:{}};
       action.messages['all_messages'].forEach(message => newState.messages[message.id] = message);
-      console.log('REDUX Get All', newState);
+      // console.log('REDUX Get All', newState);
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————

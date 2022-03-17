@@ -47,8 +47,14 @@ const Chat = () => {
       console.log('HEY———————————————————')
       dispatch(createMessage(message));
     });
-
     
+    socket.on("connection", socket => {
+      console.log('new client connetcted')
+      console.log(socket)
+      console.log('new client connetcted')
+    });
+
+
     return () => socket.disconnect(); // when component unmounts, disconnect
   }, [])
 
@@ -80,7 +86,7 @@ const Chat = () => {
 
       <div className='message-container'>
         {messagesArr?.map((message, ind) => (
-          <div key={ind}>
+          <div className='message-card' key={ind}>
             <MessageCard message={message} ind={ind}/>
             {/* {toggleEdit ? <FormComponent setToggleEdit={setToggleEdit}/> : <MessageCard setToggleEdit={setToggleEdit} message={message} ind={ind}/>} */}
           </div>
@@ -107,13 +113,16 @@ export default Chat;
 const MessageCard = ({message, ind}) => {
   const [toggleEdit, setToggleEdit] = useState(false);
 
+
   return toggleEdit ? (
-    <form >
+    <form  onSubmit={()=> console.log('message card form')}>
       <input placeholder='Update message' />
-      <button onClick={() => setToggleEdit(false)}>Toggle Edit</button>
+      <button type='button' onClick={() => setToggleEdit(false)}>Cancel</button>
+      <button type='button' onClick={console.log('delete')}>Delete</button>
     </form>
   ) : (
-    <div className='message-card' key={ind}>
+    <div>
+    {/* <div className='message-card' key={ind}> */}
     {/* <img style={{height: '2em', width: '2em'}} src="https://img.pokemondb.net/sprites/black-white/normal/pidgey.png" alt="Pidgey"/> */}
     {/*  ——————————————————————————————————————————————————————————————————————————————  */}
     {/*  Here I'll probably want to see if I can alt={preloadedImage} or alt={custom css component that also uses the author's first initial}  */}
