@@ -36,4 +36,5 @@ button{
   font: inherit;
   padding: 0.2em;
   cursor: pointer;
+  max-height: 30px;
 }
