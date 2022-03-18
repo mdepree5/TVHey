@@ -19,14 +19,27 @@ const NavDropdown = ({sessionUser}) => {
     document.removeEventListener('click', closeDropdown)
   }, [showDropdown]);
 
-  const handleSubmit = async(e) => {
+  const handleDisplay = async(e) => {
+    e.preventDefault();
+    // const formData = new FormData();
+    // formData.append('media_url', media_url);
+    // const updatedUserImage = await dispatch(updateUserImage(formData, sessionUser?.id))
+    // console.log(updatedUserImage);
+    console.log('HEY!')
+  }
+
+
+  const handleImage = async(e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('media_url', media_url);
+    console.log('send to backend');
+    console.log(media_url);
+
     const updatedUserImage = await dispatch(updateUserImage(formData, sessionUser?.id))
     console.log(updatedUserImage);
   }
-
+  
   const updateMedia_url = (e) => {
     const file = e.target.files[ 0 ];
     setMedia_url(file);
@@ -46,13 +59,15 @@ const NavDropdown = ({sessionUser}) => {
           <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
           <h3>{sessionUser?.display_name}</h3>
         </div>
-        <div>
+        <form onSubmit={handleDisplay}>
           <label>Change Display Name</label>
           <input placeholder={sessionUser?.display_name}></input>
-        </div>
-        <form onSubmit={handleSubmit}>
+          <button type='submit'>Set Profile Image</button>
+        </form>
+        <form onSubmit={handleImage}>
           <label>Set Profile Image</label>
           <input placeholder='User image url' type='file' accept='image/*' onChange={updateMedia_url}></input>
+          <button type='submit'>Set Profile Image</button>
         </form>
         <LogoutButton />
       </div>

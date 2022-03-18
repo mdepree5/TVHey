@@ -17,8 +17,7 @@ export const authenticate = () => async (dispatch) => {
     const data = await response.json();
     if (data.errors) {
       // console.log(data.errors) //=> 'Initial unauthenticated app render' 
-      // return data.errors;
-      return;
+      return data.errors;
     }
     dispatch(setUser(data));
   }
@@ -66,6 +65,19 @@ export const signUp = (username, email, password) => async (dispatch) => {
     if (data.errors) return data.errors;
   } else return ['An error occurred. Please try again.']
 }
+
+export const updateUserImage = (image_url, userId) => async (dispatch) => {
+  const response = await fetch(`/api/users/${userId}`, { method: 'PUT', body: image_url });
+  
+  console.log('thunk response', response);
+
+  if (response.ok) {
+    const updatedUser = await response.json();
+    dispatch(setUser(updatedUser));
+    return updatedUser;
+  }
+  return response;
+};
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Reducer —
 // todo ——————————————————————————————————————————————————————————————————————————————————
