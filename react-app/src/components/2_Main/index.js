@@ -73,11 +73,11 @@ const LeftNav = () => {
       <div style={{height:'100px'}}/>
 
       <div className='col-list'>
-        <h3>Channels</h3>
+        <h3 style={{paddingLeft:'1.2em', paddingRight: '1.2em'}} >Channels</h3>
         {channels?.map(channel => (
-          <NavLink to={`/channels/${channel?.id}`} key={channel?.id} activeStyle={{backgroundColor:'#e8912d', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
+          <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#e8912d', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
         ))}
-        <ChannelFormModal name='+ Add Channel' />
+        <div style={{paddingLeft:'1.2em', paddingRight: '1.2em'}}><ChannelFormModal name='+ Add Channel' /></div>
       </div>
     </div>
   )
