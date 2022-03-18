@@ -75,7 +75,7 @@ const LeftNav = () => {
 
         <div className='col-list'>
           {channels?.map(channel => (
-            <NavLink to={`/channels/${channel?.id}`} key={channel?.id} activeStyle={{backgroundColor:'darkblue', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
+            <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className={'channel-list-item'} activeStyle={{backgroundColor:'#e8912d', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
           ))}
           <ChannelFormModal name='+ Add Channel' />
         </div>

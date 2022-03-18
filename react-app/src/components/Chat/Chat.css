@@ -20,10 +20,8 @@
 .message-card{
   min-height: 100px;
   width: 100%;
-
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-bottom: solid black 1px;
+  padding: 5px;
+  border-bottom: solid rgb(97, 97, 97) 1px;
   align-items: center;
 }
 
@@ -39,6 +37,11 @@
   width: 6%;
 }
 
+.message-card-image{
+  height: 2.5em;
+  width: 2.5em;
+  border-radius: 0.2em;
+}
 
 .message-card-content{
   width: 88%;

@@ -26,10 +26,11 @@
 /* todo             Authenticated App                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .main-page{
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   /* ! Refactor this height at the end!! */
   /* ! Refactor this height at the end!! */
-  height: calc(100vh - 200px);
+  height: calc(100vh - 44px);
+  /* height: calc(100vh - 200px); */
   /* ! Refactor this height at the end!! */
   /* ! Refactor this height at the end!! */
 }
@@ -78,10 +79,19 @@
 .left-nav{
   height: 100%;
   width: 40%;
-  border: solid 3px rgb(0, 171, 131);
+  /* background-color: #19171d; */
+  background-color: #17222A;
+  /* border: solid 1px rgb(0, 171, 131); */
   /* padding-left: 10px; */
   overflow: auto;
-  overflow-y: scroll;
+  overflow-y: auto;
+}
+.channel-list-item{
+  padding-left: 12px;
+  padding-right: 5px;
+}
+.channel-list-item:hover{
+  background-color: rgba(91, 92, 99, 0.212);
 }
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
@@ -90,7 +100,8 @@
 .right-page{
   display: flex;
   flex-direction: column;
-  border: solid 3px pink;
+  background-color: #232C32;
+  /* border: solid 3px pink; */
   height: 100%;
 
   /* overflow: auto;
