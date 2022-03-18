@@ -73,14 +73,11 @@ const LeftNav = () => {
       <div style={{height:'100px'}}/>
 
       <div className='col-list'>
-        <button onClick={() => alert('Show/Hide')}>{'v>'} Channels</button>
-
-        <div className='col-list'>
-          {channels?.map(channel => (
-            <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className={'channel-list-item'} activeStyle={{backgroundColor:'#e8912d', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
-          ))}
-          <ChannelFormModal name='+ Add Channel' />
-        </div>
+        <h3>Channels</h3>
+        {channels?.map(channel => (
+          <NavLink to={`/channels/${channel?.id}`} key={channel?.id} activeStyle={{backgroundColor:'#e8912d', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
+        ))}
+        <ChannelFormModal name='+ Add Channel' />
       </div>
     </div>
   )

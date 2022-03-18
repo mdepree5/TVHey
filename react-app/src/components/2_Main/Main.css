@@ -72,10 +72,16 @@
   overflow: auto;
   overflow-y: auto;
 }
-.channel-list-item{
-  padding-left: 12px;
-  padding-right: 5px;
+.left-nav > .col-list{
+  padding-left: 1.2em;
+  padding-right: 1.2em;
 }
+
+.left-nav > .col-list > *{
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+
 .channel-list-item:hover{
   background-color: rgba(91, 92, 99, 0.212);
 }
