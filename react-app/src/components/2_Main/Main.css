@@ -26,27 +26,26 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Authenticated App                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-.main-page{
-  /* border: 1px solid blue; */
-  /* ! Refactor this height at the end!! */
-  /* ! Refactor this height at the end!! */
-  height: calc(100vh - 44px);
-  /* height: calc(100vh - 200px); */
-  /* ! Refactor this height at the end!! */
-  /* ! Refactor this height at the end!! */
-}
+.main-page{ height: calc(100vh - 44px) }
 
 .main-page .header{
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 40px;
+  justify-content: space-between;
+
+  min-height: 40px;
+  max-height: 40px;
+  
+  font-weight: bold;
   
   position: sticky;
   top: 0;
 
-  color: red;
-  border: solid 1px red;
+  border-top: solid 1px gray;
+  border-bottom: solid 1px gray;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .gutter{
@@ -88,10 +87,18 @@
   display: flex;
   flex-direction: column;
   background-color: #232C32;
-  /* border: solid 3px pink; */
   height: 100%;
 
   /* overflow: auto;
   overflow-y: scroll; */
 }
 
+.home-screen{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.home-screen > * {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

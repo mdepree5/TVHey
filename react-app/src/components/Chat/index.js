@@ -54,11 +54,14 @@ const Chat = () => {
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
   return (sessionUser && (
     <>
-      <div className='header'>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}
-        {sessionUser?.id === thisChannel?.host_id && <>
+      <div className='header'>
+        <div>
+          {thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}
+        </div>
+        {sessionUser?.id === thisChannel?.host_id && <div className='flex-end'>
           <ChannelFormModal name='^' edit={true} channel={thisChannel} />
           <DeleteChannelButton channelId={thisChannel?.id}/>
-        </>}
+        </div>}
       </div>
 
       <div className='message-container'>

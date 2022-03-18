@@ -68,7 +68,7 @@ const LeftNav = () => {
 
   return (
     <div className='left-nav'>
-      <div className='header'>TVHey <button>New</button></div>
+      <div className='header' style={{justifyContent:'flex-end'}}>TVHey</div>
       <div style={{height:'100px'}}/>
       <div style={{height:'100px'}}/>
 
@@ -91,7 +91,7 @@ const RightPage = () => {
   return (
     <div className='right-page'>
       <Switch>
-        <Route exact path="/" ><PseudoHome/></Route>
+        <Route exact path="/" ><Home /></Route>
         <Route exact path="/channels/:channelId" ><Chat /></Route>
         <Route><Redirect to='/' /></Route>
       </Switch>
@@ -99,10 +99,17 @@ const RightPage = () => {
   )
 }
 
-const PseudoHome = () => (
-  <div style={{width: '50%', border: 'solid 2px pink'}}>
-    MODAL WITH "HEY WELCOME TO SLACK START WRITING HERE!!"
-    <button>CLICK ME TO START WRITING</button>
+const Home = () => (
+  <div className='home'>
+    <div className='header'></div>
+    <div style={{height:'100px'}}/>
+    <div style={{height:'100px'}}/>
+    
+    <div className='home-screen col-list'>
+      <strong>Welcome to TVHey</strong>
+      a multiversal communication platform
+      <ChannelFormModal name='Make a new channel' />
+    </div>
   </div>
 )
 

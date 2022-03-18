@@ -17,14 +17,20 @@ body, html{
   flex-direction: row;
 }
 
+.col-list{
+  display: flex;
+  flex-direction: column;
+}
+
 input{
   background-color: rgba(138, 149, 159, 0.212);
   color: white;
 }
 
-.col-list{
+.flex-end{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 a{
