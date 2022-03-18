@@ -25,7 +25,7 @@ export const createMessage = message => api('', create, {method: 'POST', headers
 // export const getMessages = () => api('', getAll)
 
 
-export const getMessages2 = channelId => channelApi(`${channelId}/messages`, getAllMessages)
+export const getMessages = channelId => channelApi(`${channelId}/messages`, getAllMessages)
 
 // export const getMessages3 = channelId => async (dispatch) => {
 //   const response = await fetch(`/api/messages/${channelId}`)

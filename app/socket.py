@@ -15,10 +15,17 @@ else:
 socketio = SocketIO(cors_allowed_origins=origins)
 
 
+@socketio.on('connect')
+def test_connection():
+  print('debugger from websocket')
+  print('Connected to websocket!')
+  print('debugger from websocket')
+  emit('response', {'message': 'Connection successful'})
+
 # handle chat messages
-@socketio.on('send')
+@socketio.on('chat')
 def handle_chat(data):
   print('debugger from websocket')
   print(data)
   print('debugger from websocket')
-  emit('send', data, broadcast=True)
+  emit('chat', data, broadcast=True)

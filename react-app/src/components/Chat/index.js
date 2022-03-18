@@ -8,7 +8,7 @@ import { io } from 'socket.io-client';
 import ChannelFormModal from '../Channel/channel_modal';
 import {DeleteChannelButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
-import {createMessage, getMessages2} from '../../store/message';
+import {createMessage, getMessages} from '../../store/message';
 import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 let socket;
@@ -34,30 +34,23 @@ const Chat = () => {
     // const channel = dispatch(getChannel(channelId)))
     // if (!channel) history.goBack();
   }, [dispatch, channelId]);
-  useEffect(() => {dispatch(getMessages2(channelId))}, [dispatch, channelId]);
-  // useEffect(() => {setTimeout(() => {alert('MessagesArr', messagesArr)}, 2000)}, [])
-  // const [chatInput, setChatInput] = useState('');
-  
+  useEffect(() => {dispatch(getMessages(channelId))}, [dispatch, channelId]);
 // **** ——————————————————————————————————————————————————————————————————————————————————
+  
+// const socket = io.connect(base)
+// const base = (process.env.NODE_ENV === 'production') ? '/api' : 'http://localhost:3000/api';
+// socket = io.connect(base)
 
-
-  useEffect(() => {
+useEffect(() => {
     socket = io(); // open socket connection and create websocket
     // listen for chat events. when we recieve a chat, dispatch createMessage()
-    socket.on("send", message => {
+    socket.on('chat', message => {
       console.log('HEY———————————————————')
       console.log(message)
       console.log('HEY———————————————————')
       dispatch(createMessage(message));
     });
     
-    socket.on("connection", socket => {
-      console.log('new client connetcted')
-      console.log(socket)
-      console.log('new client connetcted')
-    });
-
-
     return () => socket.disconnect(); // when component unmounts, disconnect
     // }, [])
   }, [dispatch])
@@ -70,7 +63,7 @@ const Chat = () => {
     // const createdMessage = await dispatch(createMessage(mes));
     // console.log(createdMessage);
     // !!!! ——————————————————————————————————————————————————————————————————————————————
-    socket.emit('send', mes);
+    socket.emit('chat', mes);
     setChatInput('')
   }
   // console.log(chatRef.current.value)
