@@ -67,12 +67,14 @@ const Chat = () => {
         ))}
       </div>
 
-      <form onSubmit={sendChat} >
-        <input value={chatInput} onChange={e => setChatInput(e.target.value)}
-          placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`}
-        />
-        <button type="submit" disabled={!chatInput}>{'>'}</button>
-      </form>
+      <div className='write-a-message col-list'>
+        <form onSubmit={sendChat} >
+          <input value={chatInput} onChange={e => setChatInput(e.target.value)}
+            placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`}
+          />
+          <button type="submit" disabled={!chatInput}>{'>'}</button>
+        </form>
+      </div>
     </>
   )
   )

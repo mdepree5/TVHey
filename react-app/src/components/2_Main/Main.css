@@ -15,6 +15,7 @@
   width: 60%;
   margin-left: auto;
   margin-right: auto;
+
 }
 
 #unauthenticated-header{
@@ -59,21 +60,6 @@
   background-color: orange;
   cursor:'col-resize';
 }
-
-
-/* .split-tester{
-  height: 200px;
-  width: 600px;
-  border: 2px solid red;
-  display: flex;
-  flex-direction: row;
-}
-
-.tester-box{
-  height: 50px;
-  width: 50px;
-  border: 1px solid blue;
-} */
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Left Nav                   */

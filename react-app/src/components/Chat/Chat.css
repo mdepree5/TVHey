@@ -4,15 +4,15 @@
   justify-content: flex-end;
   
   height: 100%;
-
-  overflow: auto;
-  overflow-y: scroll;
-  /* overflow: auto; */
-  /* overflow-y: scroll; */
-  /* overflow-wrap: break-word; */
+  overflow-y: auto;
 }
 
-
+.write-a-message{
+  background-color:#232529;
+  /* margin-left: 20px;
+  margin-right: 20px; */
+  /* width: 80%; */
+}
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Message card                   */

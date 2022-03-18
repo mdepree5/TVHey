@@ -9,12 +9,17 @@ body, html{
   margin: 0;
   font-family:'Courier New', Courier, monospace;
   color: #ffffffa8;
-  /* background-color: rgb(227, 227, 227); */
+  background-color: #232C32;
 }
 
 .row-list{
   display: flex;
   flex-direction: row;
+}
+
+input{
+  background-color: rgba(138, 149, 159, 0.212);
+  color: white;
 }
 
 .col-list{

@@ -19,7 +19,7 @@ export const UnAuthenticatedApp = () => {
 
   return (
     <div className='page-container' id='unauthenticated-app' >
-      <div>Sign In to TVHey</div>
+      <h2>Sign In to TVHey</h2>
       
       <div className='row-list' id='unauthenticated-header'>
         <NavLink to="/login" exact={true} activeClassName="active">Login</NavLink>
@@ -50,7 +50,7 @@ export const AuthenticatedApp = () => {
         direction="horizontal"
         minSize={180}
         sizes={[25, 75]}
-        gutterSize={2}
+        gutterSize={3}
         dragInterval={2}
         snapOffset={20}
       >
