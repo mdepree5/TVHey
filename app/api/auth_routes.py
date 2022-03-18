@@ -49,11 +49,8 @@ def sign_up():
       username=form.data['username'],
       email=form.data['email'],
       password=form.data['password'],
-      # todo ——————————————————————————————————————————————————————————————————————————————————
-      # todo       SET DEFAULT DISPLAY_NAME
-      # todo       SET DEFAULT IMAGE_URL
       display_name=form.data['username'],
-      image_url=''
+      image_url='no image provided'
       # todo ——————————————————————————————————————————————————————————————————————————————————
     )
     db.session.add(user)
