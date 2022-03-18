@@ -55,7 +55,9 @@
 }
 
 .gutter:hover{
+  border-right: 2px solid orange;
   background-color: orange;
+  cursor:'col-resize';
 }
 
 
@@ -79,10 +81,9 @@
 .left-nav{
   height: 100%;
   width: 40%;
-  /* background-color: #19171d; */
+
   background-color: #17222A;
-  /* border: solid 1px rgb(0, 171, 131); */
-  /* padding-left: 10px; */
+  
   overflow: auto;
   overflow-y: auto;
 }
