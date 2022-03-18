@@ -39,12 +39,6 @@
 /* .dropdown > * {
   z-index: 4;
 } */
-#message-dropdown{
-  position: relative;
-  top: -50px;
-  right: 100px;
-  z-index: 5;
-}
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Form                   */

@@ -133,27 +133,27 @@ const MessageCard = ({message, sessionUser}) => {
   </form>
   ) : (
     <div className='row-list message-card'>
-      <img style={{height: '2em', width: '2em'}} src={message?.author_image} alt="user"/>
-      <div>{`${message?.author}: ${message?.content}`}</div>
-      {/*//! FOR if you own it or not  */}
-      {/* {message?.author_id === sessionUser.id && <>
-        <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
-        <button onClick={() => console.log('delete')}>Delete</button>
-      </>} */}
-      {/*//! FOR if you own it or not  */}
-      <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
-      <button onClick={() => console.log('delete')}>Delete</button>
-      
-      <div
-      onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
-      style={{height:'2em', width:'2em', borderRadius:'0.4em', cursor:'pointer' }}
-    >...</div>
-    {showDropdown && (
-      <div id='message-dropdown' className='dropdown'>
-        <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
-        <button onClick={() => console.log('delete')}>Delete</button>
+      <div id='left-mes'>
+        <img style={{height: '2em', width: '2em'}} src={message?.author_image} alt="user"/>
       </div>
-    )}
+
+      <div id='mid-mes'>
+        <div>{message?.author}</div>
+        <div>{message?.content}</div>
+      </div>
+
+      <div id='right-mes'>
+      {message?.author_id === sessionUser.id && <>put stuff here</>}
+        <div className='edit-delete-message'>
+          {showDropdown && (
+            <div id='message-dropdown' className='dropdown row-list'>
+              <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
+              <button onClick={() => console.log('delete')}>Delete</button>
+            </div>
+          )}
+          <div id='ed-menu' onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}>...</div>
+        </div>
+      </div>
 
     </div> 
   )
