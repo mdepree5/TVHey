@@ -9,8 +9,16 @@ import './Navigation.css'
 
 const NavDropdown = ({sessionUser}) => {
   const dispatch = useDispatch();
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo ——————————————————————————————————————————————————————————————————————————————————
+  const customImage = 'HEY'
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo ——————————————————————————————————————————————————————————————————————————————————
+
   const [showDropdown, setShowDropdown] = useState(false);
-  const [media_url, setMedia_url] = useState('');
+  const [media_url, setMedia_url] = useState(sessionUser?.media_url === 'no image provided' ? customImage : sessionUser?.media_url);
 
   useEffect(()=> {
     if (!showDropdown) return;
