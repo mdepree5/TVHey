@@ -61,10 +61,15 @@ const NavDropdown = ({sessionUser}) => {
       src={sessionUser?.image_url} alt='user'
     />
 
+    
+
     {showDropdown && (
       <div className='dropdown-nav'>
         <div className='row-list' style={{alignItems:'center'}} >
-          <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
+          {sessionUser?.image_url === 'no image provided' ? 
+            <div className='NEED TO STYLE' >{sessionUser?.display_name[0].toUpperCase()}</div> : 
+            <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
+          }
           <h3>{sessionUser?.display_name}</h3>
         </div>
         <form onSubmit={handleDisplay}>
