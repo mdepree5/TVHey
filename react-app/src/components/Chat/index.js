@@ -111,14 +111,15 @@ const MessageCard = ({message, sessionUser}) => {
     </div>
   </form>
   ) : (
-    <div className='message-card col-list'>
+    <div className='message-card'>
       <div className='message-card-header row-list'>
         <div className='message-header-left'>
           <img className='message-card-image' src={message?.author_image} alt="user"/>
         </div>
 
         <div className='message-header-mid'>
-          <div>{message?.author} {message?.created_at}</div>
+          <div><strong>{message?.author} </strong>{message?.created_at}</div>
+          {message?.content}
         </div>
 
         <div className='message-header-right'>
@@ -132,10 +133,6 @@ const MessageCard = ({message, sessionUser}) => {
             </div>
           }
         </div>
-    </div>
-
-    <div className='message-card-content'>
-      {message?.content}
     </div>
   </div>
 

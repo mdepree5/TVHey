@@ -20,9 +20,16 @@
 .message-card{
   min-height: 100px;
   width: 100%;
-  padding: 5px;
-  border-bottom: solid rgb(97, 97, 97) 1px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  /* border-bottom: solid rgb(97, 97, 97) 1px; */
   align-items: center;
+}
+
+.message-card:hover{
+  background-color: rgba(60, 73, 82, 0.317);
 }
 
 .message-card-header{
@@ -31,6 +38,8 @@
 
 .message-header-mid{
   width: 88%;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 .message-header-left,
 .message-header-right{
@@ -41,6 +50,7 @@
   height: 2.5em;
   width: 2.5em;
   border-radius: 0.2em;
+  box-shadow: 0 1px 8px rgb(77, 77, 77); 
 }
 
 .message-card-content{
