@@ -50,7 +50,7 @@ export const AuthenticatedApp = () => {
         direction="horizontal"
         minSize={180}
         sizes={[25, 75]}
-        gutterSize={3}
+        gutterSize={2}
         dragInterval={2}
         snapOffset={20}
       >
