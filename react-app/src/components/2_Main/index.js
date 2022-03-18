@@ -77,7 +77,7 @@ const LeftNav = () => {
         {channels?.map(channel => (
           <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
         ))}
-        <div style={{paddingLeft:'1.2em', paddingRight: '1.2em'}}><ChannelFormModal name='+ Add Channel' /></div>
+        <div style={{paddingLeft:'1.2em', paddingRight: '1.2em'}}><ChannelFormModal name='+ Add Channel'/></div>
       </div>
     </div>
   )
