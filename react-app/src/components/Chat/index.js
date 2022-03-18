@@ -28,20 +28,18 @@ const Chat = () => {
   
   const thisChannel = channelstate?.selected;
   const messagesArr = Object.values(messagestate?.messages);
-  // console.log('Message Arr', messagesArr);
   
-  useEffect(() => {
-    dispatch(getChannel(channelId))
-    // const channel = dispatch(getChannel(channelId)))
-    // if (!channel) history.goBack();
-  }, [dispatch, channelId]);
-  useEffect(() => {dispatch(getMessages(channelId))}, [dispatch, channelId]);
+  
+  useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);  
+
+  useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
+
 // **** ——————————————————————————————————————————————————————————————————————————————————
-
-useEffect(() => {
-    // if (process.env.NODE_ENV === 'production') socket = io('https://tvhey.herokuapp.com/')
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
+  useEffect(() => {
+  // if (process.env.NODE_ENV === 'production') socket = io('https://tvhey.herokuapp.com/')
     socket = io();
-
+  
     // listen for chat events. when we recieve a chat, dispatch createMessage()
     socket.on('chat', message => dispatch(createMessage(message)));
     
@@ -53,7 +51,7 @@ useEffect(() => {
     socket.emit('chat', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
     setChatInput('')
   }
-
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
   return (sessionUser && (
     <>
       <div className='header'>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}
