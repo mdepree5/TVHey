@@ -6,5 +6,3 @@ from app.models import User
 
 class UpdateUserImageForm(FlaskForm):
   media_url = StringField('media_url')
-  
-  submit = SubmitField("Submit")

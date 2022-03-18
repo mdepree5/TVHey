@@ -17,5 +17,3 @@ class ChannelForm(FlaskForm):
   host_id = IntegerField('host_id')
   title = StringField('title', validators=[DataRequired(), title_max_length])
   topic = StringField('topic', validators=[topic_max_length])
-  
-  submit = SubmitField("submit")
