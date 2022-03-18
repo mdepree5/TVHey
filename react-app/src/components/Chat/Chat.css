@@ -4,27 +4,126 @@
   justify-content: flex-end;
   
   height: 100%;
-
-  overflow: auto;
-  overflow-y: scroll;
-  /* overflow: auto; */
-  /* overflow-y: scroll; */
-  /* overflow-wrap: break-word; */
+  overflow-y: auto;
 }
 
-.message-card{
-  display: flex;
-  flex-direction: row;
-  border-bottom: solid black 1px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+.write-a-message{
+  background-color:#232529;
+  /* margin-left: 20px;
+  margin-right: 20px; */
+  /* width: 80%; */
+}
 
-  height: 200px;
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Message card                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+.message-card{
+  min-height: 100px;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  /* border-bottom: solid rgb(97, 97, 97) 1px; */
+  align-items: center;
+}
+
+.message-card:hover{
+  background-color: rgba(60, 73, 82, 0.317);
+}
+
+.message-card-header{
   width: 100%;
 }
 
-.line{
-  border-top: solid gray 0.1em;
+.message-header-mid{
+  width: 88%;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.message-header-left,
+.message-header-right{
+  width: 6%;
+}
+
+.message-card-image{
+  height: 2.5em;
+  width: 2.5em;
+  border-radius: 0.2em;
+  box-shadow: 0 1px 8px rgb(77, 77, 77); 
+}
+
+.message-card-content{
+  width: 88%;
   margin-left: auto;
   margin-right: auto;
+  overflow-wrap: break-word;
 }
+
+.message-card > * {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+#left-mes{
+  width: 33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0;
+}
+#mid-mes{
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0;
+}
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Right mes                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+.dropdown-message{
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content > * {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  float:right;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content li:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown-message:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-message:hover .dropdown-button{
+  background-color: #61616148;
+  /* opacity: 0.5; */
+  color: white;
+}
+
+
+
+

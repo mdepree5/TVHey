@@ -9,8 +9,10 @@
   z-index: 10;
   padding-left: 20px;
   padding-right: 20px;
-}
 
+  background-color: black;
+  color: white;
+}
 
 #left-nav{
   width: 33%;
@@ -37,23 +39,30 @@
   padding: 0;
 }
 
-
-.nav-top{
-  background-color: black;
-  color: white;
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Dropdown                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+.dropdown-nav{
+  /* background-color: gray; */
+  background-color:#232529;
+  
+  z-index: 3;
+  position: absolute;
+  top: 44px;
+  
+  width: 200px;
+  padding: 8px;
+  border-radius: 10px;
 }
 
-/* .nav-top a{
-  color: white;
-} */
-/* 
-.nav-not-top{
-  background-color: white;
-  box-shadow: 0 1px 10px rgb(218, 218, 218);
-  border-bottom: rgb(218, 218, 218) 1px solid;
-  color: black;
+.nav-user-image{
+  height: 2em;
+  width: 2em;
+  border-radius: 0.4em;
+  box-shadow: 0 1px 8px rgb(77, 77, 77); 
+  cursor: pointer;
 }
 
-.nav-not-top a{
-  color: black;
+/* .dropdown > * {
+  z-index: 4;
 } */

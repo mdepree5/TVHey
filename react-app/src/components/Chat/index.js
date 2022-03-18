@@ -1,21 +1,30 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Redirect, useHistory } from 'react-router-dom';
-import { io } from 'socket.io-client';
+import { useParams } from 'react-router-dom';
+// import { useParams, Redirect, useHistory } from 'react-router-dom';
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
+// import { io } from 'socket.io-client';
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
 // todo ——————————————————————————————————————————————————————————————————————————————————
+
+
 import ChannelFormModal from '../Channel/channel_modal';
-import {DeleteChannelButton} from '../Utils/buttons';
+import {DeleteChannelButton, DeleteMessageButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
-import {createMessage, getMessages2} from '../../store/message';
+import {createMessage, getMessages, updateMessage} from '../../store/message';
 import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-let socket;
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
+// let socket;
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
 
 const Chat = () => {
 // **** ————————————————————————————————————————————————————————————————————————————STABLE
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
   const { channelId } = useParams();
+
+  const [chatInput, setChatInput] = useState('');
 
   const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channel);
@@ -23,77 +32,65 @@ const Chat = () => {
   
   const thisChannel = channelstate?.selected;
   const messagesArr = Object.values(messagestate?.messages);
-  // console.log('Message Arr', messagesArr);
   
-  useEffect(() => {
-    const channel = dispatch(getChannel(channelId))
-    // if (!channel) history.goBack();
-  }, [dispatch, channelId]);
-  useEffect(() => {dispatch(getMessages2(channelId))}, [dispatch, channelId]);
-  // useEffect(() => {setTimeout(() => {alert('MessagesArr', messagesArr)}, 2000)}, [])
-  // const [chatInput, setChatInput] = useState('');
   
+  useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
+
+  useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
+
 // **** ——————————————————————————————————————————————————————————————————————————————————
-
-
-  useEffect(() => {
-    socket = io(); // open socket connection and create websocket
-    // listen for chat events. when we recieve a chat, dispatch createMessage()
-  
-    socket.on("send", message => dispatch(createMessage(message)));
-
-    return () => socket.disconnect(); // when component unmounts, disconnect
-  }, [dispatch])
-
-  const chatRef = useRef();
-  
-  const sendChat = async (e) => {
-    e.preventDefault()  
-    const chatInput = (chatRef.current.value)
-    console.log('CHAT MESSAGE VALUE', chatInput)
-
-    const mes = {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput};
-    // console.log('Message obj send to backend', mes)
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
-    const createdMessage = await dispatch(createMessage(mes));
-    console.log('CREATED MESSAGE ——————————————————————————', createdMessage);
-    // if(createdMessage.errors) alert(`ERRORS ${createdMessage.errors}`)
-    if(createdMessage) alert(`HEY ${createdMessage}`);
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
+  // useEffect(() => {
+  // // if (process.env.NODE_ENV === 'production') socket = io('https://tvhey.herokuapp.com/')
+  //   socket = io();
+  
+  //   // listen for chat events. when we recieve a chat, dispatch createMessage()
+  //   socket.on('chat', message => dispatch(createMessage(message)));
     
-    socket.emit('send', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
-    // socket.emit('chat', { author: sessionUser?.username, content: chatInput });
-    // setChatInput('');
-    chatRef.current.value = '';
+  //   return () => socket.disconnect();
+  // }, [dispatch])
+  
+  // const sendChat = async e => {
+  //   e.preventDefault()  
+  //   socket.emit('chat', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
+  //   setChatInput('')
+  // }
+
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
+  const sendChat = async (e) => {
+    e.preventDefault();
+    const newMessage = await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
+    console.log('newMessage', newMessage)
+    setChatInput('');
   }
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
 
   return (sessionUser && (
     <>
-      <div className='header'>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}
-      {/* <div className='header'>{selectedChannel?.privateStatus ? 'π' : '#'} {selectedChannel?.title} */}
-        {sessionUser?.id === thisChannel?.host_id && <>
+      <div className='header'>
+        <div>
+          {thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}
+        </div>
+        {sessionUser?.id === thisChannel?.host_id && <div className='flex-end'>
           <ChannelFormModal name='^' edit={true} channel={thisChannel} />
           <DeleteChannelButton channelId={thisChannel?.id}/>
-        </>}
+        </div>}
       </div>
 
       <div className='message-container'>
         {messagesArr?.map((message, ind) => (
-          <div key={ind}>
-            <MessageCard message={message} ind={ind}/>
-            {/* {toggleEdit ? <FormComponent setToggleEdit={setToggleEdit}/> : <MessageCard setToggleEdit={setToggleEdit} message={message} ind={ind}/>} */}
-          </div>
+          <MessageCard key={ind} message={message} sessionUser={sessionUser}/>
         ))}
       </div>
 
-      <form onSubmit={sendChat} >
-        {/* <label htmlFor='chat-input'>Send a message</label> */}
-        <input id='chat-input' ref={chatRef} placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`} />
-        {/* <input value={chatInput} onChange={e => setChatInput(e.target.value)} placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`} /> */}
-        {/* <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${selectedChannel?.privateStatus ? 'π' : '#'} ${selectedChannel?.title}`} /> */}
-        {/* <button type="submit" disabled={!chatInput}>{'>'}</button> */}
-        <button type="submit" >{'>'}</button>
-      </form>
+      <div className='write-a-message col-list'>
+        <form onSubmit={sendChat} >
+          <input value={chatInput} onChange={e => setChatInput(e.target.value)}
+            placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`}
+          />
+          <button type="submit" disabled={!chatInput}>{'>'}</button>
+        </form>
+      </div>
     </>
   )
   )
@@ -103,23 +100,59 @@ const Chat = () => {
 export default Chat;
 
 
-const MessageCard = ({message, ind}) => {
+const MessageCard = ({message, sessionUser}) => {
+  const dispatch = useDispatch();
+  const existing = message?.content;
   const [toggleEdit, setToggleEdit] = useState(false);
+  const [input, setInput] = useState(existing);
+
+  const handleEdit = async(e) => {
+    e.preventDefault();
+    
+    const updated = await dispatch(updateMessage({...message, content: input}, message?.id))
+    console.log('Updated in handle edit', updated)
+    setToggleEdit(false)
+  }
+  
+  const handleCancel = e => {
+    e.preventDefault();
+    setInput(existing);
+    setToggleEdit(false);
+  }
 
   return toggleEdit ? (
-    <form >
-      <input placeholder='Update message' />
-      <button onClick={() => setToggleEdit(false)}>Toggle Edit</button>
-    </form>
+  <form className='col-list message-card' onSubmit={handleEdit}>
+    <input value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}} placeholder='Update message'/>
+    <div className='row-list edit-message-buttons'>
+      <button type='button' onClick={handleCancel}>Cancel</button>
+      <button type='submit'>Save</button>
+    </div>
+  </form>
   ) : (
-    <div className='message-card' key={ind}>
-    {/* <img style={{height: '2em', width: '2em'}} src="https://img.pokemondb.net/sprites/black-white/normal/pidgey.png" alt="Pidgey"/> */}
-    {/*  ——————————————————————————————————————————————————————————————————————————————  */}
-    {/*  Here I'll probably want to see if I can alt={preloadedImage} or alt={custom css component that also uses the author's first initial}  */}
-    {/*  ——————————————————————————————————————————————————————————————————————————————  */}
-    <img style={{height: '2em', width: '2em'}} src={message?.author_image} alt="user"/>
-    <div>{`${message?.author}: ${message?.content}`}</div>
-    <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
-    </div> 
+    <div className='message-card'>
+      <div className='message-card-header row-list'>
+        <div className='message-header-left'>
+          <img className='message-card-image' src={message?.author_image} alt="user"/>
+        </div>
+
+        <div className='message-header-mid'>
+          <div><strong>{message?.author} </strong>{message?.created_at}</div>
+          {message?.content}
+        </div>
+
+        <div className='message-header-right'>
+          {message?.author_id === sessionUser.id &&
+            <div className="dropdown-message">
+              <button className='dropdown-button'>...</button>
+              <div className="dropdown-content">
+                <button onClick={() => setToggleEdit(true)}>Edit</button>
+                <DeleteMessageButton messageId={message?.id}/>
+              </div>
+            </div>
+          }
+        </div>
+    </div>
+  </div>
+
   )
 }

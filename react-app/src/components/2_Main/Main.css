@@ -15,6 +15,7 @@
   width: 60%;
   margin-left: auto;
   margin-right: auto;
+
 }
 
 #unauthenticated-header{
@@ -25,52 +26,40 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Authenticated App                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-.main-page{
-  border: 1px solid blue;
-  /* ! Refactor this height at the end!! */
-  /* ! Refactor this height at the end!! */
-  height: calc(100vh - 200px);
-  /* ! Refactor this height at the end!! */
-  /* ! Refactor this height at the end!! */
-}
+.main-page{ height: calc(100vh - 44px) }
 
 .main-page .header{
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 40px;
+  justify-content: space-between;
+
+  min-height: 40px;
+  max-height: 40px;
+  
+  font-weight: bold;
   
   position: sticky;
   top: 0;
 
-  color: red;
-  border: solid 1px red;
+  border-top: solid 1px gray;
+  border-bottom: solid 1px gray;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .gutter{
   background-color: gray;
+
   background-repeat: no-repeat;
   background-position: 50%;
 }
 
 .gutter:hover{
+  border-right: 2px solid orange;
   background-color: orange;
+  cursor:'col-resize';
 }
-
-
-/* .split-tester{
-  height: 200px;
-  width: 600px;
-  border: 2px solid red;
-  display: flex;
-  flex-direction: row;
-}
-
-.tester-box{
-  height: 50px;
-  width: 50px;
-  border: 1px solid blue;
-} */
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Left Nav                   */
@@ -78,10 +67,27 @@
 .left-nav{
   height: 100%;
   width: 40%;
-  border: solid 3px rgb(0, 171, 131);
-  /* padding-left: 10px; */
+
+  background-color: #17222A;
+  
   overflow: auto;
-  overflow-y: scroll;
+  overflow-y: auto;
+}
+
+.channel-list-item{
+  padding-left: 1.2em;
+  padding-right: 1.2em;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+}
+
+.left-nav > .col-list > div, h3{
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+
+.channel-list-item:hover{
+  background-color: rgba(91, 92, 99, 0.212);
 }
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
@@ -90,10 +96,19 @@
 .right-page{
   display: flex;
   flex-direction: column;
-  border: solid 3px pink;
+  background-color: #232C32;
   height: 100%;
 
   /* overflow: auto;
   overflow-y: scroll; */
 }
 
+.home-screen{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.home-screen > * {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

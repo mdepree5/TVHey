@@ -19,7 +19,7 @@ export const UnAuthenticatedApp = () => {
 
   return (
     <div className='page-container' id='unauthenticated-app' >
-      <div>Sign In to TVHey</div>
+      <h2>Sign In to TVHey</h2>
       
       <div className='row-list' id='unauthenticated-header'>
         <NavLink to="/login" exact={true} activeClassName="active">Login</NavLink>
@@ -48,9 +48,11 @@ export const AuthenticatedApp = () => {
       <Split className='row-list main-page'
         cursor="col-resize"
         direction="horizontal"
+        minSize={180}
         sizes={[25, 75]}
         gutterSize={2}
-        dragInterval={1}
+        dragInterval={2}
+        snapOffset={20}
       >
         <LeftNav />
         <RightPage />
@@ -64,23 +66,18 @@ const LeftNav = () => {
   const channelstate = useSelector(state => state?.channel);
   const channels = Object.values(channelstate?.channels);
 
-  // console.log('LEFT NAV CHANNELSARR', channels);
-
   return (
     <div className='left-nav'>
-      <div className='header'>TVHey <button>New</button></div>
+      <div className='header' style={{justifyContent:'flex-end'}}>TVHey</div>
       <div style={{height:'100px'}}/>
       <div style={{height:'100px'}}/>
 
       <div className='col-list'>
-        <button onClick={() => alert('Show/Hide')}>{'v>'} Channels</button>
-
-        <div className='col-list'>
-          {channels?.map(channel => (
-            <NavLink to={`/channels/${channel?.id}`} key={channel?.id} activeStyle={{backgroundColor:'darkblue', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
-          ))}
-          <ChannelFormModal name='+ Add Channel' />
-        </div>
+        <h3 style={{paddingLeft:'1.2em', paddingRight: '1.2em'}} >Channels</h3>
+        {channels?.map(channel => (
+          <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#e8912d', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
+        ))}
+        <div style={{paddingLeft:'1.2em', paddingRight: '1.2em'}}><ChannelFormModal name='+ Add Channel' /></div>
       </div>
     </div>
   )
@@ -91,7 +88,7 @@ const RightPage = () => {
   return (
     <div className='right-page'>
       <Switch>
-        <Route exact path="/" ><PseudoHome/></Route>
+        <Route exact path="/" ><Home /></Route>
         <Route exact path="/channels/:channelId" ><Chat /></Route>
         <Route><Redirect to='/' /></Route>
       </Switch>
@@ -99,10 +96,17 @@ const RightPage = () => {
   )
 }
 
-const PseudoHome = () => (
-  <div style={{width: '50%', border: 'solid 2px pink'}}>
-    MODAL WITH "HEY WELCOME TO SLACK START WRITING HERE!!"
-    <button>CLICK ME TO START WRITING</button>
+const Home = () => (
+  <div className='home'>
+    <div className='header'></div>
+    <div style={{height:'100px'}}/>
+    <div style={{height:'100px'}}/>
+    
+    <div className='home-screen col-list'>
+      <strong>Welcome to TVHey</strong>
+      a multiversal communication platform
+      <ChannelFormModal name='Make a new channel' />
+    </div>
   </div>
 )
 
