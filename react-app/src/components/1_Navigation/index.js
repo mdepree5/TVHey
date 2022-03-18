@@ -1,20 +1,37 @@
 import {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // todo ——————————————————————————————————————————————————————————————————————————————————
+import { updateUserImage } from '../../store/session';
 import LogoutButton from '../../components/0_Session/LogoutButton';
 import './Navigation.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
 
 const NavDropdown = ({sessionUser}) => {
+  const dispatch = useDispatch();
   const [showDropdown, setShowDropdown] = useState(false);
-  
+  const [media_url, setMedia_url] = useState('');
+
   useEffect(()=> {
     if (!showDropdown) return;
     const closeDropdown = () => setShowDropdown(false);
     document.addEventListener('click', closeDropdown)
     document.removeEventListener('click', closeDropdown)
   }, [showDropdown]);
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('media_url', media_url);
+    const updatedUserImage = await dispatch(updateUserImage(formData, sessionUser?.id))
+    console.log(updatedUserImage);
+  }
+
+  const updateMedia_url = (e) => {
+    const file = e.target.files[ 0 ];
+    setMedia_url(file);
+  }
+
 
   return (<>
     <img
@@ -33,10 +50,10 @@ const NavDropdown = ({sessionUser}) => {
           <label>Change Display Name</label>
           <input placeholder={sessionUser?.display_name}></input>
         </div>
-        <div>
+        <form onSubmit={handleSubmit}>
           <label>Set Profile Image</label>
-          <input placeholder='User image url'></input>
-        </div>
+          <input placeholder='User image url' type='file' accept='image/*' onChange={updateMedia_url}></input>
+        </form>
         <LogoutButton />
       </div>
     )}
