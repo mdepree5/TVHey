@@ -145,7 +145,7 @@ const MessageCard = ({message, sessionUser}) => {
             <div className="dropdown-message">
               <button className='dropdown-button'>...</button>
               <div className="dropdown-content">
-                <button onClick={() => setToggleEdit(true)}>Edit</button>
+                <button className='edit' onClick={() => setToggleEdit(true)}>^</button>
                 <DeleteMessageButton messageId={message?.id}/>
               </div>
             </div>

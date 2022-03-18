@@ -9,7 +9,7 @@
 }
 
 .delete:hover{
-  opacity: .5;
+  background-color: #61616148;
 }
 
 .edit{
@@ -20,7 +20,7 @@
 }
 
 .edit:hover{
-  opacity: .5;
+  background-color: #61616148;
 }
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Form                   */

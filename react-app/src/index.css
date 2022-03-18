@@ -47,7 +47,9 @@ button{
   font: inherit;
   padding: 0.2em;
   cursor: pointer;
-  max-height: 30px;
+  min-height: 1.8em;
+  max-height: 1.8em;
+  text-align: center;
   /* width: 50%; */
   /* max-width: 10px; */
 }

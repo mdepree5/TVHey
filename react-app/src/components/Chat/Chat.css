@@ -90,32 +90,37 @@
   display: inline-block;
 }
 
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content > * {
-  color: black;
+.dropdown-content button {
+  background-color: inherit;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
   float:right;
+  max-width: 2em;
+  max-height: 2em;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content li:hover {background-color: #ddd;}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  /* right: 0; */
+  z-index: 1;
+  min-height: 6.2em;
+  background-color: none;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
 
 /* Show the dropdown menu on hover */
 .dropdown-message:hover .dropdown-content {
-  display: block;
+  display: inline-flex;
+  left: 0;
+  top: -2.2em;
+  flex-direction: column;
+  background-color: none;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .dropdown-message:hover .dropdown-button{
