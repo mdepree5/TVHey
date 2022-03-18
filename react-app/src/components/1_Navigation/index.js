@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {NavLink, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import LogoutButton from '../../components/0_Session/LogoutButton';
@@ -16,7 +16,6 @@ const NavDropdown = ({sessionUser}) => {
     document.removeEventListener('click', closeDropdown)
   }, [showDropdown]);
 
-
   return (<>
     <img
       className='nav-user-image'
@@ -26,9 +25,18 @@ const NavDropdown = ({sessionUser}) => {
 
     {showDropdown && (
       <div className='dropdown-nav'>
-        <div>{sessionUser?.display_name}</div>
-        <input placeholder={sessionUser?.display_name}></input>
-        <input placeholder='User image url'></input>
+        <div className='row-list' style={{alignItems:'center'}} >
+          <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
+          <h3>{sessionUser?.display_name}</h3>
+        </div>
+        <div>
+          <label>Change Display Name</label>
+          <input placeholder={sessionUser?.display_name}></input>
+        </div>
+        <div>
+          <label>Set Profile Image</label>
+          <input placeholder='User image url'></input>
+        </div>
         <LogoutButton />
       </div>
     )}

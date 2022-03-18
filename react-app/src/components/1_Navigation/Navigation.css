@@ -63,9 +63,15 @@
   position: absolute;
   top: 44px;
   
-  width: 200px;
-  padding: 8px;
+  width: 20em;
+  height: 14em;
+
+  padding: 1em;
   border-radius: 10px;
+}
+.dropdown-nav > * {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .nav-user-image{

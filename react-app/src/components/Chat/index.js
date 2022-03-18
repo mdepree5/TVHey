@@ -108,16 +108,14 @@ const MessageCard = ({message, sessionUser}) => {
 
   const handleEdit = async(e) => {
     e.preventDefault();
-    
-    const updated = await dispatch(updateMessage({...message, content: input}, message?.id))
-    console.log('Updated in handle edit', updated)
-    setToggleEdit(false)
+    await dispatch(updateMessage({...message, content: input}, message?.id))
+    return setToggleEdit(false);
   }
   
   const handleCancel = e => {
     e.preventDefault();
     setInput(existing);
-    setToggleEdit(false);
+    return setToggleEdit(false);
   }
 
   return toggleEdit ? (
