@@ -12,6 +12,11 @@
   /* overflow-wrap: break-word; */
 }
 
+
+
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Message card                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
 .message-card{
   min-height: 100px;
   width: 100%;
@@ -20,47 +25,32 @@
   padding-bottom: 5px;
   border-bottom: solid black 1px;
   align-items: center;
-  justify-content: space-between;
+}
 
+.message-card-header{
+  width: 100%;
+}
+
+.message-header-mid{
+  width: 88%;
+}
+.message-header-left,
+.message-header-right{
+  width: 6%;
+}
+
+
+.message-card-content{
+  width: 88%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-wrap: break-word;
 }
 
 .message-card > * {
   margin-left: 2px;
   margin-right: 2px;
 }
-
-#message-menu{
-  border: solid 1px black;
-  cursor: pointer;
-  width: 50%;
-}
-
-#message-dropdown{
-  position: relative;
-  /* top: -10px; */
-  top: 0;
-  /* right: 10px; */
-  width: 300px;
-  z-index: 5;
-  width: 50%;
-}
-
-.nav-bar{
-  height: 44px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  padding-left: 20px;
-  padding-right: 20px;
-
-  background-color: black;
-  color: white;
-}
-
 
 #left-mes{
   width: 33%;
@@ -79,20 +69,67 @@
   text-align: center;
   padding: 0;
 }
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Right mes                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
 #right-mes{
   width: 33%;
   justify-content: flex-end;
-
-}
-/* #right-mes{
-  width: 33%;
-  display: flex;
-  flex-direction: row;
+  display: inline-block;
   align-items: center;
   padding: 0;
   height: 2em;
   width: 2em;
   border-radius: 0.4em;
   cursor: pointer;
-  display: flex;
-} */
+}
+
+#message-menu{
+  border: solid 1px black;
+  cursor: pointer;
+  width: 25%;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content > * {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content li:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}

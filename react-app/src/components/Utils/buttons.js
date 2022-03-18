@@ -27,5 +27,5 @@ export const DeleteChannelButton = ({channelId}) => (
 )
 
 export const DeleteMessageButton = ({messageId}) => (
-  <DeleteButton thisId={messageId} deleteThunk={deleteMessage} config={{buttonName: 'x', newRoute: '/'}} />
+  <DeleteButton thisId={messageId} deleteThunk={deleteMessage} config={{buttonName: 'x'}} />
 )

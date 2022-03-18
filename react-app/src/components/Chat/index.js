@@ -5,8 +5,9 @@ import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 
+
 import ChannelFormModal from '../Channel/channel_modal';
-import {DeleteChannelButton} from '../Utils/buttons';
+import {DeleteChannelButton, DeleteMessageButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
 import {createMessage, getMessages} from '../../store/message';
 import './Chat.css';
@@ -36,51 +37,26 @@ const Chat = () => {
   }, [dispatch, channelId]);
   useEffect(() => {dispatch(getMessages(channelId))}, [dispatch, channelId]);
 // **** ——————————————————————————————————————————————————————————————————————————————————
-  
-// const socket = io.connect(base)
-// const base = (process.env.NODE_ENV === 'production') ? '/api' : 'http://localhost:3000/api';
-// socket = io.connect(base)
 
 useEffect(() => {
-    // socket = io(); // open socket connection and create websocket
-    // socket = io('http://localhost:3000/');
+    // if (process.env.NODE_ENV === 'production') socket = io('https://tvhey.herokuapp.com/')
     socket = io();
-// todo ——————————————————————————————————————————————————————————————————————————————————
-// todo ——————————————————————————————————————————————————————————————————————————————————
-// todo ——————————————————————————————————————————————————————————————————————————————————
-if (process.env.NODE_ENV === 'production') socket = io('https://tvhey.herokuapp.com/')
-// todo ——————————————————————————————————————————————————————————————————————————————————
-// todo ——————————————————————————————————————————————————————————————————————————————————
-// todo ——————————————————————————————————————————————————————————————————————————————————
+
     // listen for chat events. when we recieve a chat, dispatch createMessage()
-    socket.on('chat', message => {
-      console.log('HEY———————————————————')
-      console.log(message)
-      console.log('HEY———————————————————')
-      dispatch(createMessage(message));
-    });
+    socket.on('chat', message => dispatch(createMessage(message)));
     
-    return () => socket.disconnect(); // when component unmounts, disconnect
-    // }, [])
+    return () => socket.disconnect();
   }, [dispatch])
   
   const sendChat = async (e) => {
     e.preventDefault()  
-
-    const mes = {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput};
-    // !!!! ——————————————————————————————————————————————————————————————————————————————
-    // const createdMessage = await dispatch(createMessage(mes));
-    // console.log(createdMessage);
-    // !!!! ——————————————————————————————————————————————————————————————————————————————
-    socket.emit('chat', mes);
+    socket.emit('chat', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
     setChatInput('')
   }
-  // console.log(chatRef.current.value)
 
   return (sessionUser && (
     <>
       <div className='header'>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}
-      {/* <div className='header'>{selectedChannel?.privateStatus ? 'π' : '#'} {selectedChannel?.title} */}
         {sessionUser?.id === thisChannel?.host_id && <>
           <ChannelFormModal name='^' edit={true} channel={thisChannel} />
           <DeleteChannelButton channelId={thisChannel?.id}/>
@@ -134,27 +110,35 @@ const MessageCard = ({message, sessionUser}) => {
     </div>
   </form>
   ) : (
-    <div className='row-list message-card'>
-      <div id='left-mes'>
-        <img style={{height: '2em', width: '2em'}} src={message?.author_image} alt="user"/>
-      </div>
+    
+    <div>
+      <div className='message-card-header row-list'>
+        <div className='message-header-left'>
+          <img style={{height: '2em', width: '2em'}} src={message?.author_image} alt="user"/>
+        </div>
 
-      <div id='mid-mes'>
-        <div>{message?.author}</div>
-        <div>{message?.content}</div>
-      </div>
+        <div className='message-header-mid'>
+          <div>{message?.author} {message?.created_at}</div>
+        </div>
 
-      <div id='right-mes' className='row-list'>
-        {showDropdown && (
-          <div id='message-dropdown' className='dropdown row-list'>
-            <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
-            <button onClick={() => console.log('delete')}>Delete</button>
-          </div>
-        )}
-        <div id='message-menu' onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}>...</div>
-      </div>
+        <div className='message-header-right'>
+          {message?.author_id === sessionUser.id &&
+            <div className="dropdown">
+              <button className="dropbtn">...</button>
+              <div className="dropdown-content">
+                <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
+                <DeleteMessageButton messageId={message?.id}/>
+                {/* <button onClick={() => console.log('delete')}>Delete</button> */}
+              </div>
+            </div>
+          }
+        </div>
+    </div>
 
-    </div> 
+    <div className='message-card-content'>
+      {message?.content}
+    </div>
+  </div>
+
   )
 }
-// {message?.author_id === sessionUser.id && <>put stuff here</>}

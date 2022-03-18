@@ -57,6 +57,7 @@ const channelReducer = (state = {selected:null, channels:{}, messages:{}}, actio
     case UPDATE: {
       const newState = {...state};
       newState.channels[action.channel.id] = action.channel;
+      newState.selected = action.channel;
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————

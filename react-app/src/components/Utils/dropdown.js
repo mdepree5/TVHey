@@ -20,7 +20,7 @@ export const NavDropdown = ({sessionUser}) => {
     />
 
     {showDropdown && (
-      <div className='dropdown'>
+      <div className='dropdown-nav'>
         <div>{sessionUser?.display_name}</div>
         <input placeholder={sessionUser?.display_name}></input>
         <input placeholder='User image url'></input>
