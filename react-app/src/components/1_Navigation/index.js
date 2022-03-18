@@ -1,7 +1,7 @@
 import {NavLink} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import {Dropdown} from '../Utils/dropdown';
+import {NavDropdown} from '../Utils/dropdown';
 import LogoutButton from '../../components/0_Session/LogoutButton';
 
 import './Navigation.css'
@@ -20,7 +20,7 @@ const Navigation = () => {
       </div>
     
       <div id='right-nav'>
-        <Dropdown sessionUser={sessionUser} />
+        <NavDropdown sessionUser={sessionUser} />
       </div>
     </div>
   )

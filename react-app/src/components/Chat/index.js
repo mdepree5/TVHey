@@ -1,9 +1,10 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 // import { useParams, Redirect, useHistory } from 'react-router-dom';
 import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
+
 import ChannelFormModal from '../Channel/channel_modal';
 import {DeleteChannelButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
@@ -17,6 +18,8 @@ const Chat = () => {
   const dispatch = useDispatch();
   // const history = useHistory();
   const { channelId } = useParams();
+
+  const [chatInput, setChatInput] = useState('');
 
   const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channel);
@@ -56,13 +59,11 @@ const Chat = () => {
 
 
     return () => socket.disconnect(); // when component unmounts, disconnect
-  }, [])
-
-  const chatRef = useRef();
+    // }, [])
+  }, [dispatch])
   
   const sendChat = async (e) => {
     e.preventDefault()  
-    const chatInput = (chatRef.current.value)
 
     const mes = {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput};
     // !!!! ——————————————————————————————————————————————————————————————————————————————
@@ -70,8 +71,9 @@ const Chat = () => {
     // console.log(createdMessage);
     // !!!! ——————————————————————————————————————————————————————————————————————————————
     socket.emit('send', mes);
-    chatRef.current.value = '';
+    setChatInput('')
   }
+  // console.log(chatRef.current.value)
 
   return (sessionUser && (
     <>
@@ -85,17 +87,15 @@ const Chat = () => {
 
       <div className='message-container'>
         {messagesArr?.map((message, ind) => (
-          <MessageCard message={message} ind={ind} sessionUser={sessionUser}/>
+          <MessageCard key={ind} message={message} sessionUser={sessionUser}/>
         ))}
       </div>
 
       <form onSubmit={sendChat} >
-        {/* <label htmlFor='chat-input'>Send a message</label> */}
-        <input id='chat-input' ref={chatRef} placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`} />
-        {/* <input value={chatInput} onChange={e => setChatInput(e.target.value)} placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`} /> */}
-        {/* <input value={chatInput} onChange={updateChatInput} placeholder={`Message ${selectedChannel?.privateStatus ? 'π' : '#'} ${selectedChannel?.title}`} /> */}
-        {/* <button type="submit" disabled={!chatInput}>{'>'}</button> */}
-        <button type="submit" >{'>'}</button>
+        <input value={chatInput} onChange={e => setChatInput(e.target.value)}
+          placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`}
+        />
+        <button type="submit" disabled={!chatInput}>{'>'}</button>
       </form>
     </>
   )
@@ -106,28 +106,33 @@ const Chat = () => {
 export default Chat;
 
 
-const MessageCard = ({message, ind, sessionUser}) => {
+const MessageCard = ({message, sessionUser}) => {
+  const [showDropdown, setShowDropdown] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
   const [input, setInput] = useState(message?.content);
-  const updateChatRef = useRef();
+  
+  useEffect(()=> {
+    if (!showDropdown) return;
+    const closeDropdown = () => setShowDropdown(false);
+    document.addEventListener('click', closeDropdown)
+    document.removeEventListener('click', closeDropdown)
+  }, [showDropdown]);
 
   const handleEdit = () => {
-    const updateChatInput = (updateChatRef.current.value)
     console.log('handle Edit')
-    console.log(updateChatInput)
     setToggleEdit(false)
   }
 
   return toggleEdit ? (
-  <form id={ind} className='col-list message-card' onSubmit={handleEdit}>
-    <input ref={updateChatRef} value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}} placeholder='Update message'/>
+  <form className='col-list message-card' onSubmit={handleEdit}>
+    <input value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}} placeholder='Update message'/>
     <div className='row-list edit-message-buttons'>
       <button type='button' onClick={() => setToggleEdit(false)}>Cancel</button>
       <button type='submit'>Save</button>
     </div>
   </form>
   ) : (
-    <div id={ind} className='row-list message-card'>
+    <div className='row-list message-card'>
       <img style={{height: '2em', width: '2em'}} src={message?.author_image} alt="user"/>
       <div>{`${message?.author}: ${message?.content}`}</div>
       {/*//! FOR if you own it or not  */}
@@ -138,6 +143,18 @@ const MessageCard = ({message, ind, sessionUser}) => {
       {/*//! FOR if you own it or not  */}
       <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
       <button onClick={() => console.log('delete')}>Delete</button>
+      
+      <div
+      onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
+      style={{height:'2em', width:'2em', borderRadius:'0.4em', cursor:'pointer' }}
+    >...</div>
+    {showDropdown && (
+      <div id='message-dropdown' className='dropdown'>
+        <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
+        <button onClick={() => console.log('delete')}>Delete</button>
+      </div>
+    )}
+
     </div> 
   )
 }

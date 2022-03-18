@@ -27,15 +27,23 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .dropdown{
   background-color: gray;
-  top: 44px;
+  
+  z-index: 3;
   position: absolute;
+  top: 44px;
+  
   width: 200px;
   padding: 8px;
   border-radius: 10px;
-  z-index: 3;
 }
-.dropdown > * {
+/* .dropdown > * {
   z-index: 4;
+} */
+#message-dropdown{
+  position: relative;
+  top: -50px;
+  right: 100px;
+  z-index: 5;
 }
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
