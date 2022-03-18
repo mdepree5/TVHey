@@ -51,7 +51,6 @@ def sign_up():
       password=form.data['password'],
       display_name=form.data['username'],
       image_url='no image provided'
-      # todo ——————————————————————————————————————————————————————————————————————————————————
     )
     db.session.add(user)
     db.session.commit()

@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useHistory} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import LogoutButton from '../../components/0_Session/LogoutButton';
@@ -19,8 +19,8 @@ const NavDropdown = ({sessionUser}) => {
 
   return (<>
     <img
-      onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
       className='nav-user-image'
+      onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
       src={sessionUser?.image_url} alt='user'
     />
 
@@ -37,11 +37,16 @@ const NavDropdown = ({sessionUser}) => {
 
 const Navigation = () => {
   const sessionUser = useSelector(state => state?.session?.user);
+  const history = useHistory();
 
   return (
     <div className='nav-bar'>
       <div id='left-nav'>
-        <NavLink to='/'>Home</NavLink>
+        <img
+          className='icon'
+          onClick={() => history.push('/')}
+          src='https://capstone-slack-clone.s3.amazonaws.com/favicon.ico' alt='custom' 
+        />
       </div>
     
       <div id='mid-nav'>
