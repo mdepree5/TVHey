@@ -29,25 +29,20 @@
   margin-right: 2px;
 }
 
-.edit-delete-message{
-  height: 2em;
-  width: 2em;
-  border-radius: 0.4em;
-  cursor: pointer;
-  display: flex;
-}
-
-#ed-menu{
+#message-menu{
   border: solid 1px black;
   cursor: pointer;
+  width: 50%;
 }
 
 #message-dropdown{
   position: relative;
-  top: -10px;
+  /* top: -10px; */
+  top: 0;
   /* right: 10px; */
   width: 300px;
   z-index: 5;
+  width: 50%;
 }
 
 .nav-bar{
@@ -86,9 +81,18 @@
 }
 #right-mes{
   width: 33%;
+  justify-content: flex-end;
+
+}
+/* #right-mes{
+  width: 33%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
   align-items: center;
   padding: 0;
-}
+  height: 2em;
+  width: 2em;
+  border-radius: 0.4em;
+  cursor: pointer;
+  display: flex;
+} */

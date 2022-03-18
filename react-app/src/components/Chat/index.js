@@ -142,19 +142,17 @@ const MessageCard = ({message, sessionUser}) => {
         <div>{message?.content}</div>
       </div>
 
-      <div id='right-mes'>
-      {message?.author_id === sessionUser.id && <>put stuff here</>}
-        <div className='edit-delete-message'>
-          {showDropdown && (
-            <div id='message-dropdown' className='dropdown row-list'>
-              <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
-              <button onClick={() => console.log('delete')}>Delete</button>
-            </div>
-          )}
-          <div id='ed-menu' onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}>...</div>
-        </div>
+      <div id='right-mes' className='row-list'>
+        {showDropdown && (
+          <div id='message-dropdown' className='dropdown row-list'>
+            <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
+            <button onClick={() => console.log('delete')}>Delete</button>
+          </div>
+        )}
+        <div id='message-menu' onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}>...</div>
       </div>
 
     </div> 
   )
 }
+// {message?.author_id === sessionUser.id && <>put stuff here</>}
