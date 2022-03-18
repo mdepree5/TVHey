@@ -15,8 +15,8 @@
 .edit{
   width: 15%;
   border-radius: 20px;
-  border: solid 2px orange;
-  color: orange; 
+  border: solid 2px #EC8642;
+  color: #EC8642; 
 }
 
 .edit:hover{
