@@ -72,10 +72,12 @@
   height: 2em;
   width: 2em;
   border-radius: 0.4em;
-  box-shadow: 0 1px 8px rgb(77, 77, 77); 
+  border: solid 0.05em black;
+  box-shadow: 0 0 8px white;
   cursor: pointer;
 }
 
-/* .dropdown > * {
-  z-index: 4;
-} */
+.nav-user-image:hover{
+  /* box-shadow: 0 0 10px white;  */
+  box-shadow: 0 0 10px #EC8642;
+}

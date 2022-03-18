@@ -50,7 +50,8 @@
   height: 2.5em;
   width: 2.5em;
   border-radius: 0.2em;
-  box-shadow: 0 1px 8px rgb(77, 77, 77); 
+  border: solid 0.05em black;
+  box-shadow: 0 0 8px rgb(77, 77, 77); 
 }
 
 .message-card-content{
