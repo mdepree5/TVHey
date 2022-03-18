@@ -48,9 +48,11 @@ export const AuthenticatedApp = () => {
       <Split className='row-list main-page'
         cursor="col-resize"
         direction="horizontal"
+        minSize={180}
         sizes={[25, 75]}
         gutterSize={2}
-        dragInterval={1}
+        dragInterval={2}
+        snapOffset={20}
       >
         <LeftNav />
         <RightPage />
