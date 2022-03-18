@@ -5,14 +5,13 @@ export const FormInput = ({ required, type, name, state, setState }) => {
 
   return (
     <div className='form-input'>
-      <label htmlFor={formatName}>{name}</label>
+      <label htmlFor={formatName}>{name} {required && <small style={{fontSize:'0.8em', color:'#EC8642'}}>*required</small>}</label>
       <input 
         placeholder={name}
         name={formatName}
         type={type || 'text'}
         value={state}
         onChange={e => setState(e.target.value)}
-        required={required || false}
       />
     </div>
   )

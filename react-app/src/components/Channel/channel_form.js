@@ -36,7 +36,7 @@ const ChannelForm = ({ edit, channel, closeModal }) => {
 
   return (
     <form className='channel-form-container' onSubmit={handleSubmit}>
-      <FormInput name='Title' state={title} setState={setTitle} />
+      <FormInput required={true} name='Title' state={title} setState={setTitle} />
       <FormInput name='Topic' state={topic} setState={setTopic} />
       <button type='submit'>{edit ? 'Update' : 'Create'}</button>
       <FormErrors errors={errors} />
