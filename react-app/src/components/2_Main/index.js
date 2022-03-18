@@ -22,9 +22,9 @@ export const UnAuthenticatedApp = () => {
       <h2>Sign In to TVHey</h2>
       
       <div className='row-list' id='unauthenticated-header'>
-        <NavLink to="/login" exact={true} activeClassName="active">Login</NavLink>
+        <NavLink to="/login" exact={true} >Login</NavLink>
         <button onClick={async() => await dispatch(loginDemo())}>Demo</button>
-        <NavLink to="/sign-up" exact={true} activeClassName="active">Sign Up</NavLink>
+        <NavLink to="/sign-up" exact={true}>Sign Up</NavLink>
       </div>
 
       <div className='row-list' id='main-page'>
@@ -75,7 +75,7 @@ const LeftNav = () => {
       <div className='col-list'>
         <h3 style={{paddingLeft:'1.2em', paddingRight: '1.2em'}} >Channels</h3>
         {channels?.map(channel => (
-          <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#e8912d', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
+          <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
         ))}
         <div style={{paddingLeft:'1.2em', paddingRight: '1.2em'}}><ChannelFormModal name='+ Add Channel' /></div>
       </div>
