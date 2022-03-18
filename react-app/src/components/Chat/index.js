@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 // import { useParams, Redirect, useHistory } from 'react-router-dom';
-import { io } from 'socket.io-client';
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
+// import { io } from 'socket.io-client';
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
 // todo ——————————————————————————————————————————————————————————————————————————————————
 
 
@@ -12,7 +14,9 @@ import {getChannel} from '../../store/channel';
 import {createMessage, getMessages, updateMessage} from '../../store/message';
 import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-let socket;
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
+// let socket;
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
 
 const Chat = () => {
 // **** ————————————————————————————————————————————————————————————————————————————STABLE
@@ -36,22 +40,31 @@ const Chat = () => {
 
 // **** ——————————————————————————————————————————————————————————————————————————————————
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
-  useEffect(() => {
-  // if (process.env.NODE_ENV === 'production') socket = io('https://tvhey.herokuapp.com/')
-    socket = io();
+  // useEffect(() => {
+  // // if (process.env.NODE_ENV === 'production') socket = io('https://tvhey.herokuapp.com/')
+  //   socket = io();
   
-    // listen for chat events. when we recieve a chat, dispatch createMessage()
-    socket.on('chat', message => dispatch(createMessage(message)));
+  //   // listen for chat events. when we recieve a chat, dispatch createMessage()
+  //   socket.on('chat', message => dispatch(createMessage(message)));
     
-    return () => socket.disconnect();
-  }, [dispatch])
+  //   return () => socket.disconnect();
+  // }, [dispatch])
   
+  // const sendChat = async e => {
+  //   e.preventDefault()  
+  //   socket.emit('chat', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
+  //   setChatInput('')
+  // }
+
+// !!!! ——————————————————————————————————————————————————————————————————————————————————
   const sendChat = async (e) => {
-    e.preventDefault()  
-    socket.emit('chat', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
-    setChatInput('')
+    e.preventDefault();
+    const newMessage = await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
+    console.log('newMessage', newMessage)
+    setChatInput('');
   }
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
+
   return (sessionUser && (
     <>
       <div className='header'>
