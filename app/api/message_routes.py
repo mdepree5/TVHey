@@ -54,13 +54,13 @@ def update_message(messageId):
   form['csrf_token'].data = request.cookies['csrf_token']
 
   if form.validate_on_submit():
-    message = message.query.get(messageId)
+    message = Message.query.get(messageId)
     message.author_id = form.data['author_id']
     message.channel_id = form.data['channel_id']
     message.content = form.data['content']
     message.updated_at = datetime.now()
     db.session.commit()
-    return {'message': message.to_dict()}
+    return {**message.to_dict()}
 
   return {'errors': validation_errors_to_error_messages(form.errors)}
 # todo ——————————————————————————————————————————————————————————————————————————————————

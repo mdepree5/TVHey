@@ -39,17 +39,12 @@ const channelReducer = (state = {selected:null, channels:{}, messages:{}}, actio
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case GET_ALL: {
       const newState = {...state};
-      // console.log('REDUX STATE', state)
-      // console.log('REDUX SPREAD STATE', newState)
-      // action.channels['all_channels'].forEach(channel => newState[channel.id] = channel);
       action.channels['all_channels'].forEach(channel => newState.channels[channel.id] = channel);
-      // console.log('REDUX STATE WITH CHANNELS???', newState)
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case GET_ONE: {
       const newState = {...state};
-      // console.log('GET ONE', newState)
       newState.selected = action.channel;
       return newState;
     };

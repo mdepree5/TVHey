@@ -9,7 +9,7 @@ import { io } from 'socket.io-client';
 import ChannelFormModal from '../Channel/channel_modal';
 import {DeleteChannelButton, DeleteMessageButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
-import {createMessage, getMessages} from '../../store/message';
+import {createMessage, getMessages, updateMessage} from '../../store/message';
 import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 let socket;
@@ -30,7 +30,7 @@ const Chat = () => {
   const messagesArr = Object.values(messagestate?.messages);
   
   
-  useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);  
+  useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
 
   useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
 
@@ -83,27 +83,30 @@ export default Chat;
 
 
 const MessageCard = ({message, sessionUser}) => {
-  const [showDropdown, setShowDropdown] = useState(false);
+  const dispatch = useDispatch();
+  const existing = message?.content;
   const [toggleEdit, setToggleEdit] = useState(false);
-  const [input, setInput] = useState(message?.content);
-  
-  useEffect(()=> {
-    if (!showDropdown) return;
-    const closeDropdown = () => setShowDropdown(false);
-    document.addEventListener('click', closeDropdown)
-    document.removeEventListener('click', closeDropdown)
-  }, [showDropdown]);
+  const [input, setInput] = useState(existing);
 
-  const handleEdit = () => {
-    console.log('handle Edit')
+  const handleEdit = async(e) => {
+    e.preventDefault();
+    
+    const updated = await dispatch(updateMessage({...message, content: input}, message?.id))
+    console.log('Updated in handle edit', updated)
     setToggleEdit(false)
+  }
+  
+  const handleCancel = e => {
+    e.preventDefault();
+    setInput(existing);
+    setToggleEdit(false);
   }
 
   return toggleEdit ? (
   <form className='col-list message-card' onSubmit={handleEdit}>
     <input value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}} placeholder='Update message'/>
     <div className='row-list edit-message-buttons'>
-      <button type='button' onClick={() => setToggleEdit(false)}>Cancel</button>
+      <button type='button' onClick={handleCancel}>Cancel</button>
       <button type='submit'>Save</button>
     </div>
   </form>
@@ -121,12 +124,11 @@ const MessageCard = ({message, sessionUser}) => {
 
         <div className='message-header-right'>
           {message?.author_id === sessionUser.id &&
-            <div className="dropdown">
-              <button className="dropbtn">...</button>
+            <div className="dropdown-message">
+              <button className='dropdown-button'>...</button>
               <div className="dropdown-content">
-                <button onClick={() => setToggleEdit(true)}>Toggle Edit</button>
+                <button onClick={() => setToggleEdit(true)}>Edit</button>
                 <DeleteMessageButton messageId={message?.id}/>
-                {/* <button onClick={() => console.log('delete')}>Delete</button> */}
               </div>
             </div>
           }
