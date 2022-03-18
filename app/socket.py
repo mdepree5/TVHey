@@ -29,3 +29,10 @@ def handle_chat(data):
   print(data)
   print('debugger from websocket')
   emit('chat', data, broadcast=True)
+  
+@socketio.on('disconnect')
+def test_disconnection():
+  print('debugger from websocket')
+  print('disconnected from websocket!')
+  print('debugger from websocket')
+  emit('response', {'message': 'Disconnection successful'})

@@ -42,7 +42,9 @@ const Chat = () => {
 // socket = io.connect(base)
 
 useEffect(() => {
-    socket = io(); // open socket connection and create websocket
+    // socket = io(); // open socket connection and create websocket
+    // socket = io('http://localhost:3000/');
+    socket = io();
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo ——————————————————————————————————————————————————————————————————————————————————
