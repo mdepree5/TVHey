@@ -9,16 +9,9 @@ import './Navigation.css'
 
 const NavDropdown = ({sessionUser}) => {
   const dispatch = useDispatch();
-// todo ——————————————————————————————————————————————————————————————————————————————————
-// todo ——————————————————————————————————————————————————————————————————————————————————
-// todo ——————————————————————————————————————————————————————————————————————————————————
-  const customImage = 'HEY'
-// todo ——————————————————————————————————————————————————————————————————————————————————
-// todo ——————————————————————————————————————————————————————————————————————————————————
-// todo ——————————————————————————————————————————————————————————————————————————————————
 
   const [showDropdown, setShowDropdown] = useState(false);
-  const [media_url, setMedia_url] = useState(sessionUser?.media_url === 'no image provided' ? customImage : sessionUser?.media_url);
+  const [media_url, setMedia_url] = useState(sessionUser?.media_url === 'no image provided' ? '' : sessionUser?.media_url);
 
   useEffect(()=> {
     if (!showDropdown) return;
@@ -41,11 +34,9 @@ const NavDropdown = ({sessionUser}) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('media_url', media_url);
-    console.log('send to backend');
-    console.log(media_url);
 
-    const updatedUserImage = await dispatch(updateUserImage(formData, sessionUser?.id))
-    console.log(updatedUserImage);
+    await dispatch(updateUserImage(formData, sessionUser?.id));
+    setShowDropdown(false);
   }
   
   const updateMedia_url = (e) => {
@@ -55,11 +46,15 @@ const NavDropdown = ({sessionUser}) => {
 
 
   return (<>
-    <img
-      className='nav-user-image'
-      onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
-      src={sessionUser?.image_url} alt='user'
-    />
+    {sessionUser?.image_url === 'no image provided' ? 
+      <div className='nav-user-image' 
+        onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
+      >{sessionUser?.display_name[0].toUpperCase()}</div> : 
+      <img className='nav-user-image'
+        src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}
+        onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
+      />
+    }
 
     
 
@@ -67,7 +62,7 @@ const NavDropdown = ({sessionUser}) => {
       <div className='dropdown-nav'>
         <div className='row-list' style={{alignItems:'center'}} >
           {sessionUser?.image_url === 'no image provided' ? 
-            <div className='NEED TO STYLE' >{sessionUser?.display_name[0].toUpperCase()}</div> : 
+            <div className='nav-user-image' >{sessionUser?.display_name[0].toUpperCase()}</div> : 
             <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
           }
           <h3>{sessionUser?.display_name}</h3>

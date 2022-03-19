@@ -81,6 +81,7 @@
   border: solid 0.05em black;
   box-shadow: 0 0 8px white;
   cursor: pointer;
+  margin-right: 1em;
 }
 
 .nav-user-image:hover{
