@@ -7,12 +7,15 @@ import LogoutButton from '../../components/0_Session/LogoutButton';
 import './Navigation.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
 
-const NavDropdown = ({sessionUser}) => {
+const NavDropdown = () => {
   const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state?.session?.user);
+  console.log(sessionUser)
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [display_name, setDisplay_name] = useState(sessionUser?.display_name);
   const [media_url, setMedia_url] = useState(sessionUser?.media_url === 'no image provided' ? '' : sessionUser?.media_url);
+
 
   useEffect(()=> {
     if (!showDropdown) return;
@@ -24,6 +27,7 @@ const NavDropdown = ({sessionUser}) => {
   const handleDisplay = async(e) => {
     e.preventDefault();
     await dispatch(updateUserDisplayName(display_name, sessionUser?.id));
+    // history.push()
     setShowDropdown(false);
   }
 
@@ -57,6 +61,7 @@ const NavDropdown = ({sessionUser}) => {
     
 
     {showDropdown && (
+      
       <div className='dropdown-nav'>
         <div className='row-list' style={{alignItems:'center'}} >
           {sessionUser?.image_url === 'no image provided' ? 
@@ -64,6 +69,7 @@ const NavDropdown = ({sessionUser}) => {
             <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
           }
           <h3>{sessionUser?.display_name}</h3>
+          <button className='dropdown-cancel' onClick={()=> setShowDropdown(false)}>X</button>
         </div>
         <form onSubmit={handleDisplay}>
           <label>Change Display Name</label>
@@ -82,7 +88,7 @@ const NavDropdown = ({sessionUser}) => {
 }
 
 const Navigation = () => {
-  const sessionUser = useSelector(state => state?.session?.user);
+  // const sessionUser = useSelector(state => state?.session?.user);
   const history = useHistory();
 
   return (
@@ -99,7 +105,7 @@ const Navigation = () => {
       </div>
     
       <div id='right-nav'>
-        <NavDropdown sessionUser={sessionUser} />
+        <NavDropdown />
       </div>
     </div>
   )

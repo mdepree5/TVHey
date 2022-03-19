@@ -33,7 +33,8 @@ def update_user_image(userId):
   form = UpdateUserImageForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   
-  url = form.data['media_url']
+  user = User.query.get(userId)
+  url = user.image_url
   
   if type(form.data['media_url']) is not str:
     image = form.data['media_url']
@@ -48,7 +49,6 @@ def update_user_image(userId):
     url = upload["url"]
     
   if form.validate_on_submit():
-    user = User.query.get(userId)
     user.image_url= url
     
     db.session.commit()
@@ -61,9 +61,9 @@ def update_user_display_name(userId):
   form = UpdateUserDisplayNameForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   
-  print('debugger')
-  print(form.data['display_name'])
-  print('debugger')
+  # print('debugger')
+  # print(form.data['display_name'])
+  # print('debugger')
   
   if form.validate_on_submit():
     user = User.query.get(userId)

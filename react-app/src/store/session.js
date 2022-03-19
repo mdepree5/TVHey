@@ -15,12 +15,10 @@ export const authenticate = () => async (dispatch) => {
   const response = await fetch('/api/auth/', {headers: {'Content-Type': 'application/json'}});
   if (response.ok) {
     const data = await response.json();
-    if (data.errors) {
-      // console.log(data.errors) //=> 'Initial unauthenticated app render' 
-      return data.errors;
-    }
+    if (data.errors) return data.errors;
     dispatch(setUser(data));
   }
+  return;
 }
 
 export const login = (email, password) => async (dispatch) => {
@@ -72,6 +70,7 @@ export const updateUserImage = (image_url, userId) => async (dispatch) => {
   if (response.ok) {
     const updatedUser = await response.json();
     dispatch(setUser(updatedUser));
+
     return updatedUser;
   }
   return response;
@@ -83,6 +82,7 @@ export const updateUserDisplayName = (display_name, userId) => async (dispatch) 
   if (response.ok) {
     const updatedUser = await response.json();
     dispatch(setUser(updatedUser));
+
     return updatedUser;
   }
   return response;
