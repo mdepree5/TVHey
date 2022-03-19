@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField
 # todo ——————————————————————————————————————————————————————————————————————————————————
-class UpdateUserImageForm(FlaskForm):
-  media_url = StringField('media_url')
+class UpdateUserDisplayNameForm(FlaskForm):
+  display_name = StringField('display_name')

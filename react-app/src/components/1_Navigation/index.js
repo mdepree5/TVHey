@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-import { updateUserImage } from '../../store/session';
+import { updateUserImage, updateUserDisplayName } from '../../store/session';
 import LogoutButton from '../../components/0_Session/LogoutButton';
 import './Navigation.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -11,6 +11,7 @@ const NavDropdown = ({sessionUser}) => {
   const dispatch = useDispatch();
 
   const [showDropdown, setShowDropdown] = useState(false);
+  const [display_name, setDisplay_name] = useState(sessionUser?.display_name);
   const [media_url, setMedia_url] = useState(sessionUser?.media_url === 'no image provided' ? '' : sessionUser?.media_url);
 
   useEffect(()=> {
@@ -22,11 +23,8 @@ const NavDropdown = ({sessionUser}) => {
 
   const handleDisplay = async(e) => {
     e.preventDefault();
-    // const formData = new FormData();
-    // formData.append('media_url', media_url);
-    // const updatedUserImage = await dispatch(updateUserImage(formData, sessionUser?.id))
-    // console.log(updatedUserImage);
-    console.log('HEY!')
+    await dispatch(updateUserDisplayName(display_name, sessionUser?.id));
+    setShowDropdown(false);
   }
 
 
@@ -69,8 +67,8 @@ const NavDropdown = ({sessionUser}) => {
         </div>
         <form onSubmit={handleDisplay}>
           <label>Change Display Name</label>
-          <input placeholder={sessionUser?.display_name}></input>
-          <button type='submit'>Set Profile Image</button>
+          <input placeholder={sessionUser?.display_name} value={display_name} onChange={e=> setDisplay_name(e.target.value)}></input>
+          <button type='submit'>Set Display Name</button>
         </form>
         <form onSubmit={handleImage}>
           <label>Set Profile Image</label>

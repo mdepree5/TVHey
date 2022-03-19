@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 from flask_login import login_required
-from app.forms import UpdateUserImageForm
+from app.forms import UpdateUserImageForm, UpdateUserDisplayNameForm
 from app.models import User, db
 from app.s3_helpers import (upload_file_to_s3, allowed_file, get_unique_filename)
 
@@ -27,7 +27,7 @@ def user(userId):
   user = User.query.get(userId)
   return user.to_dict()
 # todo ——————————————————————————————————————————————————————————————————————————————————
-@user_routes.route('/<int:userId>', methods=['PUT'])
+@user_routes.route('/<int:userId>/image', methods=['PUT'])
 @login_required
 def update_user_image(userId):
   form = UpdateUserImageForm()
@@ -50,6 +50,24 @@ def update_user_image(userId):
   if form.validate_on_submit():
     user = User.query.get(userId)
     user.image_url= url
+    
+    db.session.commit()
+    return user.to_dict()
+  return {'errors': validation_errors_to_error_messages(form.errors)}
+# todo ——————————————————————————————————————————————————————————————————————————————————
+@user_routes.route('/<int:userId>/display_name', methods=['PUT'])
+@login_required
+def update_user_display_name(userId):
+  form = UpdateUserDisplayNameForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
+  
+  print('debugger')
+  print(form.data['display_name'])
+  print('debugger')
+  
+  if form.validate_on_submit():
+    user = User.query.get(userId)
+    user.display_name= form.data['display_name']
     
     db.session.commit()
     return user.to_dict()

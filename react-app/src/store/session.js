@@ -54,7 +54,7 @@ export const logout = () => async (dispatch) => {
 
 
 export const signUp = (username, email, password) => async (dispatch) => {
-  const response = await fetch('/api/auth/signup', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username, email, password}),});
+  const response = await fetch('/api/auth/signup', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username, email, password})});
   
   if (response.ok) {
     const data = await response.json();
@@ -67,9 +67,18 @@ export const signUp = (username, email, password) => async (dispatch) => {
 }
 
 export const updateUserImage = (image_url, userId) => async (dispatch) => {
-  const response = await fetch(`/api/users/${userId}`, { method: 'PUT', body: image_url });
-  
-  console.log('thunk response', response);
+  const response = await fetch(`/api/users/${userId}/image`, { method: 'PUT', body: image_url });
+
+  if (response.ok) {
+    const updatedUser = await response.json();
+    dispatch(setUser(updatedUser));
+    return updatedUser;
+  }
+  return response;
+};
+
+export const updateUserDisplayName = (display_name, userId) => async (dispatch) => {
+  const response = await fetch(`/api/users/${userId}/display_name`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({display_name})});
 
   if (response.ok) {
     const updatedUser = await response.json();
