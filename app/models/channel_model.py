@@ -1,5 +1,5 @@
 from app.models.db import db
-from datetime import datetime
+from datetime import datetime, date
 
 class Channel(db.Model):
   __tablename__ = "channels"
@@ -14,13 +14,22 @@ class Channel(db.Model):
   users = db.relationship("User", back_populates="channels")
   messages = db.relationship("Message", back_populates="channels", cascade="all, delete")
 
+
+  def json_serial(obj):
+    """JSON serializer for selfects not serializable by default json code"""
+    
+    if isinstance(obj (datetime, date)):
+      return obj.isoformat()
+    raise TypeError ("Type %s not serializable" % type(obj))
+
   def to_dict(self):
     return {
       "id": self.id,
       "host_id": self.host_id,
       "title": self.title,
       "topic": self.topic,
-      "created_at": self.created_at,
-      "updated_at": self.updated_at,
+      "created_at": self.created_at.isoformat(),
+      "updated_at": self.updated_at.isoformat(),
       'owner': self.users.username
     }
+

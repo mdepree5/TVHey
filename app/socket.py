@@ -1,6 +1,9 @@
 from flask_socketio import SocketIO, emit
 import os
 from .models import Channel, Message, User, db
+from datetime import datetime, date
+import json
+from json import dumps
 
 # configure cors_allowed_origins
 if os.environ.get('FLASK_ENV') == 'production':
@@ -14,20 +17,29 @@ else:
 # initialize your socket instance
 socketio = SocketIO(cors_allowed_origins=origins)
 
+def defaultconverter(o):
+  if isinstance(o, datetime):
+    return o.__str__()
 
 @socketio.on('connect')
 def test_connection():
+  print('debugger ——————————————————————————————————————————————————————————————————————————————')
   print('debugger from websocket')
   print('Connected to websocket!')
+  print('debugger ——————————————————————————————————————————————————————————————————————————————')
   all_users = User.query.all()
   this = [user.to_dict() for user in all_users]
   print(this)
-  # all_channels = Channel.query.all()
-  # them = [channel.to_dict() for channel in all_channels]
-  # print(them)
-  print('debugger from websocket')
+  print('debugger ——————————————————————————————————————————————————————————————————————————————')
+  all_channels = Channel.query.all()
+  them = [channel.to_dict() for channel in all_channels]
+  themser = [json.dumps(channel, default = defaultconverter) for channel in them]
+  print(them)
+  print(themser)
+  print('debugger ——————————————————————————————————————————————————————————————————————————————')
   emit('response', {'message': 'Connection successful'})
   emit('all_users', {'all_users': this})
+  emit('all_channels', {'all_channels': themser})
   # emit('all_channels', {'all_channels': [channel.to_dict() for channel in all_channels]})
   # return {"all_channels": [channel.to_dict() for channel in all_channels]}
 
@@ -44,4 +56,4 @@ def test_disconnection():
   print('debugger from websocket')
   print('disconnected from websocket!')
   print('debugger from websocket')
-  emit('response', {'message': 'Disconnection successful'})
+  emit('disconnect response', {'message': 'Disconnection successful'})

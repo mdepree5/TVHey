@@ -65,9 +65,6 @@ def update_channel(channelId):
     channel.topic = form.data['topic']
     channel.updated_at = datetime.now()
     db.session.commit()
-    print('debugger')
-    print('IT WENT THRUUU')
-    print('debugger')
     return {**channel.to_dict()}
 
   return {'errors': validation_errors_to_error_messages(form.errors)}

@@ -40,15 +40,27 @@ export const UnAuthenticatedApp = () => {
 }
   
 export const AuthenticatedApp = () => {
+  const dayjs = require('dayjs');
   let socket;
   const base = (process.env.NODE_ENV === 'production') ? '/api' : '';
   socket = io(base);
   console.log('authenticated app', socket)
-
+  
   socket.on('response', response => console.log('frontend connection', response));
-  socket.on('all_channels', all_channels => console.log('frontend', all_channels));
-  socket.on('all_users', all_users => console.log('frontend all users', all_users));
+  socket.on('all_channels', all_channels => console.log('all_channels', all_channels));
+  socket.on('all_channels', all_channels => {
+    console.table(all_channels.all_channels)
+    all_channels.all_channels.forEach(channel => {
+      const parsed = JSON.parse(channel)
+      console.log('one channel', parsed)
+      console.log('created at', parsed?.created_at)
+      console.log('format date', dayjs(parsed?.created_at).format('h:mm A'))
+    })
+  });
 
+
+  socket.on('all_users', all_users => console.log('frontend all users', all_users));
+  socket.on('disconnect response', response => console.log(`%c response:`, `color:yellow`, response))
 
     // socket.on('chat', message => dispatch(createMessage(message)));
   const dispatch = useDispatch();
@@ -56,7 +68,7 @@ export const AuthenticatedApp = () => {
 
   return (
     <div className='page-container'>
-      <Navigation/>
+      <Navigation socket={socket}/>
       <Split className='row-list main-page'
         cursor="col-resize"
         direction="horizontal"
