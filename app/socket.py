@@ -9,13 +9,15 @@ from json import dumps
 if os.environ.get('FLASK_ENV') == 'production':
   origins = [
     'http://tvhey.herokuapp.com/',
-    'https://tvhey.herokuapp.com/'
+    'https://tvhey.herokuapp.com/',
+    'ws://tvhey.herokuapp.com/',
+    'wss://tvhey.herokuapp.com/'
   ]
 else:
   origins = "*"
 
 # initialize your socket instance
-socketio = SocketIO(cors_allowed_origins=origins)
+socketio = SocketIO(logger=True, cors_allowed_origins=origins)
 
 def defaultconverter(o):
   if isinstance(o, datetime):
@@ -24,7 +26,8 @@ def defaultconverter(o):
 @socketio.on('connect')
 def test_connection():
   print('debugger ——————————————————————————————————————————————————————————————————————————————')
-  print('debugger from websocket')
+  print('Connected to websocket!')
+  print('Connected to websocket!')
   print('Connected to websocket!')
   print('debugger ——————————————————————————————————————————————————————————————————————————————')
   all_users = User.query.all()

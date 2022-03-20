@@ -84,4 +84,7 @@ def react_root(path):
   return app.send_static_file('index.html')
 
 if __name__ == '__main__':
+  print('debugger __init__')
+  print(app)
+  print('debugger __init__')
   socketio.run(app)

@@ -42,9 +42,11 @@ export const UnAuthenticatedApp = () => {
 export const AuthenticatedApp = () => {
   const dayjs = require('dayjs');
   let socket;
-  // const base = (process.env.NODE_ENV === 'production') ? '/api' : '';
-  const base = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
-  socket = io(base);
+  // const domain = (process.env.NODE_ENV === 'production') ? '/api' : '';
+  // const domain = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
+  // const domain = '';
+
+  socket = io();
   console.log('authenticated app', socket)
   
   socket.on('response', response => console.log('frontend connection', response));
