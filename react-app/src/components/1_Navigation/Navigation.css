@@ -56,16 +56,23 @@
 /* todo             Dropdown                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .dropdown-nav{
-  /* background-color: gray; */
   background-color:#232529;
-  
+  box-shadow: 0 0 8px gray;
+
   z-index: 3;
   position: absolute;
   top: 44px;
   
-  width: 200px;
-  padding: 8px;
+  width: 20em;
+  height: 18em;
+
+  padding: 1em;
   border-radius: 10px;
+}
+
+.dropdown-nav > * {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .nav-user-image{
@@ -75,9 +82,14 @@
   border: solid 0.05em black;
   box-shadow: 0 0 8px white;
   cursor: pointer;
+  margin-right: 1em;
 }
 
 .nav-user-image:hover{
   /* box-shadow: 0 0 10px white;  */
   box-shadow: 0 0 10px #EC8642;
+}
+
+.dropdown-cancel{
+  width: 2em;
 }

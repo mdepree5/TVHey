@@ -15,31 +15,31 @@ s3 = boto3.client(
 
 
 def allowed_file(filename):
-    print(filename)
-    print("." in filename)
-    return "." in filename and \
-          filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+  print(filename)
+  print("." in filename)
+  return "." in filename and \
+    filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def get_unique_filename(filename):
-    ext = filename.rsplit(".", 1)[1].lower()
-    unique_filename = uuid.uuid4().hex
-    return f"{unique_filename}.{ext}"
+  ext = filename.rsplit(".", 1)[1].lower()
+  unique_filename = uuid.uuid4().hex
+  return f"{unique_filename}.{ext}"
 
 
 def upload_file_to_s3(file, acl="public-read"):
-    try:
-        s3.upload_fileobj(
-            file,
-            BUCKET_NAME,
-            file.filename,
-            ExtraArgs={
-                "ACL": acl,
-                "ContentType": file.content_type
-            }
-        )
-    except Exception as e:
-        # in case the our s3 upload fails
-        return {"errors": str(e)}
+  try:
+    s3.upload_fileobj(
+      file,
+      BUCKET_NAME,
+      file.filename,
+      ExtraArgs={
+        "ACL": acl,
+        "ContentType": file.content_type
+      }
+    )
+  except Exception as e:
+    # in case the our s3 upload fails
+    return {"errors": str(e)}
 
-    return {"url": f"{S3_LOCATION}{file.filename}"}
+  return {"url": f"{S3_LOCATION}{file.filename}"}

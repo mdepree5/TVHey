@@ -1,14 +1,22 @@
 import {useEffect, useState} from 'react';
-import {NavLink, useHistory} from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import {useHistory} from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 // todo ——————————————————————————————————————————————————————————————————————————————————
+import { updateUserImage, updateUserDisplayName } from '../../store/session';
 import LogoutButton from '../../components/0_Session/LogoutButton';
 import './Navigation.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
 
-const NavDropdown = ({sessionUser}) => {
+const NavDropdown = () => {
+  const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state?.session?.user);
+  console.log(sessionUser)
+
   const [showDropdown, setShowDropdown] = useState(false);
-  
+  const [display_name, setDisplay_name] = useState(sessionUser?.display_name);
+  const [media_url, setMedia_url] = useState(sessionUser?.media_url === 'no image provided' ? '' : sessionUser?.media_url);
+
+
   useEffect(()=> {
     if (!showDropdown) return;
     const closeDropdown = () => setShowDropdown(false);
@@ -16,19 +24,63 @@ const NavDropdown = ({sessionUser}) => {
     document.removeEventListener('click', closeDropdown)
   }, [showDropdown]);
 
+  const handleDisplay = async(e) => {
+    e.preventDefault();
+    await dispatch(updateUserDisplayName(display_name, sessionUser?.id));
+    // history.push()
+    setShowDropdown(false);
+  }
+
+
+  const handleImage = async(e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('media_url', media_url);
+
+    await dispatch(updateUserImage(formData, sessionUser?.id));
+    setShowDropdown(false);
+  }
+  
+  const updateMedia_url = (e) => {
+    const file = e.target.files[ 0 ];
+    setMedia_url(file);
+  }
+
 
   return (<>
-    <img
-      className='nav-user-image'
-      onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
-      src={sessionUser?.image_url} alt='user'
-    />
+    {sessionUser?.image_url === 'no image provided' ? 
+      <div className='nav-user-image' 
+        onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
+      >{sessionUser?.display_name[0].toUpperCase()}</div> : 
+      <img className='nav-user-image'
+        src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}
+        onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
+      />
+    }
+
+    
 
     {showDropdown && (
+      
       <div className='dropdown-nav'>
-        <div>{sessionUser?.display_name}</div>
-        <input placeholder={sessionUser?.display_name}></input>
-        <input placeholder='User image url'></input>
+        <div className='row-list' style={{alignItems:'center'}} >
+          {sessionUser?.image_url === 'no image provided' ? 
+            <div className='nav-user-image' >{sessionUser?.display_name[0].toUpperCase()}</div> : 
+            <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
+          }
+          <h3>{sessionUser?.display_name}</h3>
+          <button className='dropdown-cancel' onClick={()=> setShowDropdown(false)}>X</button>
+        </div>
+        <form onSubmit={handleDisplay}>
+          <label>Change Display Name</label>
+          <input placeholder={sessionUser?.display_name} value={display_name} onChange={e=> setDisplay_name(e.target.value)}></input>
+          <button type='submit'>Set Display Name</button>
+        </form>
+        <form onSubmit={handleImage}>
+          <label>Set Profile Image</label>
+          <input placeholder='User image url' type='file' accept='image/*' onChange={updateMedia_url}></input>
+          <button type='submit'>Set Profile Image</button>
+        </form>
         <LogoutButton />
       </div>
     )}
@@ -36,7 +88,7 @@ const NavDropdown = ({sessionUser}) => {
 }
 
 const Navigation = () => {
-  const sessionUser = useSelector(state => state?.session?.user);
+  // const sessionUser = useSelector(state => state?.session?.user);
   const history = useHistory();
 
   return (
@@ -53,7 +105,7 @@ const Navigation = () => {
       </div>
     
       <div id='right-nav'>
-        <NavDropdown sessionUser={sessionUser} />
+        <NavDropdown />
       </div>
     </div>
   )

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
+
 // import { useParams, Redirect, useHistory } from 'react-router-dom';
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
 // import { io } from 'socket.io-client';
@@ -96,11 +97,11 @@ const Chat = () => {
   )
 };
 
-
 export default Chat;
 
 
 const MessageCard = ({message, sessionUser}) => {
+  const dayjs = require('dayjs');
   const dispatch = useDispatch();
   const existing = message?.content;
   const [toggleEdit, setToggleEdit] = useState(false);
@@ -108,16 +109,14 @@ const MessageCard = ({message, sessionUser}) => {
 
   const handleEdit = async(e) => {
     e.preventDefault();
-    
-    const updated = await dispatch(updateMessage({...message, content: input}, message?.id))
-    console.log('Updated in handle edit', updated)
-    setToggleEdit(false)
+    await dispatch(updateMessage({...message, content: input}, message?.id))
+    return setToggleEdit(false);
   }
   
   const handleCancel = e => {
     e.preventDefault();
     setInput(existing);
-    setToggleEdit(false);
+    return setToggleEdit(false);
   }
 
   return toggleEdit ? (
@@ -136,7 +135,9 @@ const MessageCard = ({message, sessionUser}) => {
         </div>
 
         <div className='message-header-mid'>
-          <div><strong>{message?.author} </strong>{message?.created_at}</div>
+          <div><strong>{message?.author} </strong>{
+            dayjs(message?.created_at).format('h:mm A')
+          }</div>
           {message?.content}
         </div>
 

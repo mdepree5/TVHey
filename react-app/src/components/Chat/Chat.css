@@ -1,7 +1,7 @@
 .message-container{
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   
   height: 100%;
   overflow-y: auto;
@@ -130,6 +130,13 @@
   color: white;
 }
 
-
+.editor-wrapper{
+  height: 50%;
+  width: 50%;
+}
+.editor-wrapper * {
+  /* height: 80%; */
+  width: 80%;
+}
 
 

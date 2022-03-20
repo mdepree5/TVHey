@@ -22,13 +22,6 @@ body, html{
   flex-direction: column;
 }
 
-input{
-  background-color: rgba(138, 149, 159, 0.212);
-  border: solid 0.05em #EC8642;
-  border-radius: 0.5em;
-  color: white;
-}
-
 .flex-end{
   display: flex;
   flex-direction: row;
@@ -38,6 +31,13 @@ input{
 a{
   color: #EC8642;
   text-decoration: none;
+}
+
+input{
+  background-color: rgba(138, 149, 159, 0.212);
+  border: solid 0.05em #EC8642;
+  border-radius: 0.5em;
+  color: white;
 }
 
 button{

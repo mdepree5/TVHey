@@ -8,5 +8,3 @@ class MessageForm(FlaskForm):
   author_id = IntegerField('author_id')
   channel_id = IntegerField('channel_id', v)
   content = StringField('content', v)
-  
-  submit = SubmitField("Submit")
