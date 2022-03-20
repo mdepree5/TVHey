@@ -29,18 +29,14 @@ def test_connection():
   print('debugger ——————————————————————————————————————————————————————————————————————————————')
   all_users = User.query.all()
   this = [user.to_dict() for user in all_users]
-  print(this)
+  # print(this)
   print('debugger ——————————————————————————————————————————————————————————————————————————————')
   all_channels = Channel.query.all()
-  them = [channel.to_dict() for channel in all_channels]
-  themser = [json.dumps(channel, default = defaultconverter) for channel in them]
-  print(them)
-  print(themser)
+  themser = [json.dumps(channel, default = defaultconverter) for channel in [channel.to_dict() for channel in all_channels]]
   print('debugger ——————————————————————————————————————————————————————————————————————————————')
   emit('response', {'message': 'Connection successful'})
   emit('all_users', {'all_users': this})
   emit('all_channels', {'all_channels': themser})
-  # emit('all_channels', {'all_channels': [channel.to_dict() for channel in all_channels]})
   # return {"all_channels": [channel.to_dict() for channel in all_channels]}
 
 # handle chat messages

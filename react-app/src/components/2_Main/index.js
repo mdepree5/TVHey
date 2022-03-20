@@ -60,7 +60,6 @@ export const AuthenticatedApp = () => {
 
 
   socket.on('all_users', all_users => console.log('frontend all users', all_users));
-  socket.on('disconnect response', response => console.log(`%c response:`, `color:yellow`, response))
 
     // socket.on('chat', message => dispatch(createMessage(message)));
   const dispatch = useDispatch();
