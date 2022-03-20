@@ -45,6 +45,11 @@ export const AuthenticatedApp = () => {
   socket = io(base);
   console.log('authenticated app', socket)
 
+  socket.on('response', response => console.log('frontend connection', response));
+  socket.on('all_channels', all_channels => console.log('frontend', all_channels));
+  socket.on('all_users', all_users => console.log('frontend all users', all_users));
+
+
     // socket.on('chat', message => dispatch(createMessage(message)));
   const dispatch = useDispatch();
   useEffect(() => { dispatch(getChannels()) }, [dispatch]);
@@ -62,7 +67,7 @@ export const AuthenticatedApp = () => {
         snapOffset={20}
       >
         <LeftNav />
-        <RightPage />
+        <RightPage socket={socket}/>
       </Split>
     </div>
   )
@@ -90,13 +95,13 @@ const LeftNav = () => {
   )
 }
 
-const RightPage = () => {
+const RightPage = ({socket}) => {
 
   return (
     <div className='right-page'>
       <Switch>
         <Route exact path="/" ><Home /></Route>
-        <Route exact path="/channels/:channelId" ><Chat /></Route>
+        <Route exact path="/channels/:channelId" ><Chat socket={socket}/></Route>
         <Route><Redirect to='/' /></Route>
       </Switch>
     </div>

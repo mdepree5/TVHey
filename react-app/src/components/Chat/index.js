@@ -19,11 +19,19 @@ import './Chat.css';
 // let socket;
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
 
-const Chat = () => {
+const Chat = ({socket}) => {
 // **** ————————————————————————————————————————————————————————————————————————————STABLE
   const dispatch = useDispatch();
   // const history = useHistory();
   const { channelId } = useParams();
+
+  // todo ——————————————————————————————————————————————————————————————————————————————————
+console.log('———————————————————————————————————————————————————————————————————————————————————')
+console.log('Chat socket', socket)
+console.log('Chat channelId', channelId)
+console.log("%cThis is a yellow text", "color:yellow");
+console.log('———————————————————————————————————————————————————————————————————————————————————')
+// todo ——————————————————————————————————————————————————————————————————————————————————
 
   const [chatInput, setChatInput] = useState('');
 
