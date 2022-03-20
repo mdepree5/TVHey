@@ -10,7 +10,7 @@ import './Navigation.css'
 const NavDropdown = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state?.session?.user);
-  console.log(sessionUser)
+  console.log('NavDropdown', sessionUser)
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [display_name, setDisplay_name] = useState(sessionUser?.display_name);

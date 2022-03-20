@@ -1,8 +1,8 @@
 
 const apiFetch = route => (endpoint='', action, config = {method: 'GET'}) => async (dispatch) => {
-  const base = (process.env.NODE_ENV === 'production') ? '/api' : 'http://localhost:3000/api';
+  const domain = (process.env.NODE_ENV === 'production') ? '/api' : 'http://localhost:3000/api';
 
-  return await fetch(`${base}/${route}/${endpoint}`, config)
+  return await fetch(`${domain}/${route}/${endpoint}`, config)
   .then(async response => {
     if (response.ok) {
       const data = await response.json()

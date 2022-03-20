@@ -3,12 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
 // todo ——————————————————————————————————————————————————————————————————————————————————
+import { io } from 'socket.io-client';
+// todo ——————————————————————————————————————————————————————————————————————————————————
 import AuthForm from "../0_Session/AuthForm";
-
 import Navigation from '../1_Navigation/index';
 import Chat from "../../components/Chat";
 import ChannelFormModal from '../Channel/channel_modal';
-
+// todo ——————————————————————————————————————————————————————————————————————————————————
 import {getChannels} from '../../store/channel';
 import {loginDemo} from '../../store/session';
 import './Main.css'
@@ -39,6 +40,12 @@ export const UnAuthenticatedApp = () => {
 }
   
 export const AuthenticatedApp = () => {
+  let socket;
+  const base = (process.env.NODE_ENV === 'production') ? '/api' : '';
+  socket = io(base);
+  console.log('authenticated app', socket)
+
+    // socket.on('chat', message => dispatch(createMessage(message)));
   const dispatch = useDispatch();
   useEffect(() => { dispatch(getChannels()) }, [dispatch]);
 
