@@ -42,7 +42,8 @@ export const UnAuthenticatedApp = () => {
 export const AuthenticatedApp = () => {
   const dayjs = require('dayjs');
   let socket;
-  const base = (process.env.NODE_ENV === 'production') ? '/api' : '';
+  // const base = (process.env.NODE_ENV === 'production') ? '/api' : '';
+  const base = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
   socket = io(base);
   console.log('authenticated app', socket)
   
