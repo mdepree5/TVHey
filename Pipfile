@@ -31,6 +31,7 @@ eventlet = "==0.30.2"
 gevent = "*"
 gevent-websocket = "*"
 gunicorn = "==20.1.0"
+email-validator = "*"
 
 [dev-packages]
 psycopg2-binary = "==2.8.6"
