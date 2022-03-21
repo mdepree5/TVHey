@@ -19,22 +19,28 @@ import './Chat.css';
 // let socket;
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
 
-const Chat = () => {
+const Chat = ({socket}) => {
 // **** ————————————————————————————————————————————————————————————————————————————STABLE
   const dispatch = useDispatch();
   // const history = useHistory();
   const { channelId } = useParams();
+
+// todo ——————————————————————————————————————————————————————————————————————————————————
+  console.log('———————————————————————————————————————————————————————————————————————————————————')
+  console.log('Chat socket', socket)
+  console.log('Chat channelId', channelId)
+  console.log('———————————————————————————————————————————————————————————————————————————————————')
+// todo ——————————————————————————————————————————————————————————————————————————————————
 
   const [chatInput, setChatInput] = useState('');
 
   const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channel);
   const messagestate =  useSelector(state => state?.message);
-  
+
   const thisChannel = channelstate?.selected;
   const messagesArr = Object.values(messagestate?.messages);
-  
-  
+
   useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
 
   useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);

@@ -7,10 +7,10 @@ import LogoutButton from '../../components/0_Session/LogoutButton';
 import './Navigation.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
 
-const NavDropdown = () => {
+const NavDropdown = ({socket}) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state?.session?.user);
-  console.log(sessionUser)
+  // console.log('NavDropdown', sessionUser)
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [display_name, setDisplay_name] = useState(sessionUser?.display_name);
@@ -81,13 +81,13 @@ const NavDropdown = () => {
           <input placeholder='User image url' type='file' accept='image/*' onChange={updateMedia_url}></input>
           <button type='submit'>Set Profile Image</button>
         </form>
-        <LogoutButton />
+        <LogoutButton socket={socket}/>
       </div>
     )}
   </>)
 }
 
-const Navigation = () => {
+const Navigation = ({socket}) => {
   // const sessionUser = useSelector(state => state?.session?.user);
   const history = useHistory();
 
@@ -105,7 +105,7 @@ const Navigation = () => {
       </div>
     
       <div id='right-nav'>
-        <NavDropdown />
+        <NavDropdown socket={socket}/>
       </div>
     </div>
   )

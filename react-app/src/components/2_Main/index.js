@@ -3,12 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
 // todo ——————————————————————————————————————————————————————————————————————————————————
+import { io } from 'socket.io-client';
+// todo ——————————————————————————————————————————————————————————————————————————————————
 import AuthForm from "../0_Session/AuthForm";
-
 import Navigation from '../1_Navigation/index';
 import Chat from "../../components/Chat";
 import ChannelFormModal from '../Channel/channel_modal';
-
+// todo ——————————————————————————————————————————————————————————————————————————————————
 import {getChannels} from '../../store/channel';
 import {loginDemo} from '../../store/session';
 import './Main.css'
@@ -39,12 +40,37 @@ export const UnAuthenticatedApp = () => {
 }
   
 export const AuthenticatedApp = () => {
+  const dayjs = require('dayjs');
+  let socket;
+  // const domain = (process.env.NODE_ENV === 'production') ? '/api' : '';
+  // const domain = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
+  // const domain = '';
+
+  socket = io();
+  console.log('authenticated app', socket)
+  
+  socket.on('response', response => console.log('frontend connection', response));
+  socket.on('all_channels', all_channels => console.log('all_channels', all_channels));
+  socket.on('all_channels', all_channels => {
+    console.table(all_channels.all_channels)
+    all_channels.all_channels.forEach(channel => {
+      const parsed = JSON.parse(channel)
+      console.log('one channel', parsed)
+      console.log('created at', parsed?.created_at)
+      console.log('format date', dayjs(parsed?.created_at).format('h:mm A'))
+    })
+  });
+
+
+  socket.on('all_users', all_users => console.log('frontend all users', all_users));
+
+    // socket.on('chat', message => dispatch(createMessage(message)));
   const dispatch = useDispatch();
   useEffect(() => { dispatch(getChannels()) }, [dispatch]);
 
   return (
     <div className='page-container'>
-      <Navigation/>
+      <Navigation socket={socket}/>
       <Split className='row-list main-page'
         cursor="col-resize"
         direction="horizontal"
@@ -55,7 +81,7 @@ export const AuthenticatedApp = () => {
         snapOffset={20}
       >
         <LeftNav />
-        <RightPage />
+        <RightPage socket={socket}/>
       </Split>
     </div>
   )
@@ -83,13 +109,13 @@ const LeftNav = () => {
   )
 }
 
-const RightPage = () => {
+const RightPage = ({socket}) => {
 
   return (
     <div className='right-page'>
       <Switch>
         <Route exact path="/" ><Home /></Route>
-        <Route exact path="/channels/:channelId" ><Chat /></Route>
+        <Route exact path="/channels/:channelId" ><Chat socket={socket}/></Route>
         <Route><Redirect to='/' /></Route>
       </Switch>
     </div>
