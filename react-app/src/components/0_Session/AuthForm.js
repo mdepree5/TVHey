@@ -61,6 +61,7 @@ const AuthForm = ({signup}) => {
       {signup && 
         <FormInput required={true} show={signup} validation={confirmPasswordValidation} message='Passwords must match' type='password' name='Confirm Password' state={confirmPassword} setState={setConfirmPassword}/> }
       
+      {signup && <small style={{fontSize:'0.8em', color:'#EC8642'}}>* = required</small>}
       <button className={loginValidation ? 'input-valid' : ''} type='submit' disabled={signup ? !(loginValidation && signupValidation): !loginValidation}>{signup ? 'Sign Up' : 'Log In'}</button>
       
       <FormErrors errors={errors}/>

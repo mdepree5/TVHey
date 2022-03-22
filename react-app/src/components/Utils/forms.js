@@ -5,7 +5,7 @@ export const FormInput = ({ required, type, name, state, setState, validation, m
 
   return (
     <div className='form-input'>
-      <label htmlFor={formatName}>{name} {required && <small style={{fontSize:'0.8em', color:'#EC8642'}}>*required</small>}</label>
+      <label htmlFor={formatName}>{name}</label>
       <div className='row-list'>
         <input 
           placeholder={name}
@@ -16,6 +16,7 @@ export const FormInput = ({ required, type, name, state, setState, validation, m
         />
         {show && <div className={`inline-form-validation ${validation ? 'input-valid' : 'input-invalid'}`}>
           {validation ? <>✅ {message}</> : <>{message}</>}
+          {<small style={{fontSize:'0.8em', color:'#EC8642'}}> *</small>}         
         </div>}
       </div>
     </div>
