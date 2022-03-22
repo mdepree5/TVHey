@@ -54,27 +54,14 @@ const AuthForm = ({signup}) => {
   return (
     <form onSubmit={handleSubmit}>
       {signup && 
-        <div className='row-list'>
-          <FormInput name='Username' state={username} setState={setUsername} />
-          <InlineFormValidation validation={usernameValidation} message='Provide a valid username' />
-        </div>
+        <FormInput name='Username' show={signup} validation={usernameValidation} message='Provide a valid username' state={username} setState={setUsername}/>
       }
+      <FormInput name='Email' show={signup} validation={emailValidation} message='Provide a valid email' state={email} setState={setEmail}/>
 
-      <div className='row-list'>
-        <FormInput name='Email' state={email} setState={setEmail}/>
-        {signup && <InlineFormValidation validation={emailValidation} message='Provide a valid email' />}
-      </div>
-
-      <div className='row-list'>
-        <FormInput type='password' name='Password' state={password} setState={setPassword}/>
-        {signup && <InlineFormValidation validation={passwordValidation} message='A a 1 !' />}
-      </div>
+      <FormInput type='password' show={signup} validation={passwordValidation} message='Upper, lower, number, special' name='Password' state={password} setState={setPassword}/>
 
       {signup && 
-        <div className='row-list'>
-          <FormInput required={true} type='password' name='Confirm Password' state={confirmPassword} setState={setConfirmPassword}/> 
-          <InlineFormValidation validation={confirmPasswordValidation} message='Passwords must match' />
-        </div>
+        <FormInput required={true} validation={confirmPasswordValidation} message='Passwords must match' type='password' name='Confirm Password' state={confirmPassword} setState={setConfirmPassword}/> 
       }
       <button type='submit' disabled={!usernameValidation && !emailValidation && !passwordValidation && !confirmPasswordValidation}>{signup ? 'Sign Up' : 'Log In'}</button>
       <FormErrors errors={errors}/>

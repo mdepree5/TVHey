@@ -1,6 +1,6 @@
 import './utils.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-export const FormInput = ({ required, type, name, state, setState }) => {
+export const FormInput = ({ required, type, name, state, setState, validation, message, show}) => {
   const formatName = name.toLowerCase().split(' ').join('-');
 
   return (
@@ -14,16 +14,17 @@ export const FormInput = ({ required, type, name, state, setState }) => {
           value={state}
           onChange={e => setState(e.target.value)}
         />
+        {show && <div className={`inline-form-validation ${validation ? 'input-valid' : 'input-invalid'}`}>
+          {validation ? <>✅ {message}</> : <>{message}</>}
+        </div>}
       </div>
     </div>
   )
 }
 
 export const InlineFormValidation = ({ validation, message }) => (
-  <div className={`row-list inline-form-validation ${validation ? 'input-valid' : 'input-invalid'}`}>
-    {/* {validation && <> ✅</>} */}
-    {validation ? <> ✅</> : <></>}
-    {message}
+  <div className={`inline-form-validation ${validation ? 'input-valid' : 'input-invalid'}`}>
+    {validation ? <>✅ {message}</> : <>{message}</>}
   </div>
 )
 

@@ -29,6 +29,7 @@ input{
   color: white;
 }
 
+form > button {margin-top: 0.4em;}
 
 button{
   background: none;
