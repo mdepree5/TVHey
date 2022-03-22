@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import { signUp, login } from '../../store/session';
-import {FormInput, FormErrors} from '../Utils/forms';
+import {FormInput, InlineFormValidation, FormErrors} from '../Utils/forms';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const AuthForm = ({signup}) => {
   const dispatch = useDispatch();
@@ -12,14 +12,13 @@ const AuthForm = ({signup}) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState([]);
-  const [validationErrors, setValidationErrors] = useState([]);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (signup && password !== repeatPassword) {
+    if (signup && password !== confirmPassword) {
       setErrors(['Passwords must match']);
       alert('Passwords must match', errors);
       console.log('ERRORS', errors)
@@ -27,7 +26,7 @@ const AuthForm = ({signup}) => {
     }
 
     const user = signup ?
-      await dispatch(signUp(username, email, password)) : 
+      await dispatch(signUp(username, email, password, confirmPassword)) : 
       await dispatch(login(email, password));
 
     console.log(`%c user: ${user}`, `color:yellow`)
@@ -36,17 +35,12 @@ const AuthForm = ({signup}) => {
     return;
   };
 
-
-  // useEffect(()=> {
   //   const errors = [];
   //   if(!username) errors.push('What is your property called? We\'d love to know!');
   //   if(!username) errors.push('What is your property called? We\'d love to know!');
   //   if(!email) errors.push('What is your property called? We\'d love to know!');
   //   if(!password) errors.push('What is your property called? We\'d love to know!');
-  //   if(!password && repeatPassword !== password) errors.push('What is your property called? We\'d love to know!');
-  
-  //   setValidationErrors(errors);
-  // }, [username, numberOfBeds, price, address, city, state, zipcode])
+  //   if(!password && confirmPassword !== password) errors.push('What is your property called? We\'d love to know!');
 
   if (sessionUser) return <Redirect to='/' />;
   // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -66,22 +60,29 @@ const AuthForm = ({signup}) => {
   return (
     <form onSubmit={handleSubmit}>
       {signup && 
-      <>
-        <FormInput name='Username' state={username} setState={setUsername} />
-        {usernameValidation && <div>✅</div>}
-      </>
-        }
+        <div className='row-list'>
+          <FormInput name='Username' state={username} setState={setUsername} />
+          <InlineFormValidation validation={usernameValidation} message='Provide a valid username' />
+        </div>
+      }
+
       <div className='row-list'>
-        <FormInput inputError={email} name='Email' state={email} setState={setEmail}/>
-          <div className={`row-list ${emailValidation ? 'input-valid' : 'input-invalid'}`}>
-            Provide a valid email
-            {emailValidation && <div>✅</div>}
-          </div>
+        <FormInput name='Email' state={email} setState={setEmail}/>
+        <InlineFormValidation validation={emailValidation} message='Provide a valid email' />
       </div>
-      <FormInput inputError={password} type='password' name='Password' state={password} setState={setPassword}/>
-        {passwordValidation && <div>✅</div>}
-      {signup && <FormInput inputError={!password && password !== repeatPassword} required={true} type='password' name='Confirm Password' state={repeatPassword} setState={setRepeatPassword}/> }
-      <button type='submit'>Sign Up</button>
+
+      <div className='row-list'>
+        <FormInput type='password' name='Password' state={password} setState={setPassword}/>
+        <InlineFormValidation validation={passwordValidation} message='Provide a password with One Capital, one Lowercase, one special character, one number' />
+      </div>
+
+      {signup && 
+        <div className='row-list'>
+          <FormInput required={true} type='password' name='Confirm Password' state={confirmPassword} setState={setConfirmPassword}/> 
+          <InlineFormValidation validation={passwordValidation} message='Passwords must match' />
+        </div>
+      }
+      <button type='submit'>{signup ? 'Sign Up' : 'Log In'}</button>
       <FormErrors errors={errors}/>
     </form>
   );
