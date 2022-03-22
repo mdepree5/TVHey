@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // todo ——————————————————————————————————————————————————————————————————————————————————
+import { Modal } from '../../context/Modal';
 import { updateUserImage, updateUserDisplayName } from '../../store/session';
 import LogoutButton from '../../components/0_Session/LogoutButton';
 import './Navigation.css'
@@ -15,6 +16,16 @@ const UserDropDownForm = ({label, onSubmit, input, button}) => (
     </div>
   </form>
 )
+function NavDropdownModal({children}) {
+  const [showModal, setShowModal] = useState(false);
+  return (<>
+    <button onClick={e => setShowModal(true)}>Nav Dropdown</button>
+    {showModal && (
+      <Modal onClose={() => setShowModal(false)}>{children}</Modal>
+    )}
+  </>);
+}
+
 
 const NavDropdown = () => {
   const dispatch = useDispatch();
@@ -76,8 +87,8 @@ const NavDropdown = () => {
         onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
       />
     }
-
-    {showDropdown && (
+    <NavDropdownModal children=
+    {
       <div className='dropdown-nav'>
         <div className='row-list' style={{alignItems:'center'}} >
           {sessionUser?.image_url === 'no image provided' ? 
@@ -100,7 +111,31 @@ const NavDropdown = () => {
 
         <LogoutButton />
       </div>
-    )}
+    } />
+    {/* {showDropdown && (
+      <div className='dropdown-nav'>
+        <div className='row-list' style={{alignItems:'center'}} >
+          {sessionUser?.image_url === 'no image provided' ? 
+            <div className='nav-user-image' >{sessionUser?.display_name[0].toUpperCase()}</div> : 
+            <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
+          }
+          <h3 className='nav-display-name'>{sessionUser?.display_name}</h3>
+          <button className='dropdown-cancel' onClick={closeDropdown}>X</button>
+        </div>
+
+        <UserDropDownForm label='Change Display Name' onSubmit={handleDisplay}
+          input={<input placeholder={sessionUser?.display_name} value={display_name} onChange={updateDisplayName}></input>}
+          button={<button className={!display_name || !count ? 'default-cursor' : ''} disabled={!display_name || !count} type='submit' >{'>>>'}</button>}
+          />
+
+        <UserDropDownForm label='Set Profile Image' onSubmit={handleImage}
+          input={<input style={{cursor:'pointer'}} type='file' accept='image/*' onChange={e => setMedia_url(e.target.files[0])}></input>}
+          button={imageLoading ? <div>Uploading...</div> : <button className={!media_url ? 'default-cursor' : ''} disabled={!media_url} type='submit'>{'>>>'}</button>}
+        />
+
+        <LogoutButton />
+      </div>
+    )} */}
   </>)
 }
 

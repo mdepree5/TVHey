@@ -36,10 +36,10 @@ export const login = (email, password) => async (dispatch) => {
 export const loginDemo = () => async (dispatch) => {
   
 
-  let count = 1;
+  // let count = 1;
 
-  const response1 = await fetch('/api/auth/signup', {method: 'POST', headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({username:`${count}alligator`, display_name:'', email:`${count}alligator@lo.ki`, password:'ImaVariant?1'})});
+  // const response1 = await fetch('/api/auth/signup', {method: 'POST', headers: {'Content-Type': 'application/json'},
+  //   body: JSON.stringify({username:`${count}alligator`, display_name:'', email:`${count}alligator@lo.ki`, password:'ImaVariant?1'})});
 
 
   const response = await fetch('/api/auth/login', {method: 'POST', headers: { 'Content-Type': 'application/json' }, 
@@ -55,7 +55,7 @@ export const loginDemo = () => async (dispatch) => {
     if (data.errors) return data.errors;
   } else return ['An error occurred. Please try again.']
   
-  count ++;
+  // count++;
 }
 
 export const logout = () => async (dispatch) => {
