@@ -10,7 +10,7 @@ import './Navigation.css'
 const NavDropdown = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state?.session?.user);
-  // console.log('NavDropdown', sessionUser)
+  const [imageLoading, setImageLoading] = useState(false);
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [display_name, setDisplay_name] = useState(sessionUser?.display_name);
@@ -28,22 +28,24 @@ const NavDropdown = () => {
     e.preventDefault();
     await dispatch(updateUserDisplayName(display_name, sessionUser?.id));
     // history.push()
+
     setShowDropdown(false);
   }
-
 
   const handleImage = async(e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('media_url', media_url);
-
-    await dispatch(updateUserImage(formData, sessionUser?.id));
-    setShowDropdown(false);
+    
+    setImageLoading(true);
+    const back = await dispatch(updateUserImage(formData, sessionUser?.id));
+    setImageLoading(false);
+    return !back?.errors && setShowDropdown(false);
   }
   
-  const updateMedia_url = (e) => {
-    const file = e.target.files[ 0 ];
-    setMedia_url(file);
+  const closeDropdown = () => {
+    setDisplay_name(sessionUser?.display_name);
+    setShowDropdown(false);
   }
 
 
@@ -58,8 +60,6 @@ const NavDropdown = () => {
       />
     }
 
-    
-
     {showDropdown && (
       
       <div className='dropdown-nav'>
@@ -69,7 +69,7 @@ const NavDropdown = () => {
             <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
           }
           <h3>{sessionUser?.display_name}</h3>
-          <button className='dropdown-cancel' onClick={()=> setShowDropdown(false)}>X</button>
+          <button className='dropdown-cancel' onClick={closeDropdown}>X</button>
         </div>
         <form onSubmit={handleDisplay}>
           <label>Change Display Name</label>
@@ -78,8 +78,11 @@ const NavDropdown = () => {
         </form>
         <form onSubmit={handleImage}>
           <label>Set Profile Image</label>
-          <input placeholder='User image url' type='file' accept='image/*' onChange={updateMedia_url}></input>
-          <button type='submit'>Set Profile Image</button>
+          <input placeholder='User image url' type='file' accept='image/*' onChange={e => setMedia_url(e.target.files[0])}></input>
+          {imageLoading ? 
+            <div>Uploading...</div> :
+            <button type='submit'>Set Profile Image</button>
+          }
         </form>
         <LogoutButton />
       </div>
@@ -88,7 +91,6 @@ const NavDropdown = () => {
 }
 
 const Navigation = () => {
-  // const sessionUser = useSelector(state => state?.session?.user);
   const history = useHistory();
 
   return (
