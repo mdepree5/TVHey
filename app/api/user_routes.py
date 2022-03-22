@@ -38,17 +38,18 @@ def update_user_image(userId):
   
   if type(form.data['media_url']) is not str:
     image = form.data['media_url']
-    if not allowed_file(image.filename):
-      # url = user.image_url
-      return {"errors": "file type not permitted"}, 400
   
-    image.filename = get_unique_filename(image.filename)
-    
-    upload = upload_file_to_s3(image)
-    if "url" not in upload:
-      # url = user.image_url
-      return upload, 400
-    url = upload["url"]
+  if not allowed_file(image.filename):
+    url = 'no image provided'
+    # return {"errors": "file type not permitted"}, 400
+  
+  image.filename = get_unique_filename(image.filename)
+  
+  upload = upload_file_to_s3(image)
+  if "url" not in upload:
+    url = 'no image provided'
+  else: url = upload["url"]
+  
     
   if form.validate_on_submit():
     user.image_url= url

@@ -6,6 +6,15 @@ import { updateUserImage, updateUserDisplayName } from '../../store/session';
 import LogoutButton from '../../components/0_Session/LogoutButton';
 import './Navigation.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
+const UserDropDownForm = ({label, onSubmit, input, button}) => (
+  <form onSubmit={onSubmit}>
+    <label>{label}</label>
+    <div className='row-list'>
+      {input}
+      {button}
+    </div>
+  </form>
+)
 
 const NavDropdown = () => {
   const dispatch = useDispatch();
@@ -39,6 +48,7 @@ const NavDropdown = () => {
     
     setImageLoading(true);
     const back = await dispatch(updateUserImage(formData, sessionUser?.id));
+
     setImageLoading(false);
     return !back?.errors && setShowDropdown(false);
   }
@@ -54,6 +64,7 @@ const NavDropdown = () => {
       <div className='nav-user-image' 
         onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
       >{sessionUser?.display_name[0].toUpperCase()}</div> : 
+
       <img className='nav-user-image'
         src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}
         onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
@@ -67,27 +78,26 @@ const NavDropdown = () => {
             <div className='nav-user-image' >{sessionUser?.display_name[0].toUpperCase()}</div> : 
             <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
           }
-          <h3>{sessionUser?.display_name}</h3>
+          <h3 className='nav-display-name'>{sessionUser?.display_name}</h3>
           <button className='dropdown-cancel' onClick={closeDropdown}>X</button>
         </div>
-        <form onSubmit={handleDisplay}>
-          <label>Change Display Name</label>
-          <input placeholder={sessionUser?.display_name} value={display_name} onChange={e=> setDisplay_name(e.target.value)}></input>
-          <button type='submit'>Set Display Name</button>
-        </form>
-        <form onSubmit={handleImage}>
-          <label>Set Profile Image</label>
-          <input placeholder='User image url' type='file' accept='image/*' onChange={e => setMedia_url(e.target.files[0])}></input>
-          {imageLoading ? 
-            <div>Uploading...</div> :
-            <button type='submit'>Set Profile Image</button>
-          }
-        </form>
+
+        <UserDropDownForm label='Change Display Name' onSubmit={handleDisplay}
+          input={<input placeholder={sessionUser?.display_name} value={display_name} onChange={e=> setDisplay_name(e.target.value)}></input>}
+          button={<button type='submit'>{'>>>'}</button>}
+          />
+
+        <UserDropDownForm label='Set Profile Image 2' onSubmit={handleImage}
+          input={<input style={{cursor:'pointer'}} type='file' accept='image/*' onChange={e => setMedia_url(e.target.files[0])}></input>}
+          button={imageLoading ? <div>Uploading...</div> : <button type='submit'>{'>>>'}</button>}
+        />
+        
         <LogoutButton />
       </div>
     )}
   </>)
 }
+
 
 const Navigation = () => {
   const history = useHistory();
