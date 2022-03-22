@@ -1,13 +1,7 @@
-// import { useState, useEffect } from 'react';
 import './utils.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 export const FormInput = ({ required, type, name, state, setState }) => {
   const formatName = name.toLowerCase().split(' ').join('-');
-  // const [inputError, setInputError] = useState();
-  
-  // useEffect(() => {
-  //   if(!state) setInputError(true);
-  // }, [state])
 
   return (
     <div className='form-input'>
@@ -20,7 +14,6 @@ export const FormInput = ({ required, type, name, state, setState }) => {
           value={state}
           onChange={e => setState(e.target.value)}
         />
-        {/* {!inputError && <div>✅</div>} */}
       </div>
     </div>
   )
