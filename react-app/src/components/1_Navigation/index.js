@@ -93,7 +93,7 @@ const NavDropdown = () => {
           button={<button className={!display_name || !count ? 'default-cursor' : ''} disabled={!display_name || !count} type='submit' >{'>>>'}</button>}
           />
 
-        <UserDropDownForm label='Set Profile Image 2' onSubmit={handleImage}
+        <UserDropDownForm label='Set Profile Image' onSubmit={handleImage}
           input={<input style={{cursor:'pointer'}} type='file' accept='image/*' onChange={e => setMedia_url(e.target.files[0])}></input>}
           button={imageLoading ? <div>Uploading...</div> : <button className={!media_url ? 'default-cursor' : ''} disabled={!media_url} type='submit'>{'>>>'}</button>}
         />
