@@ -30,11 +30,15 @@
 } */
 .inline-form-validation{
   font-size: 0.8em;
-  
+
 }
 .input-valid{ color: green; }
 /* .input-invalid{ box-shadow: 1px 2px 10px white; } */
 /* .input-invalid:hover { } */
 .errors{
+  margin-top: 2em;
+  border-top: solid 0.1em gray;
+  padding-top: 1em;
+
   color: red;
 }

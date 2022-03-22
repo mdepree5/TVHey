@@ -29,14 +29,17 @@ def login():
 
   print('debugger login form')
   print(form.data)
-  print('debugger login form')
   # Get the csrf_token from the request cookie and put it into the
   # form manually to validate_on_submit can be used
   if form.validate_on_submit():
-    # Add the user to the session, we are logged in!
+    print('validated')
     user = User.query.filter(User.email == form.data['email']).first()
     login_user(user)
     return user.to_dict()
+  print(form.errors)
+  print(validation_errors_to_error_messages(form.errors))
+  print('debugger login form')
+  
   return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 # todo ——————————————————————————————————————————————————————————————————————————————————
 @auth_routes.route('/logout')

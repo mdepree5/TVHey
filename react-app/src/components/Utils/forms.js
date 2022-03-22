@@ -28,7 +28,7 @@ export const InlineFormValidation = ({ validation, message }) => (
 )
 
 export const FormErrors = ({errors}) => (
-  <div className='errors'>
+  <div className={errors.length && 'errors'}>
     {errors.map((error, ind) => (
       <div key={ind}>{error}</div>
     ))}

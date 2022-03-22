@@ -30,8 +30,10 @@ const AuthForm = ({signup}) => {
       await dispatch(login(email, password));
 
     console.log(`%c user: ${user}`, `color:yellow`)
+    console.log(`%c user:`, `color:yellow`, user)
+    console.log(`%c user: ${user?.errors}`, `color:yellow`) //=> undefined
 
-    if (user?.errors) setErrors(user?.errors);
+    if (user) setErrors(user);
     return;
   };
 

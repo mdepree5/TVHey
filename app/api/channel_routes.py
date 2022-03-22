@@ -35,7 +35,10 @@ def create_channel():
     db.session.commit()
     
     return {**new_channel.to_dict()}
-
+  print('debugger channel form')
+  print(form.errors)
+  print(validation_errors_to_error_messages(form.errors))
+  print('debugger channel form')
   return {'errors': validation_errors_to_error_messages(form.errors)}
 # todo ——————————————————————————————————————————————————————————————————————————————————
 @channel_routes.route("/", methods=["GET"])
