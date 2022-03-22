@@ -60,12 +60,12 @@ const AuthForm = ({signup}) => {
 
       <div className='row-list'>
         <FormInput name='Email' state={email} setState={setEmail}/>
-        <InlineFormValidation validation={emailValidation} message='Provide a valid email' />
+        {signup && <InlineFormValidation validation={emailValidation} message='Provide a valid email' />}
       </div>
 
       <div className='row-list'>
         <FormInput type='password' name='Password' state={password} setState={setPassword}/>
-        <InlineFormValidation validation={passwordValidation} message='Provide a password with One Capital, one Lowercase, one special character, one number' />
+        {signup && <InlineFormValidation validation={passwordValidation} message='A a 1 !' />}
       </div>
 
       {signup && 

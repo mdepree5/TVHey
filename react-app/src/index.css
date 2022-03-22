@@ -29,11 +29,6 @@ input{
   color: white;
 }
 
-.input-valid{ color: green; box-shadow: 1px 2px 10px green; }
-.input-invalid{ box-shadow: 1px 2px 10px white; }
-.input-invalid:hover { box-shadow: 1px 2px 10px yellow; }
-
-
 
 button{
   background: none;

@@ -15,13 +15,22 @@
   width: 60%;
   margin-left: auto;
   margin-right: auto;
+}
 
+#unauthenticated-app > *{
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 #unauthenticated-header{
-  flex-direction: row;
-  align-items: center;
+  border-top: solid 0.1em gray;
+  padding-top: 2em;
+  
   height: 30px;
+  align-items: center;
+
+  padding-bottom: 2em;
+  border-bottom: solid 0.1em gray;
 }
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Authenticated App                   */

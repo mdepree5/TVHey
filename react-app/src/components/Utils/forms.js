@@ -20,7 +20,7 @@ export const FormInput = ({ required, type, name, state, setState }) => {
 }
 
 export const InlineFormValidation = ({ validation, message }) => (
-  <div className={`row-list ${validation ? 'input-valid' : 'input-invalid'}`}>
+  <div className={`row-list inline-form-validation ${validation ? 'input-valid' : 'input-invalid'}`}>
     {/* {validation && <> ✅</>} */}
     {validation ? <> ✅</> : <></>}
     {message}

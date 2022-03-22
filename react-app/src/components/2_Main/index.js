@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
@@ -18,17 +18,19 @@ import './Main.css'
 export const UnAuthenticatedApp = () => {
   const dispatch = useDispatch();
 
+  const [login, setLogin] = useState(false);
+
   return (
     <div className='page-container' id='unauthenticated-app' >
       <h2>Sign In to TVHey</h2>
       
       <div className='row-list' id='unauthenticated-header'>
-        <NavLink to="/login" exact={true} >Login</NavLink>
-        <button onClick={async() => await dispatch(loginDemo())}>Demo</button>
-        <NavLink to="/sign-up" exact={true}>Sign Up</NavLink>
+        <button onClick={async() => await dispatch(loginDemo())}>Demo Log In</button>
+        <div>Or...</div>
+        <NavLink to={login ? '/login' : '/sign-up'} exact={true} onClick={()=>setLogin(!login)}>{login ? 'Log In' : 'Sign Up'}</NavLink>
       </div>
 
-      <div className='row-list' id='main-page'>
+      <div className='row-list' >
         <Switch>
           <Route exact path="/login"><AuthForm /></Route>
           <Route exact path="/sign-up"><AuthForm signup={true} /></Route>
