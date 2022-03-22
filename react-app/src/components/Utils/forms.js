@@ -1,6 +1,6 @@
 import './utils.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-export const FormInput = ({ required, type, name, state, setState, validation, message, show}) => {
+export const FormInput = ({ type, name, state, setState, validation, message, show}) => {
   const formatName = name.toLowerCase().split(' ').join('-');
 
   return (

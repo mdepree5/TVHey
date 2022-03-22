@@ -56,10 +56,10 @@ const AuthForm = ({signup}) => {
         <FormInput name='Username' show={signup} validation={usernameValidation} message='Provide a valid username' state={username} setState={setUsername}/>}
       
       <FormInput name='Email' show={signup} validation={emailValidation} message='Provide a valid email' state={email} setState={setEmail}/>
-      <FormInput type='password' show={signup} validation={passwordValidation} message='8 chars : Uppercase : lowercase : number : special' name='Password' state={password} setState={setPassword}/>
+      <FormInput name='Password' show={signup} validation={passwordValidation} message='8 chars : Uppercase : lowercase : number : special' type='password' state={password} setState={setPassword}/>
       
       {signup && 
-        <FormInput required={true} show={signup} validation={confirmPasswordValidation} message='Passwords must match' type='password' name='Confirm Password' state={confirmPassword} setState={setConfirmPassword}/> }
+        <FormInput name='Confirm Password' show={signup} validation={confirmPasswordValidation} message='Passwords must match' type='password' state={confirmPassword} setState={setConfirmPassword}/> }
       
       {signup && <small style={{fontSize:'0.8em', color:'#EC8642'}}>* = required</small>}
       <button className={loginValidation ? 'input-valid' : ''} type='submit' disabled={signup ? !(loginValidation && signupValidation): !loginValidation}>{signup ? 'Sign Up' : 'Log In'}</button>

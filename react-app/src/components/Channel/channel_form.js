@@ -40,9 +40,10 @@ const ChannelForm = ({ edit, channel, closeModal }) => {
 
   return (
     <form className='channel-form-container' onSubmit={handleSubmit}>
-      <FormInput required={true} name='Title' state={title} setState={setTitle} />
+      <FormInput name='Title' show={true} validation={title.length} message='Provide a valid title' state={title} setState={setTitle} />
       <FormInput name='Topic' state={topic} setState={setTopic} />
-      <button type='submit'>{edit ? 'Update' : 'Create'}</button>
+      
+      <button className={title.length ? 'input-valid' : ''} type='submit' disabled={!title.length}>{edit ? 'Update' : 'Create'}</button>
       <FormErrors errors={errors} />
     </form>
   )
