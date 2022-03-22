@@ -43,6 +43,7 @@
   /* cursor: not-allowed; */
 }
 
+.dropdown-button-container-invalid,
 .dropdown-button-container{
   position: relative;
   display: inline-block;
@@ -55,7 +56,7 @@
 }
 
 
-.dropdown-button-container:hover .dropdown-button-content {
+.dropdown-button-container-invalid:hover .dropdown-button-content {
   display: inline-flex;
   left: 0;
   top: 2.2em;

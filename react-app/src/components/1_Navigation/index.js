@@ -61,7 +61,6 @@ const NavDropdown = () => {
     }
 
     {showDropdown && (
-      
       <div className='dropdown-nav'>
         <div className='row-list' style={{alignItems:'center'}} >
           {sessionUser?.image_url === 'no image provided' ? 

@@ -24,7 +24,7 @@ export const FormInput = ({ required=true, type, name, state, setState, validati
 }
 
 export const FormButton = ({ validation, disabledLogic, buttonNameLogic }) => (
-  <div className='dropdown-button-container'>
+  <div className={validation ? 'dropdown-button-container' : 'dropdown-button-container-invalid'}>
     <button className={validation ? 'input-valid' : 'button-invalid'} type='submit' disabled={disabledLogic}>{buttonNameLogic}</button>
     <div className='dropdown-button-content'>
       Please fill out required fields
