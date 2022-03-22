@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -14,7 +14,7 @@ const AuthForm = ({signup}) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState([]);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -76,7 +76,7 @@ const AuthForm = ({signup}) => {
           <InlineFormValidation validation={confirmPasswordValidation} message='Passwords must match' />
         </div>
       }
-      <button type='submit'>{signup ? 'Sign Up' : 'Log In'}</button>
+      <button type='submit' disabled={!usernameValidation && !emailValidation && !passwordValidation && !confirmPasswordValidation}>{signup ? 'Sign Up' : 'Log In'}</button>
       <FormErrors errors={errors}/>
     </form>
   );

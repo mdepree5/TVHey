@@ -30,7 +30,9 @@
 } */
 .inline-form-validation{
   font-size: 0.8em;
-
+  /* text-align: ; */
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 .input-valid{ color: green; }
 /* .input-invalid{ box-shadow: 1px 2px 10px white; } */
