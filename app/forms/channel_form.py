@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField
-from wtforms.validators import DataRequired, ValidationError
-
+from wtforms import StringField, IntegerField
+from wtforms.validators import InputRequired, ValidationError
+# todo ——————————————————————————————————————————————————————————————————————————————————
 
 def title_max_length(form, field):
   title = field.data
@@ -15,5 +15,5 @@ def topic_max_length(form, field):
 
 class ChannelForm(FlaskForm):
   host_id = IntegerField('host_id')
-  title = StringField('title', validators=[DataRequired(), title_max_length])
+  title = StringField('title', validators=[InputRequired(), title_max_length])
   topic = StringField('topic', validators=[topic_max_length])

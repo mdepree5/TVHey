@@ -1,8 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms import StringField, IntegerField
+from wtforms.validators import InputRequired
+# todo ——————————————————————————————————————————————————————————————————————————————————
 
-v = [DataRequired()]
+v = [InputRequired()]
 
 class MessageForm(FlaskForm):
   author_id = IntegerField('author_id', v)
