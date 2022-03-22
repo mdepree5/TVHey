@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, Redirect } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import { login, signUp } from '../../store/session';
-import { FormErrors, FormInput } from '../Utils/forms';
+import { FormInput, FormButton, FormErrors } from '../Utils/forms';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const AuthForm = ({signup}) => {
   const dispatch = useDispatch();
@@ -63,15 +63,19 @@ const AuthForm = ({signup}) => {
       
       <small style={{fontSize:'0.8em', color:'#EC8642'}}>* = required</small>
       
-      <div className='dropdown-button-container'>
-        <button className={loginValidation ? 'input-valid' : 'button-invalid'} type='submit' disabled={signup ? !(loginValidation && signupValidation): !loginValidation}>{signup ? 'Sign Up' : 'Log In'}</button>
-        <div className='dropdown-button-content'>
-          Please fill out required fields
-        </div>
-      </div>
+      <FormButton validation={loginValidation} disabledLogic={signup ? !(loginValidation && signupValidation): !loginValidation} buttonNameLogic={signup ? 'Sign Up' : 'Log In'} />
+
       <FormErrors errors={errors}/>
     </form>
   );
 };
 
 export default AuthForm;
+
+
+//<div className='dropdown-button-container'>
+//  <button className={loginValidation ? 'input-valid' : 'button-invalid'} type='submit' disabled={signup ? !(loginValidation && signupValidation): !loginValidation}>{signup ? 'Sign Up' : 'Log In'}</button>
+//  <div className='dropdown-button-content'>
+//    Please fill out required fields
+//  </div>
+//</div>

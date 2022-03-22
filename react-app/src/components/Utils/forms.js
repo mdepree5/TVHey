@@ -23,6 +23,17 @@ export const FormInput = ({ required=true, type, name, state, setState, validati
   )
 }
 
+export const FormButton = ({ validation, disabledLogic, buttonNameLogic }) => (
+  <div className='dropdown-button-container'>
+    <button className={validation ? 'input-valid' : 'button-invalid'} type='submit' disabled={disabledLogic}>{buttonNameLogic}</button>
+    <div className='dropdown-button-content'>
+      Please fill out required fields
+    </div>
+  </div>
+)
+
+
+
 export const FormErrors = ({errors}) => (
   <div className={errors.length && 'errors'}>
     {errors.map((error, ind) => (

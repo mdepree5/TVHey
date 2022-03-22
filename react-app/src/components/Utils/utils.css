@@ -38,7 +38,7 @@
 .input-valid{ color: #22ff34; }
 
 .button-invalid:hover{ 
-  color: red; 
+  /* color: red;  */
   cursor: default;
   /* cursor: not-allowed; */
 }
@@ -51,12 +51,7 @@
 .dropdown-button-content {
   display: none;
   position: absolute;
-  /* right: 0; */
   z-index: 1;
-  /* min-height: 6.2em; */
-  min-height: 4.2em;
-  background-color: none;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 
@@ -68,7 +63,7 @@
   background-color: none;
   align-items: center;
   justify-content: space-between;
-  color: red;
+  color: #EC8642;
 }
 
 
@@ -76,6 +71,5 @@
   margin-top: 2em;
   border-top: solid 0.1em gray;
   padding-top: 1em;
-
   color: red;
 }
