@@ -7,6 +7,19 @@
   overflow-y: auto;
 }
 
+
+/* .message-container::-webkit-scrollbar{
+  display:none;
+  display: block;
+  background: red;
+  border: solid 3px gray;
+} */
+
+/* .message-container::-webkit-scrollbar-thumb{
+  background: red;
+} */
+
+
 .write-a-message{
   background-color:#232529;
   /* margin-left: 20px;

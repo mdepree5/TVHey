@@ -40,12 +40,14 @@ export const UnAuthenticatedApp = () => {
 }
   
 export const AuthenticatedApp = () => {
-  // const dayjs = require('dayjs');
+  const dayjs = require('dayjs');
   // let socket;
   // const domain = (process.env.NODE_ENV === 'production') ? '/api' : '';
-  // const domain = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
   // const domain = '';
+  // const domain = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
 
+  // socket = io(domain);
+  // console.log(`%c socket:`, `color:yellow`, socket)
   // socket = io();
   // console.log('authenticated app', socket)
   
@@ -55,8 +57,8 @@ export const AuthenticatedApp = () => {
   //   console.table(all_channels.all_channels)
   //   all_channels.all_channels.forEach(channel => {
   //     const parsed = JSON.parse(channel)
-  //     console.log('one channel', parsed)
-  //     console.log('created at', parsed?.created_at)
+  //     // console.log('one channel', parsed)
+  //     // console.log('created at', parsed?.created_at)
   //     console.log('format date', dayjs(parsed?.created_at).format('h:mm A'))
   //   })
   // });

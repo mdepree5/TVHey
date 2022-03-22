@@ -4,6 +4,10 @@ from .models import Channel, Message, User, db
 from datetime import datetime, date
 import json
 from json import dumps
+import asyncio
+# import eventlet
+# eventlet.monkey_patch()
+
 
 # configure cors_allowed_origins
 if os.environ.get('FLASK_ENV') == 'production':
@@ -17,7 +21,10 @@ else:
   origins = "*"
 
 # initialize your socket instance
-socketio = SocketIO(logger=True, cors_allowed_origins=origins)
+socketio = SocketIO(
+  # async_mode='eventlet',
+  logger=True, cors_allowed_origins=origins
+  )
 
 def defaultconverter(o):
   if isinstance(o, datetime):
