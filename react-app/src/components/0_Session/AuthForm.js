@@ -35,25 +35,17 @@ const AuthForm = ({signup}) => {
     return;
   };
 
-  //   const errors = [];
-  //   if(!username) errors.push('What is your property called? We\'d love to know!');
-  //   if(!username) errors.push('What is your property called? We\'d love to know!');
-  //   if(!email) errors.push('What is your property called? We\'d love to know!');
-  //   if(!password) errors.push('What is your property called? We\'d love to know!');
-  //   if(!password && confirmPassword !== password) errors.push('What is your property called? We\'d love to know!');
-
   if (sessionUser) return <Redirect to='/' />;
   // todo ——————————————————————————————————————————————————————————————————————————————————
-  // todo                      Inline Validation Booleans
+  // todo                      Inline Validators
   // todo ——————————————————————————————————————————————————————————————————————————————————
   const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-  const emailValidation = email && (emailRegex.exec(email) !== null);
-  const usernameValidation = username && username.length > 4;
+  const emailValidation = emailRegex.exec(email) !== null;
+  const usernameValidation = username.length > 2;
   
-  // const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-  const passwordRegex2 = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-  const passwordValidation = password && (passwordRegex2.exec(password) !== null);
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordValidation = passwordRegex.exec(password) !== null;
+  const confirmPasswordValidation = confirmPassword && confirmPassword === password;
   
 
 
@@ -79,7 +71,7 @@ const AuthForm = ({signup}) => {
       {signup && 
         <div className='row-list'>
           <FormInput required={true} type='password' name='Confirm Password' state={confirmPassword} setState={setConfirmPassword}/> 
-          <InlineFormValidation validation={passwordValidation} message='Passwords must match' />
+          <InlineFormValidation validation={confirmPasswordValidation} message='Passwords must match' />
         </div>
       }
       <button type='submit'>{signup ? 'Sign Up' : 'Log In'}</button>
