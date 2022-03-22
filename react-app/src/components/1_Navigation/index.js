@@ -20,7 +20,7 @@ const NavDropdown = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state?.session?.user);
   const [imageLoading, setImageLoading] = useState(false);
-
+  const [count, setCount] = useState(0);
   const [showDropdown, setShowDropdown] = useState(false);
   const [display_name, setDisplay_name] = useState(sessionUser?.display_name);
   const [media_url, setMedia_url] = useState(sessionUser?.media_url === 'no image provided' ? '' : sessionUser?.media_url);
@@ -36,8 +36,8 @@ const NavDropdown = () => {
   const handleDisplay = async(e) => {
     e.preventDefault();
     await dispatch(updateUserDisplayName(display_name, sessionUser?.id));
-    // history.push()
-
+    
+    setCount(0);
     setShowDropdown(false);
   }
 
@@ -50,14 +50,20 @@ const NavDropdown = () => {
     const back = await dispatch(updateUserImage(formData, sessionUser?.id));
 
     setImageLoading(false);
+    setMedia_url(sessionUser?.media_url);
     return !back?.errors && setShowDropdown(false);
   }
   
   const closeDropdown = () => {
     setDisplay_name(sessionUser?.display_name);
+    setCount(0);
     setShowDropdown(false);
   }
-
+  
+  const updateDisplayName = e => {
+    setCount(count => count += 1);
+    setDisplay_name(e.target.value);
+  }
 
   return (<>
     {sessionUser?.image_url === 'no image provided' ? 
@@ -83,15 +89,15 @@ const NavDropdown = () => {
         </div>
 
         <UserDropDownForm label='Change Display Name' onSubmit={handleDisplay}
-          input={<input placeholder={sessionUser?.display_name} value={display_name} onChange={e=> setDisplay_name(e.target.value)}></input>}
-          button={<button type='submit'>{'>>>'}</button>}
+          input={<input placeholder={sessionUser?.display_name} value={display_name} onChange={updateDisplayName}></input>}
+          button={<button className={!display_name || !count ? 'default-cursor' : ''} disabled={!display_name || !count} type='submit' >{'>>>'}</button>}
           />
 
         <UserDropDownForm label='Set Profile Image 2' onSubmit={handleImage}
           input={<input style={{cursor:'pointer'}} type='file' accept='image/*' onChange={e => setMedia_url(e.target.files[0])}></input>}
-          button={imageLoading ? <div>Uploading...</div> : <button type='submit'>{'>>>'}</button>}
+          button={imageLoading ? <div>Uploading...</div> : <button className={!media_url ? 'default-cursor' : ''} disabled={!media_url} type='submit'>{'>>>'}</button>}
         />
-        
+
         <LogoutButton />
       </div>
     )}
