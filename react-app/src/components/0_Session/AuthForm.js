@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-import { signUp, login } from '../../store/session';
-import {FormInput, FormErrors} from '../Utils/forms';
+import { login, signUp } from '../../store/session';
+import { FormErrors, FormInput } from '../Utils/forms';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const AuthForm = ({signup}) => {
   const dispatch = useDispatch();
@@ -58,10 +58,10 @@ const AuthForm = ({signup}) => {
       }
       <FormInput name='Email' show={signup} validation={emailValidation} message='Provide a valid email' state={email} setState={setEmail}/>
 
-      <FormInput type='password' show={signup} validation={passwordValidation} message='Upper, lower, number, special' name='Password' state={password} setState={setPassword}/>
+      <FormInput type='password' show={signup} validation={passwordValidation} message='8 chars : Uppercase : lowercase : number : special' name='Password' state={password} setState={setPassword}/>
 
       {signup && 
-        <FormInput required={true} validation={confirmPasswordValidation} message='Passwords must match' type='password' name='Confirm Password' state={confirmPassword} setState={setConfirmPassword}/> 
+        <FormInput required={true} show={signup} validation={confirmPasswordValidation} message='Passwords must match' type='password' name='Confirm Password' state={confirmPassword} setState={setConfirmPassword}/> 
       }
       <button type='submit' disabled={!usernameValidation && !emailValidation && !passwordValidation && !confirmPasswordValidation}>{signup ? 'Sign Up' : 'Log In'}</button>
       <FormErrors errors={errors}/>
