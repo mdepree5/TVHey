@@ -23,9 +23,9 @@ export const UnAuthenticatedApp = () => {
       <h2>Sign In to TVHey</h2>
       
       <div className='row-list' id='unauthenticated-header'>
-        <NavLink to="/login" exact={true} >Login</NavLink>
-        <button onClick={async() => await dispatch(loginDemo())}>Demo</button>
+        <NavLink to="/login" exact={true} >Log In</NavLink>
         <NavLink to="/sign-up" exact={true}>Sign Up</NavLink>
+        <div style={{color:'#EC8642', cursor:'pointer'}} onClick={async() => await dispatch(loginDemo())}>Demo</div>
       </div>
 
       <div className='row-list' id='main-page'>

@@ -1,36 +1,20 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
-
-// import { useParams, Redirect, useHistory } from 'react-router-dom';
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
 // import { io } from 'socket.io-client';
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
 // todo ——————————————————————————————————————————————————————————————————————————————————
-
-
 import ChannelFormModal from '../Channel/channel_modal';
 import {DeleteChannelButton, DeleteMessageButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
 import {createMessage, getMessages, updateMessage} from '../../store/message';
 import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
-// let socket;
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
-
 const Chat = () => {
 // **** ————————————————————————————————————————————————————————————————————————————STABLE
   const dispatch = useDispatch();
-  // const history = useHistory();
   const { channelId } = useParams();
-
-// todo ——————————————————————————————————————————————————————————————————————————————————
-  // console.log('———————————————————————————————————————————————————————————————————————————————————')
-  // // console.log('Chat socket', socket)
-  // console.log('Chat channelId', channelId)
-  // console.log('———————————————————————————————————————————————————————————————————————————————————')
-// todo ——————————————————————————————————————————————————————————————————————————————————
 
   const [chatInput, setChatInput] = useState('');
 
@@ -48,13 +32,7 @@ const Chat = () => {
 // **** ——————————————————————————————————————————————————————————————————————————————————
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
   // useEffect(() => {
-  // // if (process.env.NODE_ENV === 'production') socket = io('https://tvhey.herokuapp.com/')
-  //   socket = io();
-  
-  //   // listen for chat events. when we recieve a chat, dispatch createMessage()
   //   socket.on('chat', message => dispatch(createMessage(message)));
-    
-  //   return () => socket.disconnect();
   // }, [dispatch])
   
   // const sendChat = async e => {
@@ -112,6 +90,7 @@ const MessageCard = ({message, sessionUser}) => {
   const existing = message?.content;
   const [toggleEdit, setToggleEdit] = useState(false);
   const [input, setInput] = useState(existing);
+  const [showButtons, setShowButtons] = useState(false);
 
   const handleEdit = async(e) => {
     e.preventDefault();
@@ -123,6 +102,10 @@ const MessageCard = ({message, sessionUser}) => {
     e.preventDefault();
     setInput(existing);
     return setToggleEdit(false);
+  }
+
+  const toggleButtons = () => {
+    setShowButtons(!showButtons)
   }
 
   return toggleEdit ? (
@@ -150,8 +133,8 @@ const MessageCard = ({message, sessionUser}) => {
         <div className='message-header-right'>
           {message?.author_id === sessionUser.id &&
             <div className="dropdown-message">
-              <button className='dropdown-button'>...</button>
-              <div className="dropdown-content">
+              <button className='dropdown-button' onClick={toggleButtons}>...</button>
+              <div className={`dropdown-content ${showButtons ? 'show-dropdown-content' : ''}`}>
                 <button className='edit' onClick={() => setToggleEdit(true)}>^</button>
                 <DeleteMessageButton messageId={message?.id}/>
               </div>

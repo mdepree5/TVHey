@@ -23,7 +23,7 @@
   padding-left: 20px;
   padding-right: 20px;
 
-  background-color: black;
+  background-color: #0e151a;
   color: white;
 }
 
@@ -56,7 +56,8 @@
 /* todo             Dropdown                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .dropdown-nav{
-  background-color:#232529;
+  /* background-color:#232529; */
+  background-color: #17222A;
   box-shadow: 0 0 8px gray;
 
   z-index: 3;

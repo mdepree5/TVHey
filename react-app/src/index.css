@@ -12,26 +12,15 @@ body, html{
   background-color: #232C32;
 }
 
-.row-list{
-  display: flex;
-  flex-direction: row;
-}
+/* div{
+  width: 100%;
+} */
 
-.col-list{
-  display: flex;
-  flex-direction: column;
-}
+.row-list{ display: flex; flex-direction: row; }
+.col-list{ display: flex; flex-direction: column; }
+.flex-end{ display: flex; flex-direction: row; justify-content: flex-end; }
 
-.flex-end{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-
-a{
-  color: #EC8642;
-  text-decoration: none;
-}
+a{ color: #EC8642; text-decoration: none; }
 
 input{
   background-color: rgba(138, 149, 159, 0.212);
@@ -39,6 +28,8 @@ input{
   border-radius: 0.5em;
   color: white;
 }
+
+form > button {margin-top: 0.4em;}
 
 button{
   background: none;

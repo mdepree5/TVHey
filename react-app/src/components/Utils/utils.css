@@ -25,9 +25,20 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Form                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-/* .form-input{
+.form-input{
+  margin-bottom: 0.8em;
+}
+.inline-form-validation{
+  font-size: 0.8em;
+  text-align: start;
+  margin-left: 0.6em;
+}
+.input-valid{ color: #22ff34; }
 
-} */
 .errors{
+  margin-top: 2em;
+  border-top: solid 0.1em gray;
+  padding-top: 1em;
+
   color: red;
 }

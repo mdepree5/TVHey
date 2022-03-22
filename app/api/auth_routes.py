@@ -1,6 +1,7 @@
 from flask import Blueprint, session, request
 from app.models import User, db
-from app.forms import LoginForm, SignUpForm
+from app.forms.signup_form import SignUpForm
+from app.forms.login_form import LoginForm
 from flask_login import current_user, login_user, logout_user, login_required
 
 auth_routes = Blueprint('auth', __name__)
@@ -19,20 +20,18 @@ def authenticate():
   if current_user.is_authenticated:
     return current_user.to_dict()
   return {'errors': ['Unauthorized']}
-  # return {'errors': ['Initial unauthenticated app render']}
 # todo ——————————————————————————————————————————————————————————————————————————————————
 @auth_routes.route('/login', methods=['POST'])
 def login():
   form = LoginForm()
-  print(request.get_json())
-  # Get the csrf_token from the request cookie and put it into the
-  # form manually to validate_on_submit can be used
   form['csrf_token'].data = request.cookies['csrf_token']
+
   if form.validate_on_submit():
-    # Add the user to the session, we are logged in!
+    print('validated')
     user = User.query.filter(User.email == form.data['email']).first()
     login_user(user)
     return user.to_dict()
+  
   return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 # todo ——————————————————————————————————————————————————————————————————————————————————
 @auth_routes.route('/logout')
@@ -44,6 +43,7 @@ def logout():
 def sign_up():
   form = SignUpForm()
   form['csrf_token'].data = request.cookies['csrf_token']
+  
   if form.validate_on_submit():
     user = User(
       username=form.data['username'],
@@ -56,7 +56,7 @@ def sign_up():
     db.session.commit()
     login_user(user)
     return user.to_dict()
-  return {'errors': validation_errors_to_error_messages(form.errors)}
+  return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 # todo ——————————————————————————————————————————————————————————————————————————————————
 @auth_routes.route('/unauthorized')
 def unauthorized():
