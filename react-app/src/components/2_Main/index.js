@@ -1,3 +1,4 @@
+// import { useState, useEffect } from 'react';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
@@ -40,7 +41,7 @@ export const UnAuthenticatedApp = () => {
 }
   
 export const AuthenticatedApp = () => {
-  const dayjs = require('dayjs');
+  // const dayjs = require('dayjs');
   // let socket;
   // const domain = (process.env.NODE_ENV === 'production') ? '/api' : '';
   // const domain = '';
@@ -70,20 +71,29 @@ export const AuthenticatedApp = () => {
   const dispatch = useDispatch();
   useEffect(() => { dispatch(getChannels()) }, [dispatch]);
 
+  // const [bool, setBool] = useState(true)
+
+  // const handleHelp = () => {
+  //   // console.log(`%c bool: ${bool}`, `color:yellow`)
+  //   // setBool(!bool)
+  // }
   return (
     <div className='page-container'>
+      {/* <button onClick={handleHelp} >Help</button> */}
       <Navigation />
       <Split className='row-list main-page'
         cursor="col-resize"
         direction="horizontal"
         minSize={180}
         sizes={[25, 75]}
+        // sizes={bool ? [25, 65, 10] : [25, 75]}
         gutterSize={2}
         dragInterval={2}
         snapOffset={20}
       >
         <LeftNav />
         <RightPage />
+        {/* {bool && <div>HEY</div>} */}
       </Split>
     </div>
   )

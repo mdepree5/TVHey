@@ -17,8 +17,7 @@ s3 = boto3.client(
 def allowed_file(filename):
   # print(filename)
   # print("." in filename)
-  return "." in filename and \
-    filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+  return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def get_unique_filename(filename):
@@ -43,3 +42,11 @@ def upload_file_to_s3(file, acl="public-read"):
     return {"errors": str(e)}
 
   return {"url": f"{S3_LOCATION}{file.filename}"}
+
+""" 
+For deleting from s3 bucket (external)
+usage in CRUD-route:
+delete_in_s3(<thing.media_url>[37:].lower())
+"""
+def delete_in_s3(filename):
+  s3.delete_object(Bucket=BUCKET_NAME, Key=filename)
