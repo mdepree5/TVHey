@@ -114,11 +114,21 @@
 }
 
 /* Show the dropdown menu on hover */
-.dropdown-message:hover .dropdown-content {
+/* .dropdown-message:hover .dropdown-content {
   display: inline-flex;
   left: 0;
   top: -2.2em;
   flex-direction: column;
+  background-color: none;
+  align-items: center;
+  justify-content: space-between;
+} */
+
+.show-dropdown-content{
+  display: inline-flex;
+  left: 0;
+  top: 2em;
+  flex-direction: row;
   background-color: none;
   align-items: center;
   justify-content: space-between;

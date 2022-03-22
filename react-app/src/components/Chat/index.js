@@ -90,6 +90,7 @@ const MessageCard = ({message, sessionUser}) => {
   const existing = message?.content;
   const [toggleEdit, setToggleEdit] = useState(false);
   const [input, setInput] = useState(existing);
+  const [showButtons, setShowButtons] = useState(false);
 
   const handleEdit = async(e) => {
     e.preventDefault();
@@ -101,6 +102,10 @@ const MessageCard = ({message, sessionUser}) => {
     e.preventDefault();
     setInput(existing);
     return setToggleEdit(false);
+  }
+
+  const toggleButtons = () => {
+    setShowButtons(!showButtons)
   }
 
   return toggleEdit ? (
@@ -128,8 +133,8 @@ const MessageCard = ({message, sessionUser}) => {
         <div className='message-header-right'>
           {message?.author_id === sessionUser.id &&
             <div className="dropdown-message">
-              <button className='dropdown-button'>...</button>
-              <div className="dropdown-content">
+              <button className='dropdown-button' onClick={toggleButtons}>...</button>
+              <div className={`dropdown-content ${showButtons ? 'show-dropdown-content' : ''}`}>
                 <button className='edit' onClick={() => setToggleEdit(true)}>^</button>
                 <DeleteMessageButton messageId={message?.id}/>
               </div>
