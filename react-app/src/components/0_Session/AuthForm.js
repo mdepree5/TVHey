@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import { signUp, login } from '../../store/session';
-import {FormInput, InlineFormValidation, FormErrors} from '../Utils/forms';
+import {FormInput, FormErrors} from '../Utils/forms';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const AuthForm = ({signup}) => {
   const dispatch = useDispatch();

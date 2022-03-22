@@ -22,12 +22,6 @@ export const FormInput = ({ required, type, name, state, setState, validation, m
   )
 }
 
-export const InlineFormValidation = ({ validation, message }) => (
-  <div className={`inline-form-validation ${validation ? 'input-valid' : 'input-invalid'}`}>
-    {validation ? <>✅ {message}</> : <>{message}</>}
-  </div>
-)
-
 export const FormErrors = ({errors}) => (
   <div className={errors.length && 'errors'}>
     {errors.map((error, ind) => (
