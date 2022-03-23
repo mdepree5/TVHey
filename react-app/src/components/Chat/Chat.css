@@ -103,19 +103,21 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Right mes                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-.dropdown-content button {
+.dropdown-content > * {
   background-color: inherit;
-  padding: 1em 1em;
-  max-width: 2em;
-  max-height: 2em;
+  /* padding: 1em 1em; */
+  width: 2em;
+  height: 2em;
+  width: 50%;
 }
 
 .dropdown-content{ display: none; }
-.dropdown-content > * { margin-right: 0.2em; }
+/* .dropdown-content > * { margin-right: 0.2em; } */
 
 .message-card:hover .dropdown-content {
   display: flex;
   flex-direction: row;
+  /* justify-content: space-evenly; */
 
   position: relative;
 
@@ -123,5 +125,5 @@
   top: -2em;
   z-index: 1;
 
-  background: none;
+  background-color: pink;
 }
