@@ -49,6 +49,13 @@ button{
   /* max-width: 10px; */
 }
 
+.icon{
+  width: 2em;
+  height: 2em;
+  margin: 0.2em;
+  cursor: pointer;
+}
+
 ::-webkit-scrollbar{
   width: 0.6em;
   z-index: 1;

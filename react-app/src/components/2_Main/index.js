@@ -8,6 +8,7 @@ import AuthForm from "../0_Session/AuthForm";
 import Navigation from '../1_Navigation/index';
 import Chat from "../../components/Chat";
 import ChannelFormModal from '../Channel/channel_modal';
+import {Icon} from '../Utils/icons';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import {getChannels} from '../../store/channel';
 import {loginDemo} from '../../store/session';
@@ -34,6 +35,7 @@ export const UnAuthenticatedApp = () => {
           <Route><Redirect to="/login" /></Route>
         </Switch>
       </div>
+
     </div>
   )
 }
@@ -77,7 +79,8 @@ const LeftNav = () => {
       <div style={{height:'200px'}}/>
       
       <div className='row-list'>
-        <button onClick={()=> setDisplay(!display)} >Show</button>
+        {/* <button onClick={()=> setDisplay(!display)} >Show</button> */}
+        <Icon onClick={()=> setDisplay(!display)} iconName='expand'/>
         <h3 style={{paddingLeft:'1.2em', paddingRight: '1.2em'}} >Channels</h3>
       </div>
 

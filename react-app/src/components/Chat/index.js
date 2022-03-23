@@ -83,7 +83,6 @@ const MessageCard = ({message, sessionUser}) => {
   const existing = message?.content;
   const [toggleEdit, setToggleEdit] = useState(false);
   const [input, setInput] = useState(existing);
-  const [showButtons, setShowButtons] = useState(false);
 
   const handleEdit = async(e) => {
     e.preventDefault();
@@ -95,10 +94,6 @@ const MessageCard = ({message, sessionUser}) => {
     e.preventDefault();
     setInput(existing);
     return setToggleEdit(false);
-  }
-
-  const toggleButtons = () => {
-    setShowButtons(!showButtons)
   }
 
   return toggleEdit ? (

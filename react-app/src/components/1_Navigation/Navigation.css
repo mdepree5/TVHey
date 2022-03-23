@@ -1,7 +1,7 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Dropdown                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-.icon{
+.navicon{
   height: 2em;
   width: 2em;
   border-radius: 2em;
@@ -9,7 +9,7 @@
   cursor: pointer;
 }
 
-.icon:hover {
+.navicon:hover {
   border-radius: 2em;
   box-shadow: 0 0 10px white;
 }

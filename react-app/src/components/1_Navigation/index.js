@@ -100,7 +100,7 @@ const Navigation = () => {
     <div className='nav-bar'>
       <div id='left-nav'>
         <img
-          className='icon'
+          className='navicon'
           onClick={() => history.push('/')}
           src='https://capstone-slack-clone.s3.amazonaws.com/favicon.ico' alt='custom' 
         />
