@@ -66,7 +66,7 @@ const NavDropdown = () => {
 
     {showModal &&
       <Modal providedId='nav-dropdown' providedContent={true} onClose={handleClose}>
-      {<div className='dropdown-nav'>
+        {<div className='dropdown-nav'>
           <div className='row-list' style={{alignItems:'center'}} >
             {sessionUser?.image_url === 'no image provided' ? 
               <div className='nav-user-image' >{sessionUser?.display_name[0].toUpperCase()}</div>
@@ -79,7 +79,7 @@ const NavDropdown = () => {
           <UserDropDownForm label='Change Display Name' onSubmit={handleDisplay}
             input={<input placeholder={sessionUser?.display_name} value={display_name} onChange={updateDisplayName}></input>}
             button={<button className={!display_name || !count ? 'default-cursor' : ''} disabled={!display_name || !count} type='submit' >{'>>>'}</button>}
-            />
+          />
 
           <UserDropDownForm label='Set Profile Image' onSubmit={handleImage}
             input={<input style={{cursor:'pointer'}} type='file' accept='image/*' onChange={e => setMedia_url(e.target.files[0])}></input>}
@@ -87,34 +87,9 @@ const NavDropdown = () => {
           />
 
           <LogoutButton />
-        </div>} 
+        </div>}
       </Modal>
-      }
-
-    {/* {showDropdown && (
-      <div className='dropdown-nav'>
-        <div className='row-list' style={{alignItems:'center'}} >
-          {sessionUser?.image_url === 'no image provided' ? 
-            <div className='nav-user-image' >{sessionUser?.display_name[0].toUpperCase()}</div> : 
-            <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
-          }
-          <h3 className='nav-display-name'>{sessionUser?.display_name}</h3>
-          <button className='dropdown-cancel' onClick={closeDropdown}>X</button>
-        </div>
-
-        <UserDropDownForm label='Change Display Name' onSubmit={handleDisplay}
-          input={<input placeholder={sessionUser?.display_name} value={display_name} onChange={updateDisplayName}></input>}
-          button={<button className={!display_name || !count ? 'default-cursor' : ''} disabled={!display_name || !count} type='submit' >{'>>>'}</button>}
-          />
-
-        <UserDropDownForm label='Set Profile Image' onSubmit={handleImage}
-          input={<input style={{cursor:'pointer'}} type='file' accept='image/*' onChange={e => setMedia_url(e.target.files[0])}></input>}
-          button={imageLoading ? <div>Uploading...</div> : <button className={!media_url ? 'default-cursor' : ''} disabled={!media_url} type='submit'>{'>>>'}</button>}
-        />
-
-        <LogoutButton />
-      </div>
-    )} */}
+    }
   </>)
 }
 
