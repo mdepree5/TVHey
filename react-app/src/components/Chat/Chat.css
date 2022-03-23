@@ -8,30 +8,36 @@
 }
 
 
-/* .message-container::-webkit-scrollbar{
-  display:none;
-  display: block;
-  background: red;
-  border: solid 3px gray;
-} */
+#message-writer{
+  position: relative;
+  top: -1em;
+  z-index: 5;
 
-/* .message-container::-webkit-scrollbar-thumb{
-  background: red;
-} */
-
-
-.write-a-message{
-  background-color:#232529;
-  /* margin-left: 20px;
-  margin-right: 20px; */
-  /* width: 80%; */
+  background-color: #3B4248;
+  border: 0.08em solid rgb(193, 193, 193);
+  border-radius: 1em;
+  
+  width: calc(100% - 4em);
+  
+  padding: 1em;
+  margin: 1.3em;
+  margin-top: 0;
 }
+
+#writer-input{
+  border: none;
+  height: 4em;
+  color: white;
+}
+
+
+#writer-input:focus{border: 0.08em solid rgb(193, 193, 193)};
+#message-writer:hover{border: 0.08em solid rgb(193, 193, 193);}
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Message card                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .message-card{
-  
   padding-top: 1em;
   
   min-height: 6.5em;
@@ -42,26 +48,20 @@
   padding-right: 1.3em;
   
   padding-bottom: 1em;
-  /* border-bottom: solid rgb(97, 97, 97) 1px; */
 }
 
-.message-card:hover{
-  background-color: rgba(60, 73, 82, 0.317);
-}
-
-.message-card-header{
-  width: 100%;
-}
+.message-card:hover{ background-color: rgba(60, 73, 82, 0.317); }
+.message-card-header{ width: 100%; }
 
 .message-header-mid{
-  width: 88%;
+  /* width: 88%; */
+  width: calc(100% - 6em);
   padding-left: 8px;
   padding-right: 8px;
 }
-.message-header-left,
-.message-header-right{
-  width: 6%;
-}
+
+.message-header-left { width: 3em; }
+.message-header-right { width: 3em; }
 
 .message-card-image{
   height: 2.5em;

@@ -30,8 +30,7 @@ const Chat = () => {
     await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
     setChatInput('');
   }
-
-
+  
   return (sessionUser && (
     <>
       <div className='header'>
@@ -46,14 +45,14 @@ const Chat = () => {
 
       <MessagesContainer messagesArr={messagesArr} sessionUser={sessionUser} ref={messagesRef} />
 
-      <div className='write-a-message col-list'>
-        <form onSubmit={sendChat} >
-          <input value={chatInput} onChange={e => setChatInput(e.target.value)}
-            placeholder={`Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`}
-          />
-          <button type="submit" disabled={!chatInput}>{'>'}</button>
-        </form>
-      </div>
+      <form id='message-writer' className='col-list' onSubmit={sendChat} >
+        <input value={chatInput} onChange={e => setChatInput(e.target.value)}
+          id='writer-input'
+          placeholder={`  Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`}
+        />
+        <button type="submit" disabled={!chatInput}>{'>'}</button>
+      </form>
+
     </>
   )
   )

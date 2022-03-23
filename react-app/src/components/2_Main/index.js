@@ -85,8 +85,8 @@ const LeftNav = () => {
         {channels?.map(channel => (
           <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
         ))}
-        <div style={{paddingLeft:'1.2em', paddingRight: '1.2em'}}><ChannelFormModal name='+ Add Channel'/></div>
       </div>
+      <div style={{padding:'1.2em', paddingTop:'0'}}><ChannelFormModal name='+ Add Channel'/></div>
 
       <div style={{height:'200px'}}>
         <AboutLink link='https://github.com/mdepree5' image='https://capstone-slack-clone.s3.amazonaws.com/github.png' />
