@@ -10,10 +10,11 @@ body, html{
   font-family:'Courier New', Courier, monospace;
   color: #ffffffa8;
   background-color: #232C32;
+  /* font-size: 20px; */
 }
 
-/* div{
-  width: 100%;
+/* body{ 
+  font-size: 30px;
 } */
 
 .row-list{ display: flex; flex-direction: row; }

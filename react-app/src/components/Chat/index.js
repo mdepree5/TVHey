@@ -27,8 +27,7 @@ const Chat = () => {
 
   const sendChat = async (e) => {
     e.preventDefault();
-    const newMessage = await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
-    console.log('newMessage', newMessage)
+    await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
     setChatInput('');
   }
 
@@ -45,13 +44,8 @@ const Chat = () => {
         </div>}
       </div>
 
-      <div className='message-container' role='log'>
-        {messagesArr?.map((message, ind) => (
-          <MessageCard key={ind} message={message} sessionUser={sessionUser}/>
-        ))}
-      </div>
-
       <MessagesContainer messagesArr={messagesArr} sessionUser={sessionUser} ref={messagesRef} />
+
       <div className='write-a-message col-list'>
         <form onSubmit={sendChat} >
           <input value={chatInput} onChange={e => setChatInput(e.target.value)}
@@ -67,23 +61,20 @@ const Chat = () => {
 
 const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
   const messageContainerRef = useRef();
-  const scrollToTop = () => messageContainerRef.current.scrollTop = 0;
   const scrollToBottom = () => messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
 
   useLayoutEffect(()=>{scrollToBottom()});
-  useImperativeHandle(ref, () => ({
-    scrollToTop,
-    scrollToBottom,
-  }))
+  useImperativeHandle(ref, () => ({ scrollToBottom }))
 
   return (
     <div ref={messageContainerRef} role='log' className='message-container' >
-        {messagesArr?.map((message, ind) => (
-          <MessageCard key={ind} message={message} sessionUser={sessionUser}/>
-        ))}
+      {messagesArr?.map((message, ind) => (
+        <MessageCard key={ind} message={message} sessionUser={sessionUser}/>
+      ))}
     </div>
   )
 })
+
 export default Chat;
 
 

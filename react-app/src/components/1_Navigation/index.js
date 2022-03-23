@@ -96,6 +96,12 @@ const NavDropdown = () => {
 
 const Navigation = () => {
   const history = useHistory();
+  
+  const bod = document.getElementById('body');
+  console.log(`%c bod:`, `color:yellow`, bod)
+  console.log(`%c bod:`, `color:yellow`, bod.style)
+  console.log(`%c bod:`, `color:yellow`, bod.style.fontSize)
+
 
   return (
     <div className='nav-bar'>
@@ -108,6 +114,9 @@ const Navigation = () => {
       </div>
     
       <div id='mid-nav'>
+        <button onClick={()=> bod.style.fontSize='32px'}>Change to 32</button>
+        <button onClick={()=> bod.style.fontSize='16px'}>Change to 16</button>
+        <About />
       </div>
     
       <div id='right-nav'>
@@ -116,5 +125,15 @@ const Navigation = () => {
     </div>
   )
 }
+
+
+const About = () => (
+  <div>
+    <a href='https://github.com/mdepree5' target='_blank' rel='noreferrer'><img className='about'  src='https://capstone-slack-clone.s3.amazonaws.com/github.png' alt='github' /> </a>
+    <a href='https://www.linkedin.com/in/mitch-depree-4a5686155/' target='_blank' rel='noreferrer'><img className='about'  src='https://capstone-slack-clone.s3.amazonaws.com/linkedin.png' alt='linked' /> </a>
+  </div>
+  
+)
+
 
 export default Navigation;
