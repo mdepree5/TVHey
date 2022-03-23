@@ -1,9 +1,6 @@
 import { useRef, forwardRef, useImperativeHandle, useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
-// import { io } from 'socket.io-client';
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import ChannelFormModal from '../Channel/channel_modal';
 import {DeleteChannelButton, DeleteMessageButton} from '../Utils/buttons';
@@ -12,7 +9,7 @@ import {createMessage, getMessages, updateMessage} from '../../store/message';
 import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const Chat = () => {
-// **** ————————————————————————————————————————————————————————————————————————————STABLE
+  const messagesRef = useRef();
   const dispatch = useDispatch();
   const { channelId } = useParams();
 
@@ -26,29 +23,14 @@ const Chat = () => {
   const messagesArr = Object.values(messagestate?.messages);
 
   useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
-
   useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
 
-// **** ——————————————————————————————————————————————————————————————————————————————————
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
-  // useEffect(() => {
-  //   socket.on('chat', message => dispatch(createMessage(message)));
-  // }, [dispatch])
-  
-  // const sendChat = async e => {
-  //   e.preventDefault()  
-  //   socket.emit('chat', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
-  //   setChatInput('')
-  // }
-
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
   const sendChat = async (e) => {
     e.preventDefault();
     const newMessage = await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
     console.log('newMessage', newMessage)
     setChatInput('');
   }
-// !!!! ——————————————————————————————————————————————————————————————————————————————————
 
 
   return (sessionUser && (
@@ -69,6 +51,7 @@ const Chat = () => {
         ))}
       </div>
 
+      <MessagesContainer messagesArr={messagesArr} sessionUser={sessionUser} ref={messagesRef} />
       <div className='write-a-message col-list'>
         <form onSubmit={sendChat} >
           <input value={chatInput} onChange={e => setChatInput(e.target.value)}
