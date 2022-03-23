@@ -13,7 +13,7 @@
   margin-right: auto;
 }
 
-#modal-background {
+.modal-background {
   position: fixed;
   top: 0;
   right: 0;
@@ -23,7 +23,7 @@
   /* background-color: none; */
 }
 
-#modal-content {
+.modal-content {
   position: absolute;
   padding: 20px;
   
@@ -35,3 +35,5 @@
   min-height: 200px;
   min-width: 200px;
 }
+
+#nav-dropdown .modal-background { background: none; }

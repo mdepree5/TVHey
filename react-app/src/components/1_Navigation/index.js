@@ -16,12 +16,13 @@ const UserDropDownForm = ({label, onSubmit, input, button}) => (
     </div>
   </form>
 )
-function NavDropdownModal({children}) {
-  const [showModal, setShowModal] = useState(false);
+
+function NavDropdownModal({ showModal, setShowModal, button, children }) {
   return (<>
-    <button onClick={e => setShowModal(true)}>Nav Dropdown</button>
+    {/* <button onClick={e => setShowModal(true)}>Nav Dropdown</button> */}
+    {button}
     {showModal && (
-      <Modal onClose={() => setShowModal(false)}>{children}</Modal>
+      <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}>{children}</Modal>
     )}
   </>);
 }
@@ -32,6 +33,7 @@ const NavDropdown = () => {
   const sessionUser = useSelector(state => state?.session?.user);
   const [imageLoading, setImageLoading] = useState(false);
   const [count, setCount] = useState(0);
+  const [showModal, setShowModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [display_name, setDisplay_name] = useState(sessionUser?.display_name);
   const [media_url, setMedia_url] = useState(sessionUser?.media_url === 'no image provided' ? '' : sessionUser?.media_url);
@@ -77,18 +79,24 @@ const NavDropdown = () => {
   }
 
   return (<>
+    <NavDropdownModal 
+    showModal={showModal}
+    setShowModal={setShowModal}
+    button=
     {sessionUser?.image_url === 'no image provided' ? 
       <div className='nav-user-image' 
-        onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
+        // onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
+        onClick={e => setShowModal(true)}
       >{sessionUser?.display_name[0].toUpperCase()}</div> : 
 
       <img className='nav-user-image'
         src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}
-        onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
+        // onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
+        onClick={e => setShowModal(true)}
       />
     }
-    <NavDropdownModal children=
-    {
+    
+    children={
       <div className='dropdown-nav'>
         <div className='row-list' style={{alignItems:'center'}} >
           {sessionUser?.image_url === 'no image provided' ? 
