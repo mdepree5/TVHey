@@ -79,7 +79,6 @@ const LeftNav = () => {
       <div style={{height:'200px'}}/>
       
       <div className='row-list'>
-        {/* <button onClick={()=> setDisplay(!display)} >Show</button> */}
         <Icon onClick={()=> setDisplay(!display)} iconName='expand'/>
         <h3 style={{paddingLeft:'1.2em', paddingRight: '1.2em'}} >Channels</h3>
       </div>

@@ -2,11 +2,16 @@ import { useRef, forwardRef, useImperativeHandle, useState, useEffect, useLayout
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
+import {Icon} from '../Utils/icons';
 import ChannelFormModal from '../Channel/channel_modal';
 import {DeleteChannelButton, DeleteMessageButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
 import {createMessage, getMessages, updateMessage} from '../../store/message';
 import './Chat.css';
+// todo ——————————————————————————————————————————————————————————————————————————————————
+
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo                               Chat
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const Chat = () => {
   const messagesRef = useRef();
@@ -38,7 +43,7 @@ const Chat = () => {
           {thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}
         </div>
         {sessionUser?.id === thisChannel?.host_id && <div className='flex-end'>
-          <ChannelFormModal name='^' edit={true} channel={thisChannel} />
+          <ChannelFormModal icon={true} edit={true} channel={thisChannel} />
           <DeleteChannelButton channelId={thisChannel?.id}/>
         </div>}
       </div>
@@ -57,7 +62,9 @@ const Chat = () => {
   )
   )
 };
-
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo                               Messages Container
+// todo ——————————————————————————————————————————————————————————————————————————————————
 const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
   const messageContainerRef = useRef();
   const scrollToBottom = () => messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
@@ -73,10 +80,9 @@ const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
     </div>
   )
 })
-
-export default Chat;
-
-
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo                               Message Card
+// todo ——————————————————————————————————————————————————————————————————————————————————
 const MessageCard = ({message, sessionUser}) => {
   const dayjs = require('dayjs');
   const dispatch = useDispatch();
@@ -121,13 +127,14 @@ const MessageCard = ({message, sessionUser}) => {
         <div className='message-header-right'>
           {message?.author_id === sessionUser.id &&
             <div className='dropdown-content'>
-              <button className='edit' onClick={() => setToggleEdit(true)}>^</button>
+              <Icon onClick={()=> setToggleEdit(true)} iconName='edit'/>
               <DeleteMessageButton messageId={message?.id}/>
             </div>
           }
         </div>
     </div>
   </div>
-
   )
 }
+
+export default Chat;
