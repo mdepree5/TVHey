@@ -125,12 +125,9 @@ const MessageCard = ({message, sessionUser}) => {
 
         <div className='message-header-right'>
           {message?.author_id === sessionUser.id &&
-            <div className="dropdown-message">
-              <button className='dropdown-button' onClick={toggleButtons}>...</button>
-              <div className={`dropdown-content ${showButtons ? 'show-dropdown-content' : ''}`}>
-                <button className='edit' onClick={() => setToggleEdit(true)}>^</button>
-                <DeleteMessageButton messageId={message?.id}/>
-              </div>
+            <div className='dropdown-content'>
+              <button className='edit' onClick={() => setToggleEdit(true)}>^</button>
+              <DeleteMessageButton messageId={message?.id}/>
             </div>
           }
         </div>
