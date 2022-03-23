@@ -25,7 +25,8 @@
 
 .modal-content {
   position: absolute;
-  padding: 20px;
+  /* padding: 20px; */
+  padding: 2em;
   
   box-shadow: 0 1px 10px rgb(167, 167, 167);
   

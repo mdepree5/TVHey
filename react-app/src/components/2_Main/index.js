@@ -1,8 +1,9 @@
-// import { useState, useEffect } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
+import ReactSlider from "react-slider";
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import AuthForm from "../0_Session/AuthForm";
 import Navigation from '../1_Navigation/index';
@@ -34,10 +35,51 @@ export const UnAuthenticatedApp = () => {
           <Route><Redirect to="/login" /></Route>
         </Switch>
       </div>
+
+        <SizeSlider /> 
+
     </div>
   )
 }
   
+
+const SizeSlider = () => {
+  const [fontSize, setFontSize] = useState(16)
+  const bod = document.getElementById('body');
+  console.log(`%c bod:`, `color:yellow`, bod)
+  console.log(`%c bod:`, `color:yellow`, bod.style)
+  console.log(`%c bod:`, `color:yellow`, bod.style.fontSize)
+
+  const onSave = () => {
+    bod.style.fontSize=`${fontSize.toString()}px`
+  }
+
+  return (
+    <>
+      <ReactSlider
+        value={fontSize}
+        onAfterChange={(val) => {setFontSize(val)}}
+        className="font-size-slider"
+        thumbClassName="font-size-thumb"
+        trackClassName="font-size-track"
+        ariaLabel={"Change Font Size"}
+        orientation="horizontal"
+        min={12}
+        max={50}
+        renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+        renderTrack={(props, state) => (
+          <div {...props} index={state.index}></div>
+        )}
+        invert
+        pearling
+        minDistance={1}
+      />
+      <button onClick={onSave} >Save size</button>
+    </>
+  )
+}
+
+
 export const AuthenticatedApp = () => {
   const dispatch = useDispatch();
   useEffect(() => { dispatch(getChannels()) }, [dispatch]);

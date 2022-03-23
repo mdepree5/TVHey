@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+// import ReactSlider from "react-slider";
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import { Modal } from '../../context/Modal';
 import { updateUserImage, updateUserDisplayName } from '../../store/session';
 import LogoutButton from '../../components/0_Session/LogoutButton';
 import './Navigation.css'
+// import { bindActionCreators } from 'redux';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const UserDropDownForm = ({label, onSubmit, input, button}) => (
   <form onSubmit={onSubmit}>
@@ -93,7 +95,6 @@ const NavDropdown = () => {
   </>)
 }
 
-
 const Navigation = () => {
   const history = useHistory();
   
@@ -116,6 +117,7 @@ const Navigation = () => {
       <div id='mid-nav'>
         <button onClick={()=> bod.style.fontSize='32px'}>Change to 32</button>
         <button onClick={()=> bod.style.fontSize='16px'}>Change to 16</button>
+        {/* <SizeSlider /> */}
         <About />
       </div>
     
@@ -125,6 +127,9 @@ const Navigation = () => {
     </div>
   )
 }
+
+
+
 
 
 const About = () => (
