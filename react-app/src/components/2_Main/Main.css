@@ -37,37 +37,6 @@
 }
 
 
-.font-size-slider { height: 20px; }
-
-.font-size-thumb {
-  height: 30px;
-  line-height: 30px;
-  width: 30px;
-  text-align: center;
-  background-color: #000;
-  color: #fff;
-  border-radius: 50%;
-  cursor: grab;
-  font-size: 20px;
-  padding: 5px;
-}
-
-.font-size-track {
-  top: 0;
-  bottom: 0;
-  /* background: gray; */
-  border-radius: 999px;
-  /* left: 5px; */
-  width: 100px;
-  border: 2px solid blue;
-}
-
-/* .font-size-track.font-size-track-0 {
-  background: red; 
-} */
-
-
-
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Authenticated App                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
@@ -119,6 +88,10 @@
   overflow: auto;
   overflow-y: auto;
 }
+
+.hide-channels > * { display: none; }
+
+.channels-container{ margin-bottom: 1em; }
 
 .channel-list-item{
   padding-left: 1.2em;

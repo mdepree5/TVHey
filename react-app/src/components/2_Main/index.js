@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
-import ReactSlider from "react-slider";
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import AuthForm from "../0_Session/AuthForm";
 import Navigation from '../1_Navigation/index';
@@ -35,49 +34,11 @@ export const UnAuthenticatedApp = () => {
           <Route><Redirect to="/login" /></Route>
         </Switch>
       </div>
-
-        <SizeSlider /> 
-
     </div>
   )
 }
   
 
-const SizeSlider = () => {
-  const [fontSize, setFontSize] = useState(16)
-  const bod = document.getElementById('body');
-  console.log(`%c bod:`, `color:yellow`, bod)
-  console.log(`%c bod:`, `color:yellow`, bod.style)
-  console.log(`%c bod:`, `color:yellow`, bod.style.fontSize)
-
-  const onSave = () => {
-    bod.style.fontSize=`${fontSize.toString()}px`
-  }
-
-  return (
-    <>
-      <ReactSlider
-        value={fontSize}
-        onAfterChange={(val) => {setFontSize(val)}}
-        className="font-size-slider"
-        thumbClassName="font-size-thumb"
-        trackClassName="font-size-track"
-        ariaLabel={"Change Font Size"}
-        orientation="horizontal"
-        min={12}
-        max={50}
-        renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-        renderTrack={(props, state) => (
-          <div {...props} index={state.index}></div>
-        )}
-        invert
-        pearling
-        minDistance={1}
-      />
-      <button onClick={onSave} >Save size</button>
-    </>
-  )
-}
 
 
 export const AuthenticatedApp = () => {
@@ -108,22 +69,36 @@ const LeftNav = () => {
   const channelstate = useSelector(state => state?.channel);
   const channels = Object.values(channelstate?.channels);
 
+  const [display, setDisplay] = useState(true)
+
   return (
     <div className='left-nav'>
       <div className='header' style={{justifyContent:'flex-end'}}>TVHey</div>
-      <div style={{height:'100px'}}/>
-      <div style={{height:'100px'}}/>
-
-      <div className='col-list'>
+      <div style={{height:'200px'}}/>
+      
+      <div className='row-list'>
+        <button onClick={()=> setDisplay(!display)} >Show</button>
         <h3 style={{paddingLeft:'1.2em', paddingRight: '1.2em'}} >Channels</h3>
+      </div>
+
+      <div className={`col-list channels-container ${display ? 'hide-channels' : ''}`}>
         {channels?.map(channel => (
-          <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
+          <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
         ))}
         <div style={{paddingLeft:'1.2em', paddingRight: '1.2em'}}><ChannelFormModal name='+ Add Channel'/></div>
+      </div>
+
+      <div style={{height:'200px'}}>
+        <AboutLink link='https://github.com/mdepree5' image='https://capstone-slack-clone.s3.amazonaws.com/github.png' />
+        <AboutLink link='https://www.linkedin.com/in/mitch-depree-4a5686155/' image='https://capstone-slack-clone.s3.amazonaws.com/linkedin.png' />
       </div>
     </div>
   )
 }
+
+const AboutLink = ({link, image}) => (
+  <img className='about' onClick={()=>window.open(link)} src={image} alt='about-link' />
+)
 
 const RightPage = ({socket}) => {
 

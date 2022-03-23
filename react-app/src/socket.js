@@ -46,3 +46,75 @@
   //   setChatInput('')
   // }
 
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo                               Slider
+// todo ——————————————————————————————————————————————————————————————————————————————————
+
+// const SizeSlider = () => {
+//   const [fontSize, setFontSize] = useState(16)
+//   const bod = document.getElementById('body');
+//   console.log(`%c bod:`, `color:yellow`, bod)
+//   console.log(`%c bod:`, `color:yellow`, bod.style)
+//   console.log(`%c bod:`, `color:yellow`, bod.style.fontSize)
+
+//   const onSave = () => {
+//     bod.style.fontSize=`${fontSize.toString()}px`
+//   }
+
+//   return (
+//     <>
+//       <ReactSlider
+//         value={fontSize}
+//         onAfterChange={(val) => {setFontSize(val)}}
+//         className="font-size-slider"
+//         thumbClassName="font-size-thumb"
+//         trackClassName="font-size-track"
+//         ariaLabel={"Change Font Size"}
+//         orientation="horizontal"
+//         min={12}
+//         max={50}
+//         renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+//         renderTrack={(props, state) => (
+//           <div {...props} index={state.index}></div>
+//         )}
+//         invert
+//         pearling
+//         minDistance={1}
+//       />
+//       <button onClick={onSave} >Save size</button>
+//     </>
+//   )
+// }
+
+// ???? ——————————————————————————————————————————————————————————————————————————————————
+// ????                               Slider CSS
+// ???? ——————————————————————————————————————————————————————————————————————————————————
+
+// .font-size-slider { height: 20px; }
+
+// .font-size-thumb {
+//   height: 30px;
+//   line-height: 30px;
+//   width: 30px;
+//   text-align: center;
+//   background-color: #000;
+//   color: #fff;
+//   border-radius: 50%;
+//   cursor: grab;
+//   font-size: 20px;
+//   padding: 5px;
+// }
+
+// .font-size-track {
+//   top: 0;
+//   bottom: 0;
+//   /* background: gray; */
+//   border-radius: 999px;
+//   /* left: 5px; */
+//   width: 100px;
+//   border: 2px solid blue;
+// }
+
+// /* .font-size-track.font-size-track-0 {
+//   background: red; 
+// } */

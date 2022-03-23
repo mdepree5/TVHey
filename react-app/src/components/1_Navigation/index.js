@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import ReactSlider from "react-slider";
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import { Modal } from '../../context/Modal';
 import { updateUserImage, updateUserDisplayName } from '../../store/session';
 import LogoutButton from '../../components/0_Session/LogoutButton';
 import './Navigation.css'
-// import { bindActionCreators } from 'redux';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const UserDropDownForm = ({label, onSubmit, input, button}) => (
   <form onSubmit={onSubmit}>
@@ -97,12 +95,6 @@ const NavDropdown = () => {
 
 const Navigation = () => {
   const history = useHistory();
-  
-  const bod = document.getElementById('body');
-  console.log(`%c bod:`, `color:yellow`, bod)
-  console.log(`%c bod:`, `color:yellow`, bod.style)
-  console.log(`%c bod:`, `color:yellow`, bod.style.fontSize)
-
 
   return (
     <div className='nav-bar'>
@@ -115,10 +107,8 @@ const Navigation = () => {
       </div>
     
       <div id='mid-nav'>
-        <button onClick={()=> bod.style.fontSize='32px'}>Change to 32</button>
-        <button onClick={()=> bod.style.fontSize='16px'}>Change to 16</button>
-        {/* <SizeSlider /> */}
-        <About />
+        <AboutLink link='https://github.com/mdepree5' image='https://capstone-slack-clone.s3.amazonaws.com/github.png' />
+        <AboutLink link='https://www.linkedin.com/in/mitch-depree-4a5686155/' image='https://capstone-slack-clone.s3.amazonaws.com/linkedin.png' />
       </div>
     
       <div id='right-nav'>
@@ -132,12 +122,8 @@ const Navigation = () => {
 
 
 
-const About = () => (
-  <div>
-    <a href='https://github.com/mdepree5' target='_blank' rel='noreferrer'><img className='about'  src='https://capstone-slack-clone.s3.amazonaws.com/github.png' alt='github' /> </a>
-    <a href='https://www.linkedin.com/in/mitch-depree-4a5686155/' target='_blank' rel='noreferrer'><img className='about'  src='https://capstone-slack-clone.s3.amazonaws.com/linkedin.png' alt='linked' /> </a>
-  </div>
-  
+const AboutLink = ({link, image}) => (
+  <img className='about' onClick={()=>window.open(link)} src={image} alt='about-link' />
 )
 
 
