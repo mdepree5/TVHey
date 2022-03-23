@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import { Modal } from '../../context/Modal';
@@ -10,23 +10,9 @@ import './Navigation.css'
 const UserDropDownForm = ({label, onSubmit, input, button}) => (
   <form onSubmit={onSubmit}>
     <label>{label}</label>
-    <div className='row-list'>
-      {input}
-      {button}
-    </div>
+    <div className='row-list'>{input} {button} </div>
   </form>
 )
-
-function NavDropdownModal({ showModal, setShowModal, button, children }) {
-  return (<>
-    {/* <button onClick={e => setShowModal(true)}>Nav Dropdown</button> */}
-    {button}
-    {showModal && (
-      <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}>{children}</Modal>
-    )}
-  </>);
-}
-
 
 const NavDropdown = () => {
   const dispatch = useDispatch();
@@ -34,24 +20,15 @@ const NavDropdown = () => {
   const [imageLoading, setImageLoading] = useState(false);
   const [count, setCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
   const [display_name, setDisplay_name] = useState(sessionUser?.display_name);
   const [media_url, setMedia_url] = useState(sessionUser?.media_url === 'no image provided' ? '' : sessionUser?.media_url);
-
-
-  useEffect(()=> {
-    if (!showDropdown) return;
-    const closeDropdown = () => setShowDropdown(false);
-    document.addEventListener('click', closeDropdown)
-    document.removeEventListener('click', closeDropdown)
-  }, [showDropdown]);
 
   const handleDisplay = async(e) => {
     e.preventDefault();
     await dispatch(updateUserDisplayName(display_name, sessionUser?.id));
     
     setCount(0);
-    setShowDropdown(false);
+    setShowModal(false);
   }
 
   const handleImage = async(e) => {
@@ -64,13 +41,13 @@ const NavDropdown = () => {
 
     setImageLoading(false);
     setMedia_url(sessionUser?.media_url);
-    return !back?.errors && setShowDropdown(false);
+    return !back?.errors && setShowModal(false);
   }
   
-  const closeDropdown = () => {
+  const handleClose = () => {
     setDisplay_name(sessionUser?.display_name);
     setCount(0);
-    setShowDropdown(false);
+    setShowModal(false);
   }
   
   const updateDisplayName = e => {
@@ -79,47 +56,41 @@ const NavDropdown = () => {
   }
 
   return (<>
-    <NavDropdownModal 
-    showModal={showModal}
-    setShowModal={setShowModal}
-    button=
     {sessionUser?.image_url === 'no image provided' ? 
-      <div className='nav-user-image' 
-        // onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
+      <div className='nav-user-image' onClick={e => setShowModal(true)}>
+        {sessionUser?.display_name[0].toUpperCase()}</div>
+      : 
+      <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}
         onClick={e => setShowModal(true)}
-      >{sessionUser?.display_name[0].toUpperCase()}</div> : 
+    />}
 
-      <img className='nav-user-image'
-        src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}
-        // onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
-        onClick={e => setShowModal(true)}
-      />
-    }
-    
-    children={
-      <div className='dropdown-nav'>
-        <div className='row-list' style={{alignItems:'center'}} >
-          {sessionUser?.image_url === 'no image provided' ? 
-            <div className='nav-user-image' >{sessionUser?.display_name[0].toUpperCase()}</div> : 
-            <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
-          }
-          <h3 className='nav-display-name'>{sessionUser?.display_name}</h3>
-          <button className='dropdown-cancel' onClick={closeDropdown}>X</button>
-        </div>
+    {showModal &&
+      <Modal providedId='nav-dropdown' providedContent={true} onClose={handleClose}>
+      {<div className='dropdown-nav'>
+          <div className='row-list' style={{alignItems:'center'}} >
+            {sessionUser?.image_url === 'no image provided' ? 
+              <div className='nav-user-image' >{sessionUser?.display_name[0].toUpperCase()}</div>
+              :
+              <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
+            }
+            <h3 className='nav-display-name'>{sessionUser?.display_name}</h3>
+          </div>
 
-        <UserDropDownForm label='Change Display Name' onSubmit={handleDisplay}
-          input={<input placeholder={sessionUser?.display_name} value={display_name} onChange={updateDisplayName}></input>}
-          button={<button className={!display_name || !count ? 'default-cursor' : ''} disabled={!display_name || !count} type='submit' >{'>>>'}</button>}
+          <UserDropDownForm label='Change Display Name' onSubmit={handleDisplay}
+            input={<input placeholder={sessionUser?.display_name} value={display_name} onChange={updateDisplayName}></input>}
+            button={<button className={!display_name || !count ? 'default-cursor' : ''} disabled={!display_name || !count} type='submit' >{'>>>'}</button>}
+            />
+
+          <UserDropDownForm label='Set Profile Image' onSubmit={handleImage}
+            input={<input style={{cursor:'pointer'}} type='file' accept='image/*' onChange={e => setMedia_url(e.target.files[0])}></input>}
+            button={imageLoading ? <div>Uploading...</div> : <button className={!media_url ? 'default-cursor' : ''} disabled={!media_url} type='submit'>{'>>>'}</button>}
           />
 
-        <UserDropDownForm label='Set Profile Image' onSubmit={handleImage}
-          input={<input style={{cursor:'pointer'}} type='file' accept='image/*' onChange={e => setMedia_url(e.target.files[0])}></input>}
-          button={imageLoading ? <div>Uploading...</div> : <button className={!media_url ? 'default-cursor' : ''} disabled={!media_url} type='submit'>{'>>>'}</button>}
-        />
+          <LogoutButton />
+        </div>} 
+      </Modal>
+      }
 
-        <LogoutButton />
-      </div>
-    } />
     {/* {showDropdown && (
       <div className='dropdown-nav'>
         <div className='row-list' style={{alignItems:'center'}} >
