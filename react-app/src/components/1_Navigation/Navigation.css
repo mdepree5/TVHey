@@ -22,7 +22,7 @@
 /* todo             Nav Bar Layout                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .nav-bar{
-  height: 44px;
+  height: 4em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -72,7 +72,8 @@
 
   z-index: 3;
   position: absolute;
-  top: 44px;
+  top: 4em;
+  
   /* left: 100%; */
   /* left: calc(100% - 7em); */
   left: calc(110%);

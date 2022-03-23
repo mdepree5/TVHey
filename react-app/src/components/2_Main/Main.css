@@ -39,7 +39,7 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Authenticated App                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-.main-page{ height: calc(100vh - 44px) }
+.main-page{ height: calc(100vh - 4em) }
 
 .main-page .header{
   display: flex;
