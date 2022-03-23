@@ -74,6 +74,9 @@ const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
 
   return (
     <div ref={messageContainerRef} role='log' className='message-container' >
+      <br />
+      <div>This is the top</div>
+      <hr />
       {messagesArr?.map((message, ind) => (
         <MessageCard key={ind} message={message} sessionUser={sessionUser}/>
       ))}
