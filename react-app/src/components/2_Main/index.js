@@ -84,7 +84,7 @@ export const AuthenticatedApp = () => {
       <Split className='row-list main-page'
         cursor="col-resize"
         direction="horizontal"
-        minSize={180}
+        minSize={270}
         sizes={[25, 75]}
         // sizes={bool ? [25, 65, 10] : [25, 75]}
         gutterSize={2}

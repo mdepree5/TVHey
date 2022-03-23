@@ -43,7 +43,7 @@ export const loginDemo = () => async (dispatch) => {
 
 
   const response = await fetch('/api/auth/login', {method: 'POST', headers: { 'Content-Type': 'application/json' }, 
-    body: JSON.stringify({ email: 'alligator@lo.ki', password:'thetrueloki' })});
+    body: JSON.stringify({ email: 'alligator@lo.ki', password:'Thetruel0ki??' })});
   
   
   if (response.ok) {
