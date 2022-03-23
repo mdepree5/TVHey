@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, Redirect } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import { login, signUp } from '../../store/session';
-import { FormErrors, FormInput } from '../Utils/forms';
+import { FormInput, FormButton, FormErrors } from '../Utils/forms';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const AuthForm = ({signup}) => {
   const dispatch = useDispatch();
@@ -53,20 +53,29 @@ const AuthForm = ({signup}) => {
   return (
     <form onSubmit={handleSubmit}>
       {signup && 
-        <FormInput name='Username' show={signup} validation={usernameValidation} message='Provide a valid username' state={username} setState={setUsername}/>}
+        <FormInput name='Username' validation={usernameValidation} message='Provide a valid username' state={username} setState={setUsername}/>}
       
-      <FormInput name='Email' show={signup} validation={emailValidation} message='Provide a valid email' state={email} setState={setEmail}/>
-      <FormInput name='Password' show={signup} validation={passwordValidation} message='8 chars : Uppercase : lowercase : number : special' type='password' state={password} setState={setPassword}/>
+      <FormInput name='Email' validation={emailValidation} message={signup ? 'Provide a valid email' : 'Enter your email'} state={email} setState={setEmail}/>
+      <FormInput name='Password' validation={passwordValidation} message={signup ? '8 chars : Uppercase : lowercase : number : special' : 'Enter your password'} type='password' state={password} setState={setPassword}/>
       
       {signup && 
-        <FormInput name='Confirm Password' show={signup} validation={confirmPasswordValidation} message='Passwords must match' type='password' state={confirmPassword} setState={setConfirmPassword}/> }
+        <FormInput name='Confirm Password' validation={confirmPasswordValidation} message='Passwords must match' type='password' state={confirmPassword} setState={setConfirmPassword}/> }
       
-      {signup && <small style={{fontSize:'0.8em', color:'#EC8642'}}>* = required</small>}
-      <button className={loginValidation ? 'input-valid' : ''} type='submit' disabled={signup ? !(loginValidation && signupValidation): !loginValidation}>{signup ? 'Sign Up' : 'Log In'}</button>
+      <small style={{fontSize:'0.8em', color:'#EC8642'}}>* = required</small>
       
+      <FormButton validation={loginValidation} disabledLogic={signup ? !(loginValidation && signupValidation): !loginValidation} buttonNameLogic={signup ? 'Sign Up' : 'Log In'} />
+
       <FormErrors errors={errors}/>
     </form>
   );
 };
 
 export default AuthForm;
+
+
+//<div className='dropdown-button-container'>
+//  <button className={loginValidation ? 'input-valid' : 'button-invalid'} type='submit' disabled={signup ? !(loginValidation && signupValidation): !loginValidation}>{signup ? 'Sign Up' : 'Log In'}</button>
+//  <div className='dropdown-button-content'>
+//    Please fill out required fields
+//  </div>
+//</div>

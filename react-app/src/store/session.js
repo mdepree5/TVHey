@@ -34,7 +34,18 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 export const loginDemo = () => async (dispatch) => {
-  const response = await fetch('/api/auth/login', {method: 'POST', headers: { 'Content-Type': 'application/json' },body: JSON.stringify({ email: 'alligator@lo.ki', password:'thetrueloki' })});
+  
+
+  // let count = 1;
+
+  // const response1 = await fetch('/api/auth/signup', {method: 'POST', headers: {'Content-Type': 'application/json'},
+  //   body: JSON.stringify({username:`${count}alligator`, display_name:'', email:`${count}alligator@lo.ki`, password:'ImaVariant?1'})});
+
+
+  const response = await fetch('/api/auth/login', {method: 'POST', headers: { 'Content-Type': 'application/json' }, 
+    body: JSON.stringify({ email: 'alligator@lo.ki', password:'Thetruel0ki??' })});
+  
+  
   if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data))
@@ -43,6 +54,8 @@ export const loginDemo = () => async (dispatch) => {
     const data = await response.json();
     if (data.errors) return data.errors;
   } else return ['An error occurred. Please try again.']
+  
+  // count++;
 }
 
 export const logout = () => async (dispatch) => {
@@ -67,6 +80,7 @@ export const signUp = (username, email, password) => async (dispatch) => {
 export const updateUserImage = (image_url, userId) => async (dispatch) => {
   const response = await fetch(`/api/users/${userId}/image`, { method: 'PUT', body: image_url });
 
+  console.log(`%c REDUX response:`, `color:yellow`, response)
   if (response.ok) {
     const updatedUser = await response.json();
     dispatch(setUser(updatedUser));

@@ -28,17 +28,49 @@
 .form-input{
   margin-bottom: 0.8em;
 }
+
 .inline-form-validation{
   font-size: 0.8em;
   text-align: start;
   margin-left: 0.6em;
 }
+
 .input-valid{ color: #22ff34; }
+
+.button-invalid:hover{ 
+  /* color: red;  */
+  cursor: default;
+  /* cursor: not-allowed; */
+}
+
+.dropdown-button-container-invalid,
+.dropdown-button-container{
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-button-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+
+.dropdown-button-container-invalid:hover .dropdown-button-content {
+  display: inline-flex;
+  left: 0;
+  top: 2.2em;
+  flex-direction: column;
+  background-color: none;
+  align-items: center;
+  justify-content: space-between;
+  color: #EC8642;
+}
+
 
 .errors{
   margin-top: 2em;
   border-top: solid 0.1em gray;
   padding-top: 1em;
-
   color: red;
 }

@@ -7,6 +7,19 @@
   overflow-y: auto;
 }
 
+
+/* .message-container::-webkit-scrollbar{
+  display:none;
+  display: block;
+  background: red;
+  border: solid 3px gray;
+} */
+
+/* .message-container::-webkit-scrollbar-thumb{
+  background: red;
+} */
+
+
 .write-a-message{
   background-color:#232529;
   /* margin-left: 20px;
@@ -18,14 +31,18 @@
 /* todo             Message card                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .message-card{
-  min-height: 100px;
+  
+  padding-top: 1em;
+  
+  min-height: 6.5em;
   width: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  /* border-bottom: solid rgb(97, 97, 97) 1px; */
+  
   align-items: center;
+  padding-left: 1.3em;
+  padding-right: 1.3em;
+  
+  padding-bottom: 1em;
+  /* border-bottom: solid rgb(97, 97, 97) 1px; */
 }
 
 .message-card:hover{

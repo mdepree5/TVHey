@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import { createChannel, updateChannel } from '../../store/channel';
-import {FormInput, FormErrors} from '../Utils/forms';
+import {FormInput, FormButton, FormErrors} from '../Utils/forms';
 import './Channel.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const ChannelForm = ({ edit, channel, closeModal }) => {
@@ -44,7 +44,8 @@ const ChannelForm = ({ edit, channel, closeModal }) => {
       <FormInput name='Topic' show={true} message='Set a topic (optional)' required={false} state={topic} setState={setTopic} />
       
       {<small style={{fontSize:'0.8em', color:'#EC8642'}}>* = required</small>}
-      <button className={title.length ? 'input-valid' : ''} type='submit' disabled={!title.length}>{edit ? 'Update' : 'Create'}</button>
+      
+      <FormButton validation={title.length} disabledLogic={!title.length} buttonNameLogic={edit ? 'Update' : 'Create'} />
       
       <FormErrors errors={errors} />
     </form>

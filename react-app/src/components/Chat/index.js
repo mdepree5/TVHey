@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useRef, forwardRef, useImperativeHandle, useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
@@ -50,6 +50,7 @@ const Chat = () => {
   }
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
 
+
   return (sessionUser && (
     <>
       <div className='header'>
@@ -62,7 +63,7 @@ const Chat = () => {
         </div>}
       </div>
 
-      <div className='message-container'>
+      <div className='message-container' role='log'>
         {messagesArr?.map((message, ind) => (
           <MessageCard key={ind} message={message} sessionUser={sessionUser}/>
         ))}
@@ -81,6 +82,25 @@ const Chat = () => {
   )
 };
 
+const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
+  const messageContainerRef = useRef();
+  const scrollToTop = () => messageContainerRef.current.scrollTop = 0;
+  const scrollToBottom = () => messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+
+  useLayoutEffect(()=>{scrollToBottom()});
+  useImperativeHandle(ref, () => ({
+    scrollToTop,
+    scrollToBottom,
+  }))
+
+  return (
+    <div ref={messageContainerRef} role='log' className='message-container' >
+        {messagesArr?.map((message, ind) => (
+          <MessageCard key={ind} message={message} sessionUser={sessionUser}/>
+        ))}
+    </div>
+  )
+})
 export default Chat;
 
 

@@ -63,7 +63,9 @@
   z-index: 3;
   position: absolute;
   top: 44px;
-  
+  /* left: 100%; */
+  left: calc(100% - 7em);
+
   width: 20em;
   height: 18em;
 
@@ -75,15 +77,23 @@
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
-
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Dropdown Contents                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
 .nav-user-image{
-  height: 2em;
-  width: 2em;
-  border-radius: 0.4em;
   border: solid 0.05em black;
+  border-radius: 0.4em;
   box-shadow: 0 0 8px white;
-  cursor: pointer;
-  margin-right: 1em;
+
+  min-height: 2em;
+  max-height: 2em;
+  min-width: 2em;
+  max-width: 2em;
+
+  text-align: center;
+  line-height: 2em;
+
+  cursor: pointer;  
 }
 
 .nav-user-image:hover{
@@ -91,6 +101,16 @@
   box-shadow: 0 0 10px #EC8642;
 }
 
+.default-cursor{
+  cursor: default;
+}
+
 .dropdown-cancel{
   width: 2em;
+}
+
+.nav-display-name{
+  margin: 0;
+  padding-left: 1em;
+  padding-right: 1em;
 }

@@ -1,3 +1,4 @@
+// import { useState, useEffect } from 'react';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
@@ -43,9 +44,11 @@ export const AuthenticatedApp = () => {
   // const dayjs = require('dayjs');
   // let socket;
   // const domain = (process.env.NODE_ENV === 'production') ? '/api' : '';
-  // const domain = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
   // const domain = '';
+  // const domain = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
 
+  // socket = io(domain);
+  // console.log(`%c socket:`, `color:yellow`, socket)
   // socket = io();
   // console.log('authenticated app', socket)
   
@@ -55,8 +58,8 @@ export const AuthenticatedApp = () => {
   //   console.table(all_channels.all_channels)
   //   all_channels.all_channels.forEach(channel => {
   //     const parsed = JSON.parse(channel)
-  //     console.log('one channel', parsed)
-  //     console.log('created at', parsed?.created_at)
+  //     // console.log('one channel', parsed)
+  //     // console.log('created at', parsed?.created_at)
   //     console.log('format date', dayjs(parsed?.created_at).format('h:mm A'))
   //   })
   // });
@@ -68,20 +71,29 @@ export const AuthenticatedApp = () => {
   const dispatch = useDispatch();
   useEffect(() => { dispatch(getChannels()) }, [dispatch]);
 
+  // const [bool, setBool] = useState(true)
+
+  // const handleHelp = () => {
+  //   // console.log(`%c bool: ${bool}`, `color:yellow`)
+  //   // setBool(!bool)
+  // }
   return (
     <div className='page-container'>
+      {/* <button onClick={handleHelp} >Help</button> */}
       <Navigation />
       <Split className='row-list main-page'
         cursor="col-resize"
         direction="horizontal"
-        minSize={180}
+        minSize={270}
         sizes={[25, 75]}
+        // sizes={bool ? [25, 65, 10] : [25, 75]}
         gutterSize={2}
         dragInterval={2}
         snapOffset={20}
       >
         <LeftNav />
         <RightPage />
+        {/* {bool && <div>HEY</div>} */}
       </Split>
     </div>
   )
