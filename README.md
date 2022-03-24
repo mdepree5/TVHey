@@ -1,134 +1,103 @@
-# Flask React Project
+<div id="top"></div>
 
-This is the starter for the Flask React project.
+<br />
+<div align="center">
+  <a href="https://tvhey.herokuapp.com/">
+    <img src='https://capstone-slack-clone.s3.amazonaws.com/favicon.ico' alt="Logo" width="70" height="70">
+  </a>
 
-## Getting started
+<h1 align="center">TVHey</h1>
+  <h3 style='font-style: italic' align="center">"The idea was to bring together a group of of remarkable people to see if they could become something more"</h3>
+  <h1 align="center"></h1>
+  
+  <p align="justify">
+    Everything we do at TVHey, we do to change the world for the better. 
+    We know we can't do this alone, which is why we believe in equipping you to change it with us. 
+    <a href="https://slack.com/help/articles/115004071768-What-is-Slack-">Slack</a> is doing this too. They, like us, know that without the tools to communicate, we are leaving the possibility of changing the world up to chance.
+    Here at TVHey, we work tirelessly in every detail and at every level of the services we offer and the features we put into your hands. 
+    We happen to provide a beautifully designed app and lightning-fast messaging. When you're ready, <a href="https://tvhey.herokuapp.com/"><strong>come change the world with us »</strong></a>
 
-1. Clone this repository (only this branch)
+  </p>
+  <p align="center">
+    <br />
+    <a href="https://tvhey.herokuapp.com/"><strong>TVHey Live Site »</strong></a>
+    <br />
+    <br />
+    <a href="#getting-started">Get Started</a>
+    ·
+    <a href="https://github.com/mdepree5/TVHey/wiki">Explore Docs</a>
+    ·
+    <a href="https://github.com/mdepree5/TVHey/issues">Report Bug</a>
+  </p>
+</div>
 
-   ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
-   ```
+<!-- Built With -->
+<h2 align="left">Built with </h2>
+<p align="left">
+    <a href="https://reactjs.org/"><strong>React</strong></a>
+    ·
+    <a href="https://redux.js.org/">Redux</a>
+    ·
+    <a href="https://flask.palletsprojects.com/en/2.0.x/">Flask</a>
+    ·
+    <a href="https://www.postgresql.org/">PostgresQL</a>
+    ·
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">Pure CSS</a>
+  </p>
 
-2. Install dependencies
+<!-- GETTING STARTED -->
+<h1 align="center"></h1>
 
-      ```bash
-      pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
-      ```
+## Getting Started
+To get a local copy up and running follow these simple example steps.
 
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
-4. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file
+1. Clone the repository
+    ```sh
+    git clone git@github.com:mdepree5/TVHey.git
+    ```
+2. Install backend dependencies in root directory
+    ```sh
+     pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
+    ```
+3. Create a POSTGRESQL user in PSQL
+    ```sh
+    psql -c "CREATE USER <username> WITH PASSWORD '<password>' CREATEDB"
+    ```
+4. Create .env file and add username, password, database name, JWT/secret, port
+    ```sh
+    touch .env
+    ```
+5. Populate backend server
+    ```sh
+     pipenv shell
+     flask db upgrade
+     flask seed all
+    ```
+6. Start backend server
+    ```sh
+    flask run
+    ```
+    
+7. In a separate terminal window, change directories into 'react-app' and install frontend dependencies
+    ```sh
+    cd react-app
+    npm install
+    ```
+8. Start frontend server and navigate to https://localhost:3000/
+    ```sh
+    npm start
+    ```
+<h1 align="center"></h1>
 
-5. Get into your pipenv, migrate your database, seed your database, and run your flask app
 
-   ```bash
-   pipenv shell
-   ```
+<!-- CONTACT -->
+<h1 align="center">Contact Us</h1>
+<p align="center">
+<a href="https://github.com/mdepree5"><strong>Github »</strong></a>
+· 
+<a href="https://www.linkedin.com/in/mitchell-depree-4a5686155"><strong>LinkedIn »</strong></a>
+</p>
 
-   ```bash
-   flask db upgrade
-   ```
 
-   ```bash
-   flask seed all
-   ```
 
-   ```bash
-   flask run
-   ```
-
-6. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
-
-***
-*IMPORTANT!*
-   If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment.
-   You can do this by running:
-
-   ```bash
-   pipenv lock -r > requirements.txt
-   ```
-
-*ALSO IMPORTANT!*
-   psycopg2-binary MUST remain a dev dependency because you can't install it on apline-linux.
-   There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
-***
-
-## Deploy to Heroku
-
-1. Before you deploy, don't forget to run the following command in order to
-ensure that your production environment has all of your up-to-date
-dependencies. You only have to run this command when you have installed new
-Python packages since your last deployment, but if you aren't sure, it won't
-hurt to run it again.
-
-   ```bash
-   pipenv lock -r > requirements.txt
-   ```
-
-2. Create a new project on Heroku
-3. Under Resources click "Find more add-ons" and add the add on called "Heroku Postgres"
-4. Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command-line)
-5. Run
-
-   ```bash
-   heroku login
-   ```
-
-6. Login to the heroku container registry
-
-   ```bash
-   heroku container:login
-   ```
-
-7. Update the `REACT_APP_BASE_URL` variable in the Dockerfile.
-   This should be the full URL of your Heroku app: i.e. "https://flask-react-aa.herokuapp.com"
-8. Push your docker container to heroku from the root directory of your project.
-   (If you are using an M1 mac, follow [these steps below](#for-m1-mac-users) instead, then continue on to step 9.)
-   This will build the Dockerfile and push the image to your heroku container registry.
-
-   ```bash
-   heroku container:push web -a {NAME_OF_HEROKU_APP}
-   ```
-
-9. Release your docker container to heroku
-
-      ```bash
-      heroku container:release web -a {NAME_OF_HEROKU_APP}
-      ```
-
-10. set up your database
-
-      ```bash
-      heroku run -a {NAME_OF_HEROKU_APP} flask db upgrade
-      heroku run -a {NAME_OF_HEROKU_APP} flask seed all
-      ```
-
-11. Under Settings find "Config Vars" and add any additional/secret .env
-variables.
-
-12. profit
-
-### For M1 Mac users
-
-(Replaces **Step 8**)
-
-1. Build image with linux platform for heroku servers. Replace
-{NAME_OF_HEROKU_APP} with your own tag:
-
-   ```bash=
-   docker buildx build --platform linux/amd64 -t {NAME_OF_HEROKU_APP} .
-   ```
-
-2. Tag your app with the url for your apps registry. Make sure to use the name
-of your Heroku app in the url and tag name:
-
-   ```bash=2
-   docker tag {NAME_OF_HEROKU_APP} registry.heroku.com/{NAME_OF_HEROKU_APP}/web
-   ```
-
-3. Use docker to push the image to the Heroku container registry:
-
-   ```bash=3
-   docker push registry.heroku.com/{NAME_OF_HEROKU_APP}/web
-   ```
+<p align="right">(<a href="#top">back to top</a>)</p>
