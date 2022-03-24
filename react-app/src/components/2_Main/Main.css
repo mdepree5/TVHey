@@ -32,9 +32,9 @@
   padding-bottom: 2em;
   border-bottom: solid 0.1em gray;
 }
-#unauthenticated-header > * {
-  text-align: center;
-}
+
+#unauthenticated-header > *{ text-align: center; }
+#unauthenticated-header > *:hover{ border-left: solid 0.1em gray; border-right: solid 0.1em gray }
 
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */

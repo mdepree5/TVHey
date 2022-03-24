@@ -132,9 +132,15 @@
   line-height: 2.2em;
 }
 
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Message Card edit and save buttons                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+.cancel-message-button{ border: 0.08em solid rgb(193, 193, 193); }
+.cancel-message-button:hover{ border: 0.08em solid white; }
+.save-message-button{ border: 0.08em solid rgb(193, 193, 193); cursor: default; }
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-/* todo             Message Card right side                   */
+/* todo             Message Card hover buttons                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .dropdown-content > * {
   background-color: inherit;

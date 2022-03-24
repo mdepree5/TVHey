@@ -108,8 +108,11 @@ const MessageCard = ({message, sessionUser}) => {
   <form className='col-list message-card' onSubmit={handleEdit}>
     <input value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}} placeholder='Update message'/>
     <div className='row-list edit-message-buttons'>
-      <button type='button' onClick={handleCancel}>Cancel</button>
-      <button type='submit'>Save</button>
+      <button className='cancel-message-button' type='button' onClick={handleCancel}>Cancel</button>
+      {/* <button type='submit'>Save</button> */}
+      <button className='save-message-button' id={input && 'send-it'} type="submit" disabled={!input}>
+        Save
+      </button>
     </div>
   </form>
   ) : (
