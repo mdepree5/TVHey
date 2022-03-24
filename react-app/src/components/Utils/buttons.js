@@ -3,6 +3,7 @@ import {useDispatch} from "react-redux";
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import {deleteMessage} from '../../store/message';
 import {deleteChannel} from '../../store/channel';
+import {Icon} from './icons';
 import './utils.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
 
@@ -17,15 +18,13 @@ export const DeleteButton = ({ thisId, deleteThunk, config }) => {
     return config.newRoute ? history.push(config.newRoute) : deleted;
   }
 
-  return (
-    <button className='delete' onClick={handleDelete}>{config.buttonName}</button>
-  )
+  return <Icon onClick={handleDelete} iconName='delete'/>
 }
 
 export const DeleteChannelButton = ({channelId}) => (
-  <DeleteButton thisId={channelId} deleteThunk={deleteChannel} config={{buttonName: 'x', newRoute: '/'}} />
+  <DeleteButton thisId={channelId} deleteThunk={deleteChannel} config={{newRoute: '/'}} />
 )
 
 export const DeleteMessageButton = ({messageId}) => (
-  <DeleteButton thisId={messageId} deleteThunk={deleteMessage} config={{buttonName: 'x'}} />
+  <DeleteButton thisId={messageId} deleteThunk={deleteMessage} />
 )

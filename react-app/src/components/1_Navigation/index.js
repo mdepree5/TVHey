@@ -93,7 +93,6 @@ const NavDropdown = () => {
   </>)
 }
 
-
 const Navigation = () => {
   const history = useHistory();
 
@@ -101,13 +100,15 @@ const Navigation = () => {
     <div className='nav-bar'>
       <div id='left-nav'>
         <img
-          className='icon'
+          className='navicon'
           onClick={() => history.push('/')}
           src='https://capstone-slack-clone.s3.amazonaws.com/favicon.ico' alt='custom' 
         />
       </div>
     
       <div id='mid-nav'>
+        <AboutLink link='https://github.com/mdepree5' image='https://capstone-slack-clone.s3.amazonaws.com/github.png' />
+        <AboutLink link='https://www.linkedin.com/in/mitch-depree-4a5686155/' image='https://capstone-slack-clone.s3.amazonaws.com/linkedin.png' />
       </div>
     
       <div id='right-nav'>
@@ -116,5 +117,14 @@ const Navigation = () => {
     </div>
   )
 }
+
+
+
+
+
+const AboutLink = ({link, image}) => (
+  <img className='about' onClick={()=>window.open(link)} src={image} alt='about-link' />
+)
+
 
 export default Navigation;

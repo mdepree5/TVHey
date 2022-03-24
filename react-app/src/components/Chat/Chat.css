@@ -1,3 +1,6 @@
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Message Container                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
 .message-container{
   display: flex;
   flex-direction: column;
@@ -7,31 +10,50 @@
   overflow-y: auto;
 }
 
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Message Writing Form                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+#message-writer{
+  position: relative;
+  top: -1em;
+  z-index: 5;
 
-/* .message-container::-webkit-scrollbar{
-  display:none;
-  display: block;
-  background: red;
-  border: solid 3px gray;
-} */
-
-/* .message-container::-webkit-scrollbar-thumb{
-  background: red;
-} */
-
-
-.write-a-message{
-  background-color:#232529;
-  /* margin-left: 20px;
-  margin-right: 20px; */
-  /* width: 80%; */
+  background-color: #3B4248;
+  border: 0.08em solid rgb(193, 193, 193);
+  border-radius: 1em;
+  
+  width: calc(100% - 4em);
+  
+  padding: 1em;
+  margin: 1.3em;
+  margin-top: 0;
 }
 
+#writer-input{
+  border: none;
+  height: 4em;
+  color: white;
+}
+
+.submit-message-button{
+  width: 3em;
+  margin-left: auto;
+  /* border: solid rgb(0, 186, 59) 0.15em; */
+  border: 0.08em solid rgb(193, 193, 193);
+  cursor: default;
+}
+
+#send-it{
+  border: 0.15em solid rgb(0, 186, 59);
+  cursor: pointer; 
+}
+
+#writer-input:focus{ border: 0.08em solid rgb(193, 193, 193); };
+#message-writer:hover{ border: 0.08em solid rgb(193, 193, 193); }
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Message card                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .message-card{
-  
   padding-top: 1em;
   
   min-height: 6.5em;
@@ -42,26 +64,20 @@
   padding-right: 1.3em;
   
   padding-bottom: 1em;
-  /* border-bottom: solid rgb(97, 97, 97) 1px; */
 }
 
-.message-card:hover{
-  background-color: rgba(60, 73, 82, 0.317);
-}
-
-.message-card-header{
-  width: 100%;
-}
+.message-card:hover{ background-color: rgba(60, 73, 82, 0.317); }
+.message-card-header{ width: 100%; }
 
 .message-header-mid{
-  width: 88%;
+  /* width: 88%; */
+  width: calc(100% - 6em);
   padding-left: 8px;
   padding-right: 8px;
 }
-.message-header-left,
-.message-header-right{
-  width: 6%;
-}
+
+.message-header-left { width: 3em; }
+.message-header-right { width: 3em; }
 
 .message-card-image{
   height: 2.5em;
@@ -101,70 +117,29 @@
   padding: 0;
 }
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-/* todo             Right mes                   */
+/* todo             Message Card right side                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-.dropdown-message{
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content button {
+.dropdown-content > * {
   background-color: inherit;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  float:right;
-  max-width: 2em;
-  max-height: 2em;
-}
-
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  /* right: 0; */
-  z-index: 1;
-  /* min-height: 6.2em; */
-  min-height: 4.2em;
-  background-color: none;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-/* Show the dropdown menu on hover */
-/* .dropdown-message:hover .dropdown-content {
-  display: inline-flex;
-  left: 0;
-  top: -2.2em;
-  flex-direction: column;
-  background-color: none;
-  align-items: center;
-  justify-content: space-between;
-} */
-
-.show-dropdown-content{
-  display: inline-flex;
-  right: 0;
-  top: 2.2em;
-  flex-direction: column;
-  background-color: none;
-  align-items: center;
-  /* justify-content: space-between; */
-}
-
-.dropdown-message:hover .dropdown-button{
-  background-color: #61616148;
-  /* opacity: 0.5; */
-  color: white;
-}
-
-.editor-wrapper{
-  height: 50%;
+  /* padding: 1em 1em; */
+  width: 2em;
+  height: 2em;
   width: 50%;
 }
-.editor-wrapper * {
-  /* height: 80%; */
-  width: 80%;
+
+.dropdown-content{ display: none; }
+/* .dropdown-content > * { margin-right: 0.2em; } */
+
+.message-card:hover .dropdown-content {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-evenly; */
+
+  position: relative;
+
+  right: 2em;
+  top: -2em;
+  z-index: 1;
+
+  /* background-color: pink; */
 }
-
-

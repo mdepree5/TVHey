@@ -1,18 +1,29 @@
-.icon{
-  height: 2em;
-  width: 2em;
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Dropdown                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+.navicon{
+  height: 2.2em;
+  width: 2.2em;
   border-radius: 2em;
   box-shadow: 0 0 10px #EC8642;
   cursor: pointer;
 }
 
-.icon:hover {
+.navicon:hover {
   border-radius: 2em;
   box-shadow: 0 0 10px white;
 }
 
+.about{
+  height: 2em;
+  width: 2em;
+  cursor: pointer;
+}
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Nav Bar Layout                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
 .nav-bar{
-  height: 44px;
+  height: 4em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -55,16 +66,19 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Dropdown                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
+#nav-dropdown .modal-background { background: none; }
 .dropdown-nav{
-  /* background-color:#232529; */
   background-color: #17222A;
   box-shadow: 0 0 8px gray;
-
+  
   z-index: 3;
   position: absolute;
-  top: 44px;
-  /* left: 100%; */
-  left: calc(100% - 7em);
+  top: 4em;
+  
+  /* !!!! ——————————————————————————————————————————————————————————————————————————————— */
+  /* left: calc(1vw); */
+  left: calc(80vw - 28em);
+  /* !!!! ——————————————————————————————————————————————————————————————————————————————— */
 
   width: 20em;
   height: 18em;
@@ -85,29 +99,22 @@
   border-radius: 0.4em;
   box-shadow: 0 0 8px white;
 
-  min-height: 2em;
-  max-height: 2em;
-  min-width: 2em;
-  max-width: 2em;
+  min-height: 2.2em;
+  max-height: 2.2em;
+  min-width: 2.2em;
+  max-width: 2.2em;
 
   text-align: center;
-  line-height: 2em;
+  line-height: 2.2em;
 
   cursor: pointer;  
 }
 
 .nav-user-image:hover{
-  /* box-shadow: 0 0 10px white;  */
   box-shadow: 0 0 10px #EC8642;
 }
 
-.default-cursor{
-  cursor: default;
-}
-
-.dropdown-cancel{
-  width: 2em;
-}
+.default-cursor{ cursor: default; }
 
 .nav-display-name{
   margin: 0;

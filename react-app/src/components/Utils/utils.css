@@ -55,7 +55,6 @@
   z-index: 1;
 }
 
-
 .dropdown-button-container-invalid:hover .dropdown-button-content {
   display: inline-flex;
   left: 0;
@@ -74,3 +73,19 @@
   padding-top: 1em;
   color: red;
 }
+
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Icon                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+.icon{
+  width: 2em;
+  height: 2em;
+  margin: 0.2em;
+  cursor: pointer;
+}
+
+.icon-edit{ border-bottom: 0.05em solid gray; }
+.icon-delete{ border-bottom: 0.05em solid gray; }
+
+.icon-edit:hover{ border-bottom: 0.05em solid orange; }
+.icon-delete:hover{ border-bottom: 0.05em solid red; }

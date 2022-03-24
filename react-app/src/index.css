@@ -10,10 +10,11 @@ body, html{
   font-family:'Courier New', Courier, monospace;
   color: #ffffffa8;
   background-color: #232C32;
+  /* font-size: 20px; */
 }
 
-/* div{
-  width: 100%;
+/* body{ 
+  font-size: 30px;
 } */
 
 .row-list{ display: flex; flex-direction: row; }
@@ -28,6 +29,7 @@ input{
   border-radius: 0.5em;
   color: white;
 }
+input:focus{ outline: none; }
 
 form > button {margin-top: 0.4em;}
 
@@ -46,3 +48,17 @@ button{
   /* width: 50%; */
   /* max-width: 10px; */
 }
+
+::-webkit-scrollbar{
+  width: 0.6em;
+  z-index: 1;
+  background: none;
+}
+
+::-webkit-scrollbar-thumb{
+  background: gray;
+  z-index: 2;
+  border-radius: 10em;
+}
+
+::-webkit-scrollbar-thumb:hover{ background: #EC8642 ; }

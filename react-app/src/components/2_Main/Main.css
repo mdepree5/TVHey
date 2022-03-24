@@ -36,10 +36,11 @@
   text-align: center;
 }
 
+
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Authenticated App                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-.main-page{ height: calc(100vh - 44px) }
+.main-page{ height: calc(100vh - 4em) }
 
 .main-page .header{
   display: flex;
@@ -47,8 +48,10 @@
   align-items: center;
   justify-content: space-between;
 
-  min-height: 40px;
-  max-height: 40px;
+  /* min-height: 40px;
+  max-height: 40px; */
+  min-height: 3em;
+  max-height: 3em;
   
   font-weight: bold;
   
@@ -85,6 +88,10 @@
   overflow: auto;
   overflow-y: auto;
 }
+
+.hide-channels > * { display: none; }
+
+.channels-container{ margin-bottom: 1em; }
 
 .channel-list-item{
   padding-left: 1.2em;
