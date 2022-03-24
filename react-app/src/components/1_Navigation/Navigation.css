@@ -1,5 +1,5 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-/* todo             Dropdown                   */
+/* todo             Nav icons                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .nav-user-image{
   border: solid 0.05em black;
@@ -137,4 +137,11 @@
   margin: 0;
   padding-left: 1em;
   padding-right: 1em;
+}
+
+.user-dropdown-submit-button{
+  width: 3em;
+  margin-left: auto;
+  border: 0.08em solid rgb(193, 193, 193);
+  cursor: default;
 }

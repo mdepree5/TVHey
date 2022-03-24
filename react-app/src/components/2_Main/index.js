@@ -78,7 +78,7 @@ const LeftNav = () => {
       <div className='header' style={{justifyContent:'flex-end'}}>TVHey</div>
       <div style={{height:'200px'}}/>
       
-      <div className='row-list'>
+      <div style={{paddingLeft: '.2em'}} className='row-list'>
         <Icon onClick={()=> setDisplay(!display)} iconName='expand'/>
         <h3 style={{paddingLeft:'1.2em', paddingRight: '1.2em'}} >Channels</h3>
       </div>
@@ -90,7 +90,7 @@ const LeftNav = () => {
       </div>
       <div style={{padding:'1.2em', paddingTop:'0'}}><ChannelFormModal name='+ Add Channel'/></div>
 
-      <div style={{height:'200px'}}>
+      <div className='row-list left-nav-about'>
         <AboutLink link='https://github.com/mdepree5' image='https://capstone-slack-clone.s3.amazonaws.com/github.png' />
         <AboutLink link='https://www.linkedin.com/in/mitch-depree-4a5686155/' image='https://capstone-slack-clone.s3.amazonaws.com/linkedin.png' />
       </div>

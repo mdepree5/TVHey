@@ -80,7 +80,7 @@ export const signUp = (username, email, password) => async (dispatch) => {
 export const updateUserImage = (image_url, userId) => async (dispatch) => {
   const response = await fetch(`/api/users/${userId}/image`, { method: 'PUT', body: image_url });
 
-  console.log(`%c REDUX response:`, `color:yellow`, response)
+  // console.log(`%c REDUX response:`, `color:yellow`, response)
   if (response.ok) {
     const updatedUser = await response.json();
     dispatch(setUser(updatedUser));

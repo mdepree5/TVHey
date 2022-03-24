@@ -38,9 +38,7 @@ const NavDropdown = () => {
     
     setImageLoading(true);
     const back = await dispatch(updateUserImage(formData, sessionUser?.id));
-
-    console.log(`%c navigation handleImage back:`, `color:yellow`, back)
-
+    
     setImageLoading(false);
     setMedia_url(sessionUser?.media_url);
     return !back?.errors && setShowModal(false);
@@ -66,31 +64,29 @@ const NavDropdown = () => {
         onClick={e => setShowModal(true)}
     />}
 
-    {showModal &&
-      <Modal providedId='nav-dropdown' providedContent={true} onClose={handleClose}>
-        {<div className='dropdown-nav'>
-          <div className='row-list' style={{alignItems:'center'}} >
-            {sessionUser?.image_url === 'no image provided' ? 
-              <div className='nav-dropdown-image' >{sessionUser?.display_name[0].toUpperCase()}</div>
-              :
-              <img className='nav-dropdown-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
-            }
-            <h3 className='nav-display-name'>{sessionUser?.display_name}</h3>
-          </div>
+    {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={handleClose}>
+      {<div className='dropdown-nav'>
+        <div className='row-list' style={{alignItems:'center'}} >
+          {sessionUser?.image_url === 'no image provided' ? <div className='nav-dropdown-image' >{sessionUser?.display_name[0].toUpperCase()}</div>
+            : <img className='nav-dropdown-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>}
+          <h3 className='nav-display-name'>{sessionUser?.display_name}</h3>
+        </div>
 
-          <UserDropDownForm label='Change Display Name' onSubmit={handleDisplay}
-            input={<input placeholder={sessionUser?.display_name} value={display_name} onChange={updateDisplayName}></input>}
-            button={<button className={!display_name || !count ? 'default-cursor' : ''} disabled={!display_name || !count} type='submit' >{'>>>'}</button>}
-          />
+        <UserDropDownForm label='Change Display Name' onSubmit={handleDisplay}
+          input={<input placeholder={sessionUser?.display_name} value={display_name} onChange={updateDisplayName}></input>}
+          button={<button className='user-dropdown-submit-button' id={count && display_name && 'send-it'} type="submit" disabled={!count || !display_name}>
+            <img style={{width:'1.2em', height:'1.2em'}} src='https://capstone-slack-clone.s3.amazonaws.com/icons-gray/send.png' alt='icon' />
+            </button>}/>
 
-          <UserDropDownForm label='Set Profile Image' onSubmit={handleImage}
-            input={<input style={{cursor:'pointer'}} type='file' accept='image/*' onChange={e => setMedia_url(e.target.files[0])}></input>}
-            button={imageLoading ? <div>Uploading...</div> : <button className={!media_url ? 'default-cursor' : ''} disabled={!media_url} type='submit'>{'>>>'}</button>}
-          />
+        <UserDropDownForm label='Set Profile Image' onSubmit={handleImage}
+          input={<input style={{cursor:'pointer'}} type='file' accept='image/*' onChange={e => setMedia_url(e.target.files[0])}></input>}
+          button={imageLoading ? <div>Uploading...</div> : <button className='user-dropdown-submit-button' id={media_url && 'send-it'} type="submit" disabled={!media_url}>
+            <img style={{width:'1.2em', height:'1.2em'}} src='https://capstone-slack-clone.s3.amazonaws.com/icons-gray/send.png' alt='icon' />
+            </button>}/>
 
-          <LogoutButton />
-        </div>}
-      </Modal>
+        <LogoutButton />
+      </div>}
+    </Modal>
     }
   </>)
 }

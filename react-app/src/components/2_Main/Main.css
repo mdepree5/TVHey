@@ -80,6 +80,7 @@
 /* todo             Left Nav                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .left-nav{
+  position: relative;
   height: 100%;
   width: 40%;
 
@@ -100,13 +101,18 @@
   padding-bottom: 0.3em;
 }
 
-.left-nav > .col-list > div, h3{
-  margin-top: 0.4em;
-  margin-bottom: 0.4em;
-}
+.left-nav > .col-list > div, h3{ margin-top: 0.4em; margin-bottom: 0.4em; }
 
-.channel-list-item:hover{
-  background-color: rgba(91, 92, 99, 0.212);
+.channel-list-item:hover{ background-color: rgba(91, 92, 99, 0.212); }
+
+.left-nav-about{
+  border-top: 0.1em solid gray;
+  padding-top: 2em;
+  justify-content: space-evenly;
+  /* height: 200px;
+
+  bottom: 0;
+  position: absolute; */
 }
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
