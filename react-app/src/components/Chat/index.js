@@ -55,11 +55,11 @@ const Chat = () => {
           id='writer-input'
           placeholder={`  Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`}
         />
-        <button type="submit" disabled={!chatInput}>{'>'}</button>
+        <button className='submit-message-button' id={chatInput && 'send-it'} type="submit" disabled={!chatInput}>
+          <img style={{width:'1.2em', height:'1.2em'}} src='https://capstone-slack-clone.s3.amazonaws.com/icons-gray/send.png' alt='icon' />
+        </button>
       </form>
-
-    </>
-  )
+    </>)
   )
 };
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -75,8 +75,6 @@ const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
   return (
     <div ref={messageContainerRef} role='log' className='message-container' >
       <br />
-      <div>This is the top</div>
-      <hr />
       {messagesArr?.map((message, ind) => (
         <MessageCard key={ind} message={message} sessionUser={sessionUser}/>
       ))}

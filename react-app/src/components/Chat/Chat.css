@@ -1,3 +1,6 @@
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Message Container                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
 .message-container{
   display: flex;
   flex-direction: column;
@@ -7,7 +10,9 @@
   overflow-y: auto;
 }
 
-
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Message Writing Form                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
 #message-writer{
   position: relative;
   top: -1em;
@@ -30,10 +35,21 @@
   color: white;
 }
 
+.submit-message-button{
+  width: 3em;
+  margin-left: auto;
+  /* border: solid rgb(0, 186, 59) 0.15em; */
+  border: 0.08em solid rgb(193, 193, 193);
+  cursor: default;
+}
 
-#writer-input:focus{border: 0.08em solid rgb(193, 193, 193)};
-#message-writer:hover{border: 0.08em solid rgb(193, 193, 193);}
+#send-it{
+  border: 0.15em solid rgb(0, 186, 59);
+  cursor: pointer; 
+}
 
+#writer-input:focus{ border: 0.08em solid rgb(193, 193, 193); };
+#message-writer:hover{ border: 0.08em solid rgb(193, 193, 193); }
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Message card                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
@@ -101,7 +117,7 @@
   padding: 0;
 }
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-/* todo             Right mes                   */
+/* todo             Message Card right side                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .dropdown-content > * {
   background-color: inherit;
