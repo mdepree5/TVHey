@@ -111,7 +111,7 @@ const MessageCard = ({message, sessionUser}) => {
       
       <button className='cancel-message-button' type='button' onClick={handleCancel}>Cancel</button>
       <button className='save-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}>
-        {input ? 'Save' : 'Comment cannot be empty'}
+        {input ? 'Save' : 'Message cannot be empty'}
       </button>
 
     </div>
