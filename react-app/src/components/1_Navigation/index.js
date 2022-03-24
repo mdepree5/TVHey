@@ -105,8 +105,8 @@ const Navigation = () => {
       </div>
     
       <div id='mid-nav'>
-        <AboutLink link='https://github.com/mdepree5' image='https://capstone-slack-clone.s3.amazonaws.com/github.png' />
-        <AboutLink link='https://www.linkedin.com/in/mitch-depree-4a5686155/' image='https://capstone-slack-clone.s3.amazonaws.com/linkedin.png' />
+        {/* <AboutLink link='https://github.com/mdepree5' image='https://capstone-slack-clone.s3.amazonaws.com/github.png' />
+        <AboutLink link='https://www.linkedin.com/in/mitch-depree-4a5686155/' image='https://capstone-slack-clone.s3.amazonaws.com/linkedin.png' /> */}
       </div>
     
       <div id='right-nav'>
@@ -120,9 +120,9 @@ const Navigation = () => {
 
 
 
-const AboutLink = ({link, image}) => (
-  <img className='about' onClick={()=>window.open(link)} src={image} alt='about-link' />
-)
+// const AboutLink = ({link, image}) => (
+//   <img className='about' onClick={()=>window.open(link)} src={image} alt='about-link' />
+// )
 
 
 export default Navigation;
