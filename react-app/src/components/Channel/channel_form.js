@@ -26,9 +26,6 @@ const ChannelForm = ({ edit, channel, closeModal }) => {
     }
 
     const created = await dispatch(createChannel(channelData));
-    
-    console.log(`%c channel_form created: ${created}`, `color:yellow`)
-    console.log(`%c channel_form created:`, `color:yellow`, created)
 
     if (created?.errors) setErrors(created?.errors);
     if (created?.id) {

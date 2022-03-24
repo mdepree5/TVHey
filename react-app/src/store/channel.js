@@ -33,7 +33,7 @@ const channelReducer = (state = {selected:null, channels:{}, messages:{}}, actio
       const newState = {...state};
       newState.channels[action.channel.id] = action.channel;
       newState.selected = action.channel;
-      console.log('REDUX STATECREATE NEWSTATE', newState)
+      // console.log('REDUX STATECREATE NEWSTATE', newState)
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
