@@ -33,36 +33,25 @@ def update_user_image(userId):
   form = UpdateUserImageForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   
-  print('debugger backend')
   user = User.query.get(userId)
   url = user.image_url
   
   if type(form.data['media_url']) is not str:
     image = form.data['media_url']
-  
-  if not allowed_file(image.filename):
-    url = 'no image provided'
-    # return {"errors": "file type not permitted"}, 400
-  
-  image.filename = get_unique_filename(image.filename)
-  
-  upload = upload_file_to_s3(image)
-  if "url" not in upload:
-    url = 'no image provided'
-  else: url = upload["url"]
-  
-  print('debugger url after aws logic')
-  print(url)
-  print('debugger url after aws logic')
+    if not allowed_file(image.filename):
+      return {"errors": "file type not permitted"}, 400
+    
+    image.filename = get_unique_filename(image.filename)
+    upload = upload_file_to_s3(image)
+    if "url" not in upload:
+      return upload, 400
+    url = upload["url"]
   
   if form.validate_on_submit():
-    print('debugger verify form submitted')
     user.image_url= url
     db.session.commit()
-    print(user.to_dict())
-    print('debugger verify form submitted')
+    
     return user.to_dict()
-  print('debugger backend') 
   
   return {'errors': validation_errors_to_error_messages(form.errors)}
 # todo ——————————————————————————————————————————————————————————————————————————————————
