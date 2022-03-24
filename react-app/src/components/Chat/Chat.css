@@ -4,7 +4,6 @@
 .message-container{
   display: flex;
   flex-direction: column;
-  /* justify-content: flex-end; */
   
   height: 100%;
   overflow-y: auto;
@@ -38,7 +37,6 @@
 .submit-message-button{
   width: 3em;
   margin-left: auto;
-  /* border: solid rgb(0, 186, 59) 0.15em; */
   border: 0.08em solid rgb(193, 193, 193);
   cursor: default;
 }
@@ -69,24 +67,6 @@
 .message-card:hover{ background-color: rgba(60, 73, 82, 0.317); }
 .message-card-header{ width: 100%; }
 
-.message-header-mid{
-  /* width: 88%; */
-  width: calc(100% - 6em);
-  padding-left: 8px;
-  padding-right: 8px;
-}
-
-.message-header-left { width: 3em; }
-.message-header-right { width: 3em; }
-
-.message-card-image{
-  height: 2.5em;
-  width: 2.5em;
-  border-radius: 0.2em;
-  border: solid 0.05em black;
-  box-shadow: 0 0 8px rgb(77, 77, 77); 
-}
-
 .message-card-content{
   width: 88%;
   margin-left: auto;
@@ -98,6 +78,17 @@
   margin-left: 2px;
   margin-right: 2px;
 }
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Message card Layout                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+.message-header-mid{
+  width: calc(100% - 6em);
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.message-header-left { width: 3em; }
+.message-header-right { width: 3em; }
 
 #left-mes{
   width: 33%;
@@ -117,29 +108,50 @@
   padding: 0;
 }
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
+/* todo             Message card image                   */
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
+.message-card-image{
+  height: 2.5em;
+  width: 2.5em;
+  border-radius: 0.2em;
+  border: solid 0.05em black;
+  box-shadow: 0 0 8px rgb(77, 77, 77); 
+}
+
+.message-card-icon{
+  min-height: 2.4em;
+  max-height: 2.4em;
+  min-width: 2.4em;
+  max-width: 2.4em;
+
+  border-radius: 0.2em;
+  border: solid 0.05em black;
+  box-shadow: 0 0 8px rgb(77, 77, 77); 
+
+  text-align: center;
+  line-height: 2.2em;
+}
+
+
+/* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Message Card right side                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .dropdown-content > * {
   background-color: inherit;
-  /* padding: 1em 1em; */
   width: 2em;
   height: 2em;
   width: 50%;
 }
 
 .dropdown-content{ display: none; }
-/* .dropdown-content > * { margin-right: 0.2em; } */
 
 .message-card:hover .dropdown-content {
   display: flex;
   flex-direction: row;
-  /* justify-content: space-evenly; */
 
   position: relative;
 
   right: 2em;
   top: -2em;
   z-index: 1;
-
-  /* background-color: pink; */
 }

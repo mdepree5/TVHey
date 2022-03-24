@@ -39,6 +39,8 @@ const NavDropdown = () => {
     setImageLoading(true);
     const back = await dispatch(updateUserImage(formData, sessionUser?.id));
 
+    console.log(`%c navigation handleImage back:`, `color:yellow`, back)
+
     setImageLoading(false);
     setMedia_url(sessionUser?.media_url);
     return !back?.errors && setShowModal(false);
@@ -69,9 +71,9 @@ const NavDropdown = () => {
         {<div className='dropdown-nav'>
           <div className='row-list' style={{alignItems:'center'}} >
             {sessionUser?.image_url === 'no image provided' ? 
-              <div className='nav-user-image' >{sessionUser?.display_name[0].toUpperCase()}</div>
+              <div className='nav-dropdown-image' >{sessionUser?.display_name[0].toUpperCase()}</div>
               :
-              <img className='nav-user-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
+              <img className='nav-dropdown-image' src={sessionUser?.image_url} alt='user' style={{marginRight:'1em'}}/>
             }
             <h3 className='nav-display-name'>{sessionUser?.display_name}</h3>
           </div>

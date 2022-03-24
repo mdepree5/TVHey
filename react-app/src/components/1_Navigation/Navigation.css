@@ -1,6 +1,22 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Dropdown                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
+.nav-user-image{
+  border: solid 0.05em black;
+  border-radius: 0.4em;
+  box-shadow: 0 0 8px white;
+
+  min-height: 2.2em;
+  max-height: 2.2em;
+  min-width: 2.2em;
+  max-width: 2.2em;
+
+  text-align: center;
+  line-height: 2.2em;
+
+  cursor: pointer;  
+}
+
 .navicon{
   height: 2.2em;
   width: 2.2em;
@@ -94,20 +110,18 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Dropdown Contents                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-.nav-user-image{
-  border: solid 0.05em black;
-  border-radius: 0.4em;
-  box-shadow: 0 0 8px white;
+.nav-dropdown-image{
+  min-height: 2.4em;
+  max-height: 2.4em;
+  min-width: 2.4em;
+  max-width: 2.4em;
 
-  min-height: 2.2em;
-  max-height: 2.2em;
-  min-width: 2.2em;
-  max-width: 2.2em;
+  border-radius: 0.2em;
+  border: solid 0.05em black;
+  box-shadow: 0 0 8px rgb(77, 77, 77); 
 
   text-align: center;
   line-height: 2.2em;
-
-  cursor: pointer;  
 }
 
 .nav-user-image:hover{

@@ -116,7 +116,11 @@ const MessageCard = ({message, sessionUser}) => {
     <div className='message-card'>
       <div className='message-card-header row-list'>
         <div className='message-header-left'>
-          <img className='message-card-image' src={message?.author_image} alt="user"/>
+          {message?.author_image === 'no image provided' ? 
+            <div className='message-card-icon' >{message?.author[0].toUpperCase()}</div>
+            :
+            <img className='message-card-image' src={message?.author_image} alt="user"/>
+          }
         </div>
 
         <div className='message-header-mid'>

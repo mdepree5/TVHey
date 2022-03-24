@@ -33,6 +33,7 @@ def update_user_image(userId):
   form = UpdateUserImageForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   
+  print('debugger backend')
   user = User.query.get(userId)
   url = user.image_url
   
@@ -50,12 +51,19 @@ def update_user_image(userId):
     url = 'no image provided'
   else: url = upload["url"]
   
-    
+  print('debugger url after aws logic')
+  print(url)
+  print('debugger url after aws logic')
+  
   if form.validate_on_submit():
+    print('debugger verify form submitted')
     user.image_url= url
-    
     db.session.commit()
+    print(user.to_dict())
+    print('debugger verify form submitted')
     return user.to_dict()
+  print('debugger backend') 
+  
   return {'errors': validation_errors_to_error_messages(form.errors)}
 # todo ——————————————————————————————————————————————————————————————————————————————————
 @user_routes.route('/<int:userId>/display_name', methods=['PUT'])
@@ -63,10 +71,6 @@ def update_user_image(userId):
 def update_user_display_name(userId):
   form = UpdateUserDisplayNameForm()
   form['csrf_token'].data = request.cookies['csrf_token']
-  
-  # print('debugger')
-  # print(form.data['display_name'])
-  # print('debugger')
   
   if form.validate_on_submit():
     user = User.query.get(userId)
