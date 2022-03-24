@@ -34,6 +34,7 @@
   color: white;
 }
 
+
 .submit-message-button{
   width: 3em;
   margin-left: auto;
@@ -135,9 +136,16 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Message Card edit and save buttons                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
+.edit-message-buttons{
+  margin-top: 1em;
+  justify-content: space-around;
+}
+.edit-message-buttons > *{ width: 40%; }
+
 .cancel-message-button{ border: 0.08em solid rgb(193, 193, 193); }
 .cancel-message-button:hover{ border: 0.08em solid white; }
 .save-message-button{ border: 0.08em solid rgb(193, 193, 193); cursor: default; }
+#message-empty {border: 0.08em solid red; }
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Message Card hover buttons                   */

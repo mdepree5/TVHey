@@ -55,7 +55,7 @@ const Chat = () => {
           id='writer-input'
           placeholder={`  Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`}
         />
-        <button className='submit-message-button' id={chatInput && 'send-it'} type="submit" disabled={!chatInput}>
+        <button className={'submit-message-button'} id={chatInput && 'send-it'} type="submit" disabled={!chatInput}>
           <img style={{width:'1.2em', height:'1.2em'}} src='https://capstone-slack-clone.s3.amazonaws.com/icons-gray/send.png' alt='icon' />
         </button>
       </form>
@@ -108,11 +108,12 @@ const MessageCard = ({message, sessionUser}) => {
   <form className='col-list message-card' onSubmit={handleEdit}>
     <input value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}} placeholder='Update message'/>
     <div className='row-list edit-message-buttons'>
+      
       <button className='cancel-message-button' type='button' onClick={handleCancel}>Cancel</button>
-      {/* <button type='submit'>Save</button> */}
-      <button className='save-message-button' id={input && 'send-it'} type="submit" disabled={!input}>
-        Save
+      <button className='save-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}>
+        {input ? 'Save' : 'Comment cannot be empty'}
       </button>
+
     </div>
   </form>
   ) : (

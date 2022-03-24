@@ -25,9 +25,7 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Form                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-.form-input{
-  margin-bottom: 0.8em;
-}
+.form-input{ margin-bottom: 0.8em; }
 
 .inline-form-validation{
   font-size: 0.8em;
@@ -37,11 +35,7 @@
 
 .input-valid{ color: #22ff34; }
 
-.button-invalid:hover{ 
-  /* color: red;  */
-  cursor: default;
-  /* cursor: not-allowed; */
-}
+.button-invalid:hover{ cursor: default; }
 
 .dropdown-button-container-invalid,
 .dropdown-button-container{
