@@ -1,4 +1,37 @@
 // todo ——————————————————————————————————————————————————————————————————————————————————
+// todo               openConnection, closeConnection buttons
+// todo ——————————————————————————————————————————————————————————————————————————————————
+  // let socket
+  // const openConnection = () => {
+  //   socket = io();
+  //   socket = io('https://tvhey-staging.herokuapp.com/', {
+  //     transports: ["websocket", "polling"] // use WebSocket first, if available
+  //   });
+
+  //   socket.on("connect_error", () => {
+  //     // revert to classic upgrade
+  //     socket.io.opts.transports = ["polling", "websocket"];
+  //   });
+
+
+
+  //   socket.on("connect", () => {
+  //     console.log(`%c Socket connected`, `color:#00ff44`, socket)
+  //     console.log('%c socket.connected', 'color:#00ff44', socket.connected); // true
+  //     console.log('%c socket.disconnected', 'color:#00ff44', socket.disconnected); // false
+  //   });
+    
+  //   // socket.on('response', response => console.log(`%c Front end connection:`, `color:#00ff44`, response));
+  // }
+  
+  // const closeConnection = () => {
+  //   socket.disconnect()
+  //   console.log(`%c Socket disconnected`, `color:red`, socket)
+  //   console.log('%c socket.connected', 'color:red', socket.connected); // false
+  //   console.log('%c socket.disconnected', 'color:red', socket.disconnected); // true
+  // }
+
+// todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               Authenticated App Component
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // import { io } from 'socket.io-client';

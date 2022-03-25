@@ -31,15 +31,15 @@ def defaultconverter(o):
 @socketio.on('connect')
 def test_connection():
   print('[ START Connected to Websocket!!! —————————————————————————————————————————————————— debugger')
-  # all_users = User.query.all()
-  # this = [user.to_dict() for user in all_users]
+  all_users = User.query.all()
+  this = [user.to_dict() for user in all_users]
   
-  # channels = Channel.query.all()
-  # all_channels = [json.dumps(channel, default = defaultconverter) for channel in [channel.to_dict() for channel in channels]]
-  # emit('response', {'message': 'Connection successful'})
-  # emit('all_channels', {'all_channels': all_channels})
+  channels = Channel.query.all()
+  all_channels = [json.dumps(channel, default = defaultconverter) for channel in [channel.to_dict() for channel in channels]]
+  emit('response', {'message': 'Connection successful'})
+  emit('all_channels', {'all_channels': all_channels})
   
-  # emit('all_users', {'all_users': this})
+  emit('all_users', {'all_users': this})
   # return {"all_channels": [channel.to_dict() for channel in all_channels]}
   print('[ Connected to Websocket!!! —————————————————————————————————————————————————— debugger')
   
@@ -48,10 +48,10 @@ def test_connection():
 # handle chat messages
 @socketio.on('chat')
 def handle_chat(data):
-  print('[ START CHAT Websocket!!! —————————————————————————————————————————————————— debugger')
+  print('chat —————————————————————————————————————————————————— debugger')
   print(data)
   emit('chat', data, broadcast=True)
-  print('[ END CHAT Websocket!!! —————————————————————————————————————————————————— debugger')
+  print('chat —————————————————————————————————————————————————— debugger')
   
 @socketio.on('disconnect')
 def test_disconnection():

@@ -4,8 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-// import Chap from './chat';
-import { io } from 'socket.io-client';
+import Chap from './chat';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import AuthForm from "../0_Session/AuthForm";
 import Navigation from '../1_Navigation/index';
@@ -119,40 +118,13 @@ const RightPage = ({socket}) => {
 }
 
 const Home = () => {
-  // todo ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-  // const domain = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
-  let socket
-  const openConnection = () => {
-    socket = io();
-    socket.on("connect", () => {
-      console.log(`%c Socket connected`, `color:#00ff44`, socket)
-      console.log('%c socket.connected', 'color:#00ff44', socket.connected); // true
-      console.log('%c socket.disconnected', 'color:#00ff44', socket.disconnected); // false
-    });
-  }
-  
-  const closeConnection = () => {
-    socket.disconnect()
-    console.log(`%c Socket disconnected`, `color:red`, socket)
-    console.log('%c socket.connected', 'color:red', socket.connected); // false
-    console.log('%c socket.disconnected', 'color:red', socket.disconnected); // true
-  }
-  // todo ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
 
   return (
     <div className='home'>
       <div className='header'></div>
       <div style={{height:'200px'}}/>
 
-      <button onClick={openConnection}>Open Socket</button>
-      <button onClick={closeConnection}>Close Socket</button>
-      
-      {/* <form onSubmit={sendChat} >
-        <input value={chatInput} onChange={e => setChatInput(e.target.value)} />
-        <button type="submit" >Send Chat</button>
-      </form> */}
-
+      <Chap />
       <div className='home-screen col-list'>
         <strong>Welcome to TVHey</strong>
         a multiversal communication platform
