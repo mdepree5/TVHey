@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-import Chap from './chat';
+// import Chap from './chat';
 import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import AuthForm from "../0_Session/AuthForm";
@@ -122,33 +122,13 @@ const Home = () => {
   // todo ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
   // todo ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
   // let socket;
-  // socket = io();
   // const domain = (process.env.NODE_ENV === 'production') ? '/api' : '';
   // const domain = '';
   // const domain = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
   
   let socket
   const openConnection = () => {
-    // socket = io({
-      //   reconnectionDelayMax: 10000,
-      //   auth: { token: '' },
-      //   query: { "my-key": "my-value" }
-    // });
-    
-    // console.log(`%c Authenticated App socket:`, `color:#00ff44`, socket)
-    // socket = io('https://tvhey-staging.herokuapp.com/')
-  
-    
-    socket = io('https://tvhey-staging.herokuapp.com/', {
-      transports: ["websocket", "polling"] // use WebSocket first, if available
-    });
-
-    socket.on("connect_error", () => {
-      // revert to classic upgrade
-      socket.io.opts.transports = ["polling", "websocket"];
-    });
-
-
+    socket = io();
 
     socket.on("connect", () => {
       console.log(`%c Socket connected`, `color:#00ff44`, socket)
@@ -188,7 +168,6 @@ const Home = () => {
       <button onClick={openConnection}>Open Socket</button>
       <button onClick={closeConnection}>Close Socket</button>
 
-      <Chap />
       <div className='home-screen col-list'>
         <strong>Welcome to TVHey</strong>
         a multiversal communication platform
