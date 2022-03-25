@@ -125,17 +125,29 @@ const Home = () => {
   // const domain = (process.env.NODE_ENV === 'production') ? '/api' : '';
   // const domain = '';
   // const domain = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
-
+  
   let socket
   const openConnection = () => {
     // socket = io({
-    //   reconnectionDelayMax: 10000,
-    //   auth: { token: '' },
-    //   query: { "my-key": "my-value" }
+      //   reconnectionDelayMax: 10000,
+      //   auth: { token: '' },
+      //   query: { "my-key": "my-value" }
     // });
-
-    socket = io()
+    
     // console.log(`%c Authenticated App socket:`, `color:#00ff44`, socket)
+    // socket = io('https://tvhey-staging.herokuapp.com/')
+  
+    
+    socket = io('https://tvhey-staging.herokuapp.com/', {
+      transports: ["websocket", "polling"] // use WebSocket first, if available
+    });
+
+    socket.on("connect_error", () => {
+      // revert to classic upgrade
+      socket.io.opts.transports = ["polling", "websocket"];
+    });
+
+
 
     socket.on("connect", () => {
       console.log(`%c Socket connected`, `color:#00ff44`, socket)
