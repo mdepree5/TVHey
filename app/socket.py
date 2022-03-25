@@ -5,16 +5,15 @@ from .models import Channel, Message, User, db
 from datetime import datetime, date
 import json
 from json import dumps
-import asyncio
-import eventlet
-# eventlet.monkey_patch()
 
 
 # configure cors_allowed_origins
 if os.environ.get('FLASK_ENV') == 'production':
   origins = [
-    'http://tvhey.herokuapp.com/',
-    'https://tvhey.herokuapp.com/',
+    'http://tvhey.herokuapp.com',
+    'https://tvhey.herokuapp.com',
+    'http://tvhey-staging.herokuapp.com',
+    'https://tvhey-staging.herokuapp.com',
   ]
 else:
   origins = "*"

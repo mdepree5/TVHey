@@ -120,23 +120,15 @@ const RightPage = ({socket}) => {
 
 const Home = () => {
   // todo ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-  // todo ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-  // let socket;
-  // const domain = (process.env.NODE_ENV === 'production') ? '/api' : '';
-  // const domain = '';
   // const domain = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
-  
   let socket
   const openConnection = () => {
     socket = io();
-
     socket.on("connect", () => {
       console.log(`%c Socket connected`, `color:#00ff44`, socket)
       console.log('%c socket.connected', 'color:#00ff44', socket.connected); // true
       console.log('%c socket.disconnected', 'color:#00ff44', socket.disconnected); // false
     });
-    
-    // socket.on('response', response => console.log(`%c Front end connection:`, `color:#00ff44`, response));
   }
   
   const closeConnection = () => {
@@ -145,18 +137,6 @@ const Home = () => {
     console.log('%c socket.connected', 'color:red', socket.connected); // false
     console.log('%c socket.disconnected', 'color:red', socket.disconnected); // true
   }
-
-
-
-  // const dayjs = require('dayjs');
-  // socket.on('all_channels', all_channels => {
-  //   all_channels.all_channels.forEach(channel => {
-  //     const parsed = JSON.parse(channel)
-  //     console.log('format date', dayjs(parsed?.created_at).format('h:mm A'))
-  //   })
-  // });
-
-  // todo ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
   // todo ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 
@@ -167,6 +147,11 @@ const Home = () => {
 
       <button onClick={openConnection}>Open Socket</button>
       <button onClick={closeConnection}>Close Socket</button>
+      
+      {/* <form onSubmit={sendChat} >
+        <input value={chatInput} onChange={e => setChatInput(e.target.value)} />
+        <button type="submit" >Send Chat</button>
+      </form> */}
 
       <div className='home-screen col-list'>
         <strong>Welcome to TVHey</strong>
