@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
 // todo ——————————————————————————————————————————————————————————————————————————————————
+import Chap from './chat';
 import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import AuthForm from "../0_Session/AuthForm";
@@ -187,7 +188,7 @@ const Home = () => {
       <button onClick={openConnection}>Open Socket</button>
       <button onClick={closeConnection}>Close Socket</button>
 
-
+      <Chap />
       <div className='home-screen col-list'>
         <strong>Welcome to TVHey</strong>
         a multiversal communication platform
