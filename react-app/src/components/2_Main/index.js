@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
 // todo ——————————————————————————————————————————————————————————————————————————————————
+import { io } from 'socket.io-client';
+// todo ——————————————————————————————————————————————————————————————————————————————————
 import AuthForm from "../0_Session/AuthForm";
 import Navigation from '../1_Navigation/index';
 import Chat from "../../components/Chat";
@@ -115,15 +117,70 @@ const RightPage = ({socket}) => {
   )
 }
 
-const Home = () => (
-  <div className='home'>
-    <div className='header'></div>
-    <div style={{height:'200px'}}/>
+const Home = () => {
+  // todo ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+  // todo ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+  // let socket;
+  // socket = io();
+  // const domain = (process.env.NODE_ENV === 'production') ? '/api' : '';
+  // const domain = '';
+  // const domain = (process.env.NODE_ENV === 'production') ? 'https://tvhey.herokuapp.com/' : '';
+
+  let socket
+  const openConnection = () => {
+    // socket = io({
+    //   reconnectionDelayMax: 10000,
+    //   auth: { token: '' },
+    //   query: { "my-key": "my-value" }
+    // });
+
+    socket = io()
+    // console.log(`%c Authenticated App socket:`, `color:#00ff44`, socket)
+
+    socket.on("connect", () => {
+      console.log(`%c Socket connected`, `color:#00ff44`, socket)
+      console.log('%c socket.connected', 'color:#00ff44', socket.connected); // true
+      console.log('%c socket.disconnected', 'color:#00ff44', socket.disconnected); // false
+    });
     
-    <div className='home-screen col-list'>
-      <strong>Welcome to TVHey</strong>
-      a multiversal communication platform
-      <ChannelFormModal name='Make a new channel' />
+    // socket.on('response', response => console.log(`%c Front end connection:`, `color:#00ff44`, response));
+  }
+  
+  const closeConnection = () => {
+    socket.disconnect()
+    console.log(`%c Socket disconnected`, `color:red`, socket)
+    console.log('%c socket.connected', 'color:red', socket.connected); // false
+    console.log('%c socket.disconnected', 'color:red', socket.disconnected); // true
+  }
+
+
+
+  // const dayjs = require('dayjs');
+  // socket.on('all_channels', all_channels => {
+  //   all_channels.all_channels.forEach(channel => {
+  //     const parsed = JSON.parse(channel)
+  //     console.log('format date', dayjs(parsed?.created_at).format('h:mm A'))
+  //   })
+  // });
+
+  // todo ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+  // todo ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+
+  return (
+    <div className='home'>
+      <div className='header'></div>
+      <div style={{height:'200px'}}/>
+
+      <button onClick={openConnection}>Open Socket</button>
+      <button onClick={closeConnection}>Close Socket</button>
+
+
+      <div className='home-screen col-list'>
+        <strong>Welcome to TVHey</strong>
+        a multiversal communication platform
+        <ChannelFormModal name='Make a new channel' />
+      </div>
     </div>
-  </div>
-)
+  )
+}
