@@ -23,6 +23,8 @@ const NavDropdown = () => {
   const [display_name, setDisplay_name] = useState(sessionUser?.display_name);
   const [media_url, setMedia_url] = useState(sessionUser?.media_url === 'no image provided' ? '' : sessionUser?.media_url);
 
+  
+
   const handleDisplay = async(e) => {
     e.preventDefault();
     await dispatch(updateUserDisplayName(display_name, sessionUser?.id));

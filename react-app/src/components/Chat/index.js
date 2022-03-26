@@ -190,6 +190,7 @@ const MessageCard = ({message, sessionUser}) => {
             <div className='dropdown-content'>
               <Icon onClick={()=> setToggleEdit(true)} iconName='edit'/>
               <DeleteMessageButton messageId={message?.id}/>
+              <DeleteMessage messageId={message?.id} channelId={channelId} />
             </div>
           }
         </div>
@@ -199,3 +200,14 @@ const MessageCard = ({message, sessionUser}) => {
 }
 
 export default Chat;
+
+export const DeleteMessage = ({ messageId, channelId }) => {
+
+  const handleDelete = async () => {
+    socket.emit('delete message', messageId);
+    socket.emit('get messages', channelId)
+  }
+
+  // return <Icon onClick={handleDelete} iconName='delete'/>
+  return <button onClick={handleDelete}>X</button>
+}

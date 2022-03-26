@@ -38,7 +38,7 @@ def defaultconverter(o):
 
 @socketio.on('connect')
 def test_connection():
-  print('[ START Connected to Websocket!!! —————————————————————————————————————————————————— debugger')
+  print('Connected ———————————————————————————————————————————— debugger')
   
   # all_users = User.query.all()
   # this = [user.to_dict() for user in all_users]
@@ -49,7 +49,7 @@ def test_connection():
   # emit('all_channels', {'all_channels': all_channels})
   # emit('all_users', {'all_users': this})
   # return {"all_channels": [channel.to_dict() for channel in all_channels]}
-  print('[ Connected to Websocket!!! —————————————————————————————————————————————————— debugger')
+  print('Connected ———————————————————————————————————————————— debugger')
 
 @socketio.on('get messages')
 def get_messages(channelId):
@@ -93,7 +93,16 @@ def edit_message(data):
   # return {**new_message.to_dict()}
   # return {'errors': validation_errors_to_error_messages(form.errors)}
 
-
+@socketio.on('delete message')
+@login_required
+def delete_message(id):
+  print('debugger')
+  print(id)
+  print('debugger')
+  message = Message.query.get(id)
+  db.session.delete(message)
+  db.session.commit()
+  emit('deleted message to front', id)
   
 @socketio.on('disconnect')
 def test_disconnection():
