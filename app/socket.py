@@ -11,10 +11,6 @@ from app.forms.message_form import MessageForm
 from app.models import Message, User, db
 from datetime import datetime
 # todo ——————————————————————————————————————————————————————————————————————————————————
-
-
-
-
 # configure cors_allowed_origins
 if os.environ.get('FLASK_ENV') == 'production':
   origins = [
@@ -49,7 +45,6 @@ def test_connection():
   # emit('all_channels', {'all_channels': all_channels})
   # emit('all_users', {'all_users': this})
   # return {"all_channels": [channel.to_dict() for channel in all_channels]}
-  print('Connected ———————————————————————————————————————————— debugger')
 
 @socketio.on('get messages')
 def get_messages(channelId):
@@ -63,14 +58,19 @@ def get_messages(channelId):
 @socketio.on('create message')
 @login_required
 def create_message(data):
-  # form = MessageForm()
+  form = MessageForm()
   # form['csrf_token'].data = request.cookies['csrf_token']
+  form['csrf_token'].data = data
   print('validated! ———————————————— debugger')
+  print('form.data debugger')
+  print(form.data)
+  print('form.data debugger')
+  print('validated! ———————————————— debugger')
+  
   new_message = Message(author_id=data['author_id'], channel_id=data['channel_id'], content=data['content'], created_at=datetime.now(), updated_at=datetime.now())
-    
   db.session.add(new_message)
   db.session.commit()
-  print('validated! ———————————————— debugger')
+  # print('validated! ———————————————— debugger')
   nm = new_message.to_dict()
   emit('message to front', [json.dumps(nm, default = defaultconverter)], broadcast=True)
   # return {**new_message.to_dict()}
@@ -79,14 +79,9 @@ def create_message(data):
 @socketio.on('edit message')
 @login_required
 def edit_message(data):
-  print('edited ———————————————— debugger')
-  print(data)
   message = Message.query.get(data['id'])
   message.content = data['content']
   db.session.commit()
-  print('debugger the message')
-  print(message)
-  print('debugger the message')
   em = message.to_dict()
   emit('edited message to front', [json.dumps(em, default = defaultconverter)], broadcast=True)
   print('edited! ———————————————— debugger')
@@ -96,9 +91,6 @@ def edit_message(data):
 @socketio.on('delete message')
 @login_required
 def delete_message(id):
-  print('debugger')
-  print(id)
-  print('debugger')
   message = Message.query.get(id)
   db.session.delete(message)
   db.session.commit()
