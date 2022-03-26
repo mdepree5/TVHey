@@ -13,7 +13,7 @@ const Chap = () => {
 
   const sessionUser = useSelector(state => state?.session?.user);
 
-  const dayjs = require('dayjs');
+  // const dayjs = require('dayjs');
   const [chatInput, setChatInput] = useState("");
   const [messages, setMessages] = useState([]);
 
