@@ -46,7 +46,6 @@ const Chat = () => {
     
     console.log(`%c ————————————————————————————————————————————————`, `color:yellow`)
     console.log(`%c socket!!:`, `color:yellow`, socket)
-    console.log(`%c socket.handshake:`, `color:yellow`, socket.handshake)
     console.log(`%c ————————————————————————————————————————————————`, `color:yellow`)
     
     socket.on('chat', chat => {
@@ -79,7 +78,7 @@ const Chat = () => {
     e.preventDefault();
     console.log(`%c chatInput:`, `color:skyblue`, chatInput)
     socket.emit('chat', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
-    await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
+    // await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
 
     setChatInput('');
   }
