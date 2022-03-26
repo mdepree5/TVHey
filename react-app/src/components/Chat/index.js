@@ -2,6 +2,8 @@ import { useRef, forwardRef, useImperativeHandle, useState, useEffect, useLayout
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
+import { io } from 'socket.io-client';
+// todo ——————————————————————————————————————————————————————————————————————————————————
 import {Icon} from '../Utils/icons';
 import ChannelFormModal from '../Channel/channel_modal';
 import {DeleteChannelButton, DeleteMessageButton} from '../Utils/buttons';
@@ -13,10 +15,14 @@ import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               Chat
 // todo ——————————————————————————————————————————————————————————————————————————————————
+let socket;
+
 const Chat = () => {
   const messagesRef = useRef();
   const dispatch = useDispatch();
   const { channelId } = useParams();
+
+  const [mezState, setMezState] = useState([]);
 
   const [chatInput, setChatInput] = useState('');
 
@@ -30,9 +36,37 @@ const Chat = () => {
   useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
   useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
 
+
+  useEffect(() => {
+    socket = io();
+    
+    socket.on('chat', chat => {
+      console.log(`%c chat:`, `color:yellow`, chat)
+      setMezState(messages => [...messages, chat])
+    })
+
+    socket.emit('get_messages', {channelId})
+
+    socket.on('get_messages', all_messages => {
+      
+      all_messages.all_messages.forEach(message => {
+        const parsed = JSON.parse(message)
+        console.log(parsed)
+      })
+
+      setMezState([...all_messages.all_messages]);
+    })
+
+    return (() => socket.disconnect())
+  }, [])
+
+
   const sendChat = async (e) => {
     e.preventDefault();
+    console.log(`%c chatInput:`, `color:skyblue`, chatInput)
+    socket.emit('chat', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
     await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
+
     setChatInput('');
   }
   
@@ -46,6 +80,12 @@ const Chat = () => {
           <ChannelFormModal icon={true} edit={true} channel={thisChannel} />
           <DeleteChannelButton channelId={thisChannel?.id}/>
         </div>}
+      </div>
+
+      <div style={{border:'solid 2px orange'}}> 
+        {mezState.map((message, ind) => (
+          <div key={ind}>{`${message.author_id}: ${message.content}`}</div>
+        ))} 
       </div>
 
       <MessagesContainer messagesArr={messagesArr} sessionUser={sessionUser} ref={messagesRef} />

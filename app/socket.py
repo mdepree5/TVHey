@@ -42,8 +42,13 @@ def test_connection():
   emit('all_users', {'all_users': this})
   # return {"all_channels": [channel.to_dict() for channel in all_channels]}
   print('[ Connected to Websocket!!! —————————————————————————————————————————————————— debugger')
-  
-  
+
+@socketio.on('get_messages')
+def get_messages(channelId):
+  messages = Message.query.filter(Message.channel_id == int(channelId)).all()
+  all_messages = [json.dumps(message, default = defaultconverter) for message in [message.to_dict() for message in messages]]
+  emit('all_messages', {'all_messages': all_messages})
+
 
 # handle chat messages
 @socketio.on('chat')
@@ -57,3 +62,23 @@ def handle_chat(data):
 def test_disconnection():
   print('... DISCONNECT WEBSOCKET —————————————————————————————————————————————————— debugger')
   emit('disconnect response', {'message': 'Disconnection successful'})
+  
+  
+@socketio.on('create')
+def create(data):
+  if data.crud == 'channel':
+    print(data.crud)
+  if data.crud == 'message':
+    print(data.crud)
+  
+  emit('create', data, broadcast=True)
+
+@socketio.on('edit')
+def edit(data):
+  emit('edit', data, broadcast=True)
+
+@socketio.on('delete')
+def delete(data):
+  emit('delete', data, broadcast=True)
+  
+  
