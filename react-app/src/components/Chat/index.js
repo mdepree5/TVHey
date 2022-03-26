@@ -41,24 +41,24 @@ const Chat = () => {
   useEffect(() => {
     socket = io();
     socket = io({
-      quer: {token: 'abc'}
+      auth: {token: 'abc'}
     });
     
     console.log(`%c ————————————————————————————————————————————————`, `color:yellow`)
     console.log(`%c socket!!:`, `color:yellow`, socket)
     console.log(`%c ————————————————————————————————————————————————`, `color:yellow`)
     
-    socket.on('chat', chat => {
-      console.log(`%c chat:`, `color:yellow`, chat)
-      setMezState(messages => [...messages, chat])
+    socket.on('message to front', chat => {
+      console.log(`%c chat to front:`, `color:yellow`, JSON.parse(chat))
+      setMezState(messages => [...messages, JSON.parse(chat)])
     })
     
-    socket.on('chat to front', chat => {
+    socket.on('edited message to front', chat => {
       console.log(`%c chat to front:`, `color:yellow`, JSON.parse(chat))
       setMezState(messages => [...messages, JSON.parse(chat)])
     })
 
-    socket.emit('get_messages', channelId)
+    socket.emit('get messages', channelId)
 
     socket.on('all_messages', all_messages => {
       console.log(`%c all_messages:`, `color:yellow`, all_messages)
@@ -77,7 +77,8 @@ const Chat = () => {
   const sendChat = async (e) => {
     e.preventDefault();
     console.log(`%c chatInput:`, `color:skyblue`, chatInput)
-    socket.emit('chat', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
+    socket.emit('create message', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
+    socket.emit('get messages', channelId)
     // await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
 
     setChatInput('');
@@ -94,12 +95,6 @@ const Chat = () => {
           <DeleteChannelButton channelId={thisChannel?.id}/>
         </div>}
       </div>
-
-      {/* <div style={{border:'solid 2px orange'}}> 
-        {mezState.map((message, ind) => (
-          <div key={ind}>{`${message?.author}: ${message?.content}`}</div>
-        ))} 
-      </div> */}
 
       <MessagesContainer messagesArr={mezState} sessionUser={sessionUser} ref={messagesRef} />
 
@@ -139,15 +134,18 @@ const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
 // todo                               Message Card
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const MessageCard = ({message, sessionUser}) => {
+  const { channelId } = useParams();
   const dayjs = require('dayjs');
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const existing = message?.content;
   const [toggleEdit, setToggleEdit] = useState(false);
   const [input, setInput] = useState(existing);
 
   const handleEdit = async(e) => {
     e.preventDefault();
-    await dispatch(updateMessage({...message, content: input}, message?.id))
+    // await dispatch(updateMessage({...message, content: input}, message?.id))
+    socket.emit('edit message', {...message, content:input});
+    socket.emit('get messages', channelId)
     return setToggleEdit(false);
   }
   

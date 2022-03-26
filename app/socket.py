@@ -39,6 +39,7 @@ def defaultconverter(o):
 @socketio.on('connect')
 def test_connection():
   print('[ START Connected to Websocket!!! —————————————————————————————————————————————————— debugger')
+  
   # all_users = User.query.all()
   # this = [user.to_dict() for user in all_users]
   
@@ -50,7 +51,7 @@ def test_connection():
   # return {"all_channels": [channel.to_dict() for channel in all_channels]}
   print('[ Connected to Websocket!!! —————————————————————————————————————————————————— debugger')
 
-@socketio.on('get_messages')
+@socketio.on('get messages')
 def get_messages(channelId):
   messages = Message.query.filter(Message.channel_id == int(channelId)).all()
   all_messages = [json.dumps(message, default = defaultconverter) for message in [message.to_dict() for message in messages]]
@@ -59,35 +60,39 @@ def get_messages(channelId):
 
 
 # handle chat messages
-@socketio.on('chat')
+@socketio.on('create message')
 @login_required
-def handle_chat(data):
-  print('chat —————————————————————————————————————————————————— debugger')
-  print('chat —————————————————————————————————————————————————— debugger')
-  print(data)
-  print(data['author_id'])
-  print('chat —————————————————————————————————————————————————— debugger')
-  form = MessageForm()
-  # form['csrf_token'].data = data['csrf_token']
-  
+def create_message(data):
+  # form = MessageForm()
+  # form['csrf_token'].data = request.cookies['csrf_token']
   print('validated! ———————————————— debugger')
-  new_message = Message(
-    author_id = data['author_id'],
-    channel_id = data['channel_id'],
-    content = data['content'],
-    created_at = datetime.now(),
-    updated_at = datetime.now()
-  )
+  new_message = Message(author_id=data['author_id'], channel_id=data['channel_id'], content=data['content'], created_at=datetime.now(), updated_at=datetime.now())
     
   db.session.add(new_message)
   db.session.commit()
-  print(new_message)
   print('validated! ———————————————— debugger')
   nm = new_message.to_dict()
-  emit('chat to front', [json.dumps(nm, default = defaultconverter)], broadcast=True)
-  return {**new_message.to_dict()}
-
+  emit('message to front', [json.dumps(nm, default = defaultconverter)], broadcast=True)
+  # return {**new_message.to_dict()}
   # return {'errors': validation_errors_to_error_messages(form.errors)}
+
+@socketio.on('edit message')
+@login_required
+def edit_message(data):
+  print('edited ———————————————— debugger')
+  print(data)
+  message = Message.query.get(data['id'])
+  message.content = data['content']
+  db.session.commit()
+  print('debugger the message')
+  print(message)
+  print('debugger the message')
+  em = message.to_dict()
+  emit('edited message to front', [json.dumps(em, default = defaultconverter)], broadcast=True)
+  print('edited! ———————————————— debugger')
+  # return {**new_message.to_dict()}
+  # return {'errors': validation_errors_to_error_messages(form.errors)}
+
 
   
 @socketio.on('disconnect')
@@ -96,21 +101,21 @@ def test_disconnection():
   emit('disconnect response', {'message': 'Disconnection successful'})
   
   
-@socketio.on('create')
-def create(data):
-  if data.crud == 'channel':
-    print(data.crud)
-  if data.crud == 'message':
-    print(data.crud)
+# @socketio.on('create')
+# def create(data):
+#   if data.crud == 'channel':
+#     print(data.crud)
+#   if data.crud == 'message':
+#     print(data.crud)
   
-  emit('create', data, broadcast=True)
+#   emit('create', data, broadcast=True)
 
-@socketio.on('edit')
-def edit(data):
-  emit('edit', data, broadcast=True)
+# @socketio.on('edit')
+# def edit(data):
+#   emit('edit', data, broadcast=True)
 
-@socketio.on('delete')
-def delete(data):
-  emit('delete', data, broadcast=True)
+# @socketio.on('delete')
+# def delete(data):
+#   emit('delete', data, broadcast=True)
   
   
