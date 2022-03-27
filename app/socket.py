@@ -7,6 +7,7 @@ from flask import request
 from datetime import datetime
 from flask_login import current_user
 from flask_socketio import SocketIO, emit, disconnect
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 # todo ——————————————————————————————————————————————————————————————————————————————————
 from .models import Channel, Message, User, db
 from app.forms.message_form import MessageForm
@@ -22,7 +23,7 @@ else:
 
 # initialize your socket instance
 socketio = SocketIO(
-  logger=True, cors_allowed_origins=origins
+  logger=True, engineio_logger=True, cors_allowed_origins=origins
 )
 
 # todo ——————————————————————————————————————————————————————————————————————————————————
@@ -65,6 +66,16 @@ def test_disconnection():
   print('... DISCONNECT WEBSOCKET —————————————————————————————————————————————————— debugger')
   emit('disconnect response', {'message': 'Disconnection successful'})
 
+# def inject_csrf_token(data):
+#   data.set_cookie(
+#     'csrf_token',
+#     generate_csrf(),
+#     secure=True if os.environ.get('FLASK_ENV') == 'production' else False,
+#     samesite='Strict' if os.environ.get(
+#       'FLASK_ENV') == 'production' else None,
+#     httponly=True)
+#   return data
+
 # todo ——————————————————————————————————————————————————————————————————————————————————
 # todo                   Message Event Handlers
 # todo ——————————————————————————————————————————————————————————————————————————————————
@@ -79,15 +90,22 @@ def get_messages(channelId):
 @socketio.on('create message')
 @authenticated_only
 def create_message(data):
+  
   form = MessageForm()
   # form['csrf_token'].data = request.cookies['csrf_token']
+  # form.data = data
+  print('debugger————')
+  print(data['csrf_token'])
+  print('debugger————')
   form['csrf_token'].data = data
-  print('validated! ———————————————— debugger')
+  # print('validated! ———————————————— debugger')
   print('form.data debugger')
   print(form.data)
   print('form.data debugger')
-  print('validated! ———————————————— debugger')
+  # print('validated! ———————————————— debugger')
   
+  if form.validate_on_submit():
+    print('validated for real debugger')
   new_message = Message(author_id=data['author_id'], channel_id=data['channel_id'], content=data['content'], created_at=datetime.now(), updated_at=datetime.now())
   db.session.add(new_message)
   db.session.commit()
