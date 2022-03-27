@@ -8,7 +8,7 @@ import {Icon} from '../Utils/icons';
 import ChannelFormModal from '../Channel/channel_modal';
 import {DeleteChannelButton, DeleteMessageButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
-// import {createMessage, getMessages, updateMessage} from '../../store/message';
+import {createMessage, getMessages, updateMessage} from '../../store/message-s';
 // import {createMessage, updateMessage} from '../../store/message';
 import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -24,14 +24,20 @@ const Chat = () => {
   const { channelId } = useParams();
 
   const [chatInput, setChatInput] = useState('');
-  const [mezState, setMezState] = useState([]);
 
   const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channel);
-  // const messagestate =  useSelector(state => state?.message);
+  const messagestate =  useSelector(state => state?.messageS);
+  const state =  useSelector(state => state);
+  
+  console.log('—————————————————')
+  console.log(`%c state:`, `color:blue`, state)
+  console.log(`%c state:`, `color:blue`, messagestate?.messages)
+  console.log('—————————————————')
 
   const thisChannel = channelstate?.selected;
-  // const messagesArr = Object.values(messagestate?.messages);
+  const messagesArr = Object.values(messagestate?.messages);
+  console.log(`%c messagesArr:`, `color:yellow`, messagesArr)
 
   // useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
   useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
@@ -42,18 +48,22 @@ const Chat = () => {
     socket = io();
     console.log(`%c ————————————————————————————————————————————————`, `color:yellow`); console.log(`%c socket!!:`, `color:yellow`, socket); console.log(`%c ————————————————————————————————————————————————`, `color:yellow`)
     // socket.on('get all channels', response => console.log(`%c get all channels:`, `color:yellow`, response))
-    socket.on('message to front', chat => setMezState(messages => [...messages, JSON.parse(chat)]))
-    socket.on('edited message to front', chat => setMezState(messages => [...messages, JSON.parse(chat)]))
+    socket.on('message to front', async(message) => {
+      await dispatch(createMessage(JSON.parse(message)))
+    })
+    socket.on('edited message to front', async(message) => {
+      await dispatch(updateMessage(JSON.parse(message)))
+    })
     
     socket.emit('get messages', channelId)
-    socket.on('all_messages', all_messages => {
-      const messages = [];
-      all_messages.all_messages.forEach(message => messages.push(JSON.parse(message)))
-      setMezState([...messages]);
+    socket.on('get all messages', async(messages) => {
+      const messageArr = [];
+      messages.all_messages.forEach(message => messageArr.push(JSON.parse(message)))
+      await dispatch(getMessages(messageArr))
     })
 
     return (() => socket.disconnect())
-  }, [channelId])
+  }, [dispatch, channelId])
 
 
   const sendChat = async (e) => {
@@ -76,7 +86,7 @@ const Chat = () => {
         </div>}
       </div>
 
-      <MessagesContainer messagesArr={mezState} sessionUser={sessionUser} ref={messagesRef} />
+      <MessagesContainer messagesArr={messagesArr} sessionUser={sessionUser} ref={messagesRef} />
 
       <form id='message-writer' className='col-list' onSubmit={sendChat} >
         <input value={chatInput} onChange={e => setChatInput(e.target.value)}

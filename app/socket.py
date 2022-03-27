@@ -74,7 +74,7 @@ def get_messages(channelId):
   messages = Message.query.filter(Message.channel_id == int(channelId)).all()
   all_messages = [json.dumps(message, default = defaultconverter) for message in [message.to_dict() for message in messages]]
   
-  emit('all_messages', {'all_messages': all_messages})
+  emit('get all messages', {'all_messages': all_messages})
 
 @socketio.on('create message')
 @authenticated_only
