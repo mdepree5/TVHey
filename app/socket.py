@@ -66,16 +66,6 @@ def test_disconnection():
   print('... DISCONNECT WEBSOCKET —————————————————————————————————————————————————— debugger')
   emit('disconnect response', {'message': 'Disconnection successful'})
 
-# def inject_csrf_token(data):
-#   data.set_cookie(
-#     'csrf_token',
-#     generate_csrf(),
-#     secure=True if os.environ.get('FLASK_ENV') == 'production' else False,
-#     samesite='Strict' if os.environ.get(
-#       'FLASK_ENV') == 'production' else None,
-#     httponly=True)
-#   return data
-
 # todo ——————————————————————————————————————————————————————————————————————————————————
 # todo                   Message Event Handlers
 # todo ——————————————————————————————————————————————————————————————————————————————————
@@ -84,7 +74,6 @@ def test_disconnection():
 def get_messages(channelId):
   messages = Message.query.filter(Message.channel_id == int(channelId)).all()
   all_messages = [json.dumps(message, default = defaultconverter) for message in [message.to_dict() for message in messages]]
-  
   emit('get all messages', {'all_messages': all_messages})
 
 @socketio.on('create message')
@@ -95,8 +84,6 @@ def create_message(data):
   db.session.commit()
   new = new_message.to_dict()
   emit('message to front', [json.dumps(new, default = defaultconverter)], broadcast=True)
-  # return {**new_message.to_dict()}
-  # return {'errors': validation_errors_to_error_messages(form.errors)}
 
 @socketio.on('edit message')
 @authenticated_only
@@ -116,8 +103,19 @@ def delete_message(id):
   emit('deleted message to front', id)
 
 # todo ——————————————————————————————————————————————————————————————————————————————————
-# todo             MessageForm form validators
+# todo             MessageForm form validators and csrf
 # todo ——————————————————————————————————————————————————————————————————————————————————
+# def inject_csrf_token(data):
+#   data.set_cookie(
+#     'csrf_token',
+#     generate_csrf(),
+#     secure=True if os.environ.get('FLASK_ENV') == 'production' else False,
+#     samesite='Strict' if os.environ.get(
+#       'FLASK_ENV') == 'production' else None,
+#     httponly=True)
+#   return data
+
+
 # form = MessageForm()
   # data['csrf_token'] = generate_csrf()
   # form['csrf_token'].data = data

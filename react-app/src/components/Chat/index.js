@@ -6,13 +6,11 @@ import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import {Icon} from '../Utils/icons';
 import ChannelFormModal from '../Channel/channel_modal';
-import {DeleteChannelButton, DeleteMessageButton} from '../Utils/buttons';
+import {DeleteChannelButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
 import {createMessage, getMessages, updateMessage, deleteMessage} from '../../store/message-s';
 // import {createMessage, updateMessage} from '../../store/message';
 import './Chat.css';
-// todo ——————————————————————————————————————————————————————————————————————————————————
-
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               Chat
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -41,15 +39,9 @@ const Chat = () => {
     socket = io();
     console.log(`%c ————————————————————————————————————————————————`, `color:yellow`); console.log(`%c socket!!:`, `color:yellow`, socket); console.log(`%c ————————————————————————————————————————————————`, `color:yellow`)
     // socket.on('get all channels', response => console.log(`%c get all channels:`, `color:yellow`, response))
-    socket.on('message to front', async(message) => {
-      await dispatch(createMessage(JSON.parse(message)))
-    })
-    socket.on('edited message to front', async(message) => {
-      await dispatch(updateMessage(JSON.parse(message)))
-    })
-    socket.on('deleted message to front', async(id) => {
-      await dispatch(deleteMessage(id))
-    })
+    socket.on('message to front', async(message) => await dispatch(createMessage(JSON.parse(message))))
+    socket.on('edited message to front', async(message) => await dispatch(updateMessage(JSON.parse(message))))
+    socket.on('deleted message to front', async(id) => await dispatch(deleteMessage(id)))
     
     socket.emit('get messages', channelId)
     socket.on('get all messages', async(messages) => {
@@ -120,16 +112,13 @@ const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
 const MessageCard = ({message, sessionUser}) => {
   const { channelId } = useParams();
   const dayjs = require('dayjs');
-  // const dispatch = useDispatch();
   const existing = message?.content;
   const [toggleEdit, setToggleEdit] = useState(false);
   const [input, setInput] = useState(existing);
 
   const handleEdit = async(e) => {
     e.preventDefault();
-    // await dispatch(updateMessage({...message, content: input}, message?.id))
     socket.emit('edit message', {...message, content:input});
-    socket.emit('get messages', channelId)
     return setToggleEdit(false);
   }
   
@@ -173,7 +162,6 @@ const MessageCard = ({message, sessionUser}) => {
           {message?.author_id === sessionUser.id &&
             <div className='dropdown-content'>
               <Icon onClick={()=> setToggleEdit(true)} iconName='edit'/>
-              {/* <DeleteMessageButton messageId={message?.id}/> */}
               <DeleteMessage messageId={message?.id} channelId={channelId} />
             </div>
           }

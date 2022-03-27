@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-import Chap from './chat';
+// import Chap from './chat';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import AuthForm from "../0_Session/AuthForm";
 import Navigation from '../1_Navigation/index';
@@ -124,7 +124,6 @@ const Home = () => {
       <div className='header'></div>
       <div style={{height:'200px'}}/>
 
-      <Chap />
       <div className='home-screen col-list'>
         <strong>Welcome to TVHey</strong>
         a multiversal communication platform
