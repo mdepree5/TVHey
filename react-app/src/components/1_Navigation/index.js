@@ -25,10 +25,10 @@ const NavDropdown = () => {
 
   const handleDisplay = async(e) => {
     e.preventDefault();
-    await dispatch(updateUserDisplayName(display_name, sessionUser?.id));
+    const updatedName = await dispatch(updateUserDisplayName(display_name, sessionUser?.id));
     
     setCount(0);
-    setShowModal(false);
+    return !updatedName?.errors && setShowModal(false);
   }
 
   const handleImage = async(e) => {
@@ -37,22 +37,22 @@ const NavDropdown = () => {
     formData.append('media_url', media_url);
     
     setImageLoading(true);
-    const back = await dispatch(updateUserImage(formData, sessionUser?.id));
+    const updatedImage = await dispatch(updateUserImage(formData, sessionUser?.id));
     
     setImageLoading(false);
     setMedia_url(sessionUser?.media_url);
-    return !back?.errors && setShowModal(false);
+    return !updatedImage?.errors && setShowModal(false);
   }
   
   const handleClose = () => {
     setDisplay_name(sessionUser?.display_name);
     setCount(0);
-    setShowModal(false);
+    return setShowModal(false);
   }
   
   const updateDisplayName = e => {
     setCount(count => count += 1);
-    setDisplay_name(e.target.value);
+    return setDisplay_name(e.target.value);
   }
 
   return (<>
