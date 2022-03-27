@@ -21,7 +21,23 @@ def validation_errors_to_error_messages(validation_errors):
 @login_required
 def create_message():
   form = MessageForm()
+  
+  print(' before csrf line ———————————————————————————————— debugger')
+  print('form.data')
+  print(form.data)
+  print('request.cookies')
+  print(request.cookies)
+  print(' before csrf line ———————————————————————————————— debugger')
+  
   form['csrf_token'].data = request.cookies['csrf_token']
+  
+  print(' after csrf line ———————————————————————————————— debugger')
+  print('form.data')
+  print(form.data)
+  print('request.cookies')
+  print(request.cookies)
+  print(' after csrf line ———————————————————————————————— debugger')
+  
   
   if form.validate_on_submit():
     new_message = Message(

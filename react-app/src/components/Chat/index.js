@@ -2,8 +2,6 @@ import { useRef, forwardRef, useImperativeHandle, useState, useEffect, useLayout
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-import { io } from 'socket.io-client';
-// todo ——————————————————————————————————————————————————————————————————————————————————
 import {Icon} from '../Utils/icons';
 import ChannelFormModal from '../Channel/channel_modal';
 import {DeleteChannelButton, DeleteMessageButton} from '../Utils/buttons';
@@ -16,9 +14,9 @@ import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               Chat
 // todo ——————————————————————————————————————————————————————————————————————————————————
-let socket;
 
-const Chat = () => {
+
+const Chat = ({socket}) => {
   const messagesRef = useRef();
   const dispatch = useDispatch();
   const { channelId } = useParams();
@@ -39,15 +37,16 @@ const Chat = () => {
 
 
   useEffect(() => {
-    socket = io();
-    socket = io({
-      auth: {token: 'abc'}
-    });
+    
+    // socket = io({ auth: {token: 'abc'} });
     
     console.log(`%c ————————————————————————————————————————————————`, `color:yellow`)
     console.log(`%c socket!!:`, `color:yellow`, socket)
     console.log(`%c ————————————————————————————————————————————————`, `color:yellow`)
     
+    socket.on('get all channels', response => console.log(`%c get all channels:`, `color:yellow`, response))
+// todo ——————————————————————————————————————————————————————————————————————————————————
+
     socket.on('message to front', chat => {
       console.log(`%c chat to front:`, `color:yellow`, JSON.parse(chat))
       setMezState(messages => [...messages, JSON.parse(chat)])
@@ -96,7 +95,7 @@ const Chat = () => {
         </div>}
       </div>
 
-      <MessagesContainer messagesArr={mezState} sessionUser={sessionUser} ref={messagesRef} />
+      <MessagesContainer socket={socket} messagesArr={mezState} sessionUser={sessionUser} ref={messagesRef} />
 
       <form id='message-writer' className='col-list' onSubmit={sendChat} >
         <input value={chatInput} onChange={e => setChatInput(e.target.value)}
@@ -113,7 +112,7 @@ const Chat = () => {
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               Messages Container
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
+const MessagesContainer = forwardRef(({socket, messagesArr, sessionUser}, ref) => {
   const messageContainerRef = useRef();
   const scrollToBottom = () => messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
 
@@ -124,7 +123,7 @@ const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
     <div ref={messageContainerRef} role='log' className='message-container' >
       <br />
       {messagesArr?.map((message, ind) => (
-        <MessageCard key={ind} message={message} sessionUser={sessionUser}/>
+        <MessageCard key={ind} message={message} sessionUser={sessionUser} socket={socket}/>
       ))}
       <br />
     </div>
@@ -133,7 +132,7 @@ const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               Message Card
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const MessageCard = ({message, sessionUser}) => {
+const MessageCard = ({message, sessionUser, socket}) => {
   const { channelId } = useParams();
   const dayjs = require('dayjs');
   // const dispatch = useDispatch();
@@ -190,7 +189,7 @@ const MessageCard = ({message, sessionUser}) => {
             <div className='dropdown-content'>
               <Icon onClick={()=> setToggleEdit(true)} iconName='edit'/>
               <DeleteMessageButton messageId={message?.id}/>
-              <DeleteMessage messageId={message?.id} channelId={channelId} />
+              <DeleteMessage socket={socket} messageId={message?.id} channelId={channelId} />
             </div>
           }
         </div>
@@ -201,7 +200,7 @@ const MessageCard = ({message, sessionUser}) => {
 
 export default Chat;
 
-export const DeleteMessage = ({ messageId, channelId }) => {
+export const DeleteMessage = ({ socket, messageId, channelId }) => {
 
   const handleDelete = async () => {
     socket.emit('delete message', messageId);
