@@ -8,7 +8,7 @@ import {Icon} from '../Utils/icons';
 import ChannelFormModal from '../Channel/channel_modal';
 import {DeleteChannelButton, DeleteMessageButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
-import {createMessage, getMessages, updateMessage} from '../../store/message-s';
+import {createMessage, getMessages, updateMessage, deleteMessage} from '../../store/message-s';
 // import {createMessage, updateMessage} from '../../store/message';
 import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -28,16 +28,9 @@ const Chat = () => {
   const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channel);
   const messagestate =  useSelector(state => state?.messageS);
-  const state =  useSelector(state => state);
-  
-  console.log('—————————————————')
-  console.log(`%c state:`, `color:blue`, state)
-  console.log(`%c state:`, `color:blue`, messagestate?.messages)
-  console.log('—————————————————')
 
   const thisChannel = channelstate?.selected;
   const messagesArr = Object.values(messagestate?.messages);
-  console.log(`%c messagesArr:`, `color:yellow`, messagesArr)
 
   // useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
   useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
@@ -54,6 +47,9 @@ const Chat = () => {
     socket.on('edited message to front', async(message) => {
       await dispatch(updateMessage(JSON.parse(message)))
     })
+    socket.on('deleted message to front', async(id) => {
+      await dispatch(deleteMessage(id))
+    })
     
     socket.emit('get messages', channelId)
     socket.on('get all messages', async(messages) => {
@@ -68,9 +64,7 @@ const Chat = () => {
 
   const sendChat = async (e) => {
     e.preventDefault();
-    // await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
     socket.emit('create message', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
-    socket.emit('get messages', channelId)
     setChatInput('');
   }
   
@@ -179,7 +173,7 @@ const MessageCard = ({message, sessionUser}) => {
           {message?.author_id === sessionUser.id &&
             <div className='dropdown-content'>
               <Icon onClick={()=> setToggleEdit(true)} iconName='edit'/>
-              <DeleteMessageButton messageId={message?.id}/>
+              {/* <DeleteMessageButton messageId={message?.id}/> */}
               <DeleteMessage messageId={message?.id} channelId={channelId} />
             </div>
           }
@@ -191,13 +185,7 @@ const MessageCard = ({message, sessionUser}) => {
 
 export default Chat;
 
-export const DeleteMessage = ({ messageId, channelId }) => {
-
-  const handleDelete = async () => {
-    socket.emit('delete message', messageId);
-    socket.emit('get messages', channelId)
-  }
-
-  // return <Icon onClick={handleDelete} iconName='delete'/>
-  return <button onClick={handleDelete}>X</button>
+export const DeleteMessage = ({ messageId }) => {
+  const handleDelete = async () => socket.emit('delete message', messageId);
+  return <Icon onClick={handleDelete} iconName='delete'/>
 }

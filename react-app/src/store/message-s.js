@@ -40,7 +40,7 @@ const messageSReducer = (state = {messages:{}}, action) => {
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case DELETE: {
       const newState = {...state};
-      delete newState.messages[action.messageId.id];
+      delete newState.messages[action.messageId];
       return newState;
     }
 // ???? ——————————————————————————————————————————————————————————————————————————————————
