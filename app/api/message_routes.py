@@ -30,13 +30,20 @@ def create_message():
   print(' before csrf line ———————————————————————————————— debugger')
   
   form['csrf_token'].data = request.cookies['csrf_token']
+  # print('debugger ———————————————————————————')
+  # print('request', request)
+  # print('debugger ')
+  # print('request.cookies', request.cookies)
+  # print('debugger ')
+  # print('request.cookies[\'csrf_token\']', request.cookies['csrf_token'])
+  # print('debugger ———————————————————————————')
   
-  print(' after csrf line ———————————————————————————————— debugger')
-  print('form.data')
-  print(form.data)
-  print('request.cookies')
-  print(request.cookies)
-  print(' after csrf line ———————————————————————————————— debugger')
+  # print(' after csrf line ———————————————————————————————— debugger')
+  # print('form.data')
+  # print(form.data)
+  # print('request.cookies')
+  # print(request.cookies)
+  # print(' after csrf line ———————————————————————————————— debugger')
   
   
   if form.validate_on_submit():

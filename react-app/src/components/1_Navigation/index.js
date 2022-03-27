@@ -50,12 +50,12 @@ const NavDropdown = () => {
   const handleClose = () => {
     setDisplay_name(sessionUser?.display_name);
     setCount(0);
-    setShowModal(false);
+    return setShowModal(false);
   }
   
   const updateDisplayName = e => {
     setCount(count => count += 1);
-    setDisplay_name(e.target.value);
+    return setDisplay_name(e.target.value);
   }
 
   return (<>
