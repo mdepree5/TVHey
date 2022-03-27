@@ -14,23 +14,26 @@ const UserDropDownForm = ({label, onSubmit, input, button}) => (
   </form>
 )
 
-const NavDropdown = () => {
+const NavDropdown = ({socket}) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state?.session?.user);
+  const channelId = useSelector(state => state?.channel?.selected?.id);
   const [imageLoading, setImageLoading] = useState(false);
   const [count, setCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [display_name, setDisplay_name] = useState(sessionUser?.display_name);
   const [media_url, setMedia_url] = useState(sessionUser?.media_url === 'no image provided' ? '' : sessionUser?.media_url);
-
   
+  // const state = useSelector(state => state);
+  // console.log(`%c state:`, `color:yellow`, state)
 
   const handleDisplay = async(e) => {
     e.preventDefault();
-    await dispatch(updateUserDisplayName(display_name, sessionUser?.id));
+    const updatedName = await dispatch(updateUserDisplayName(display_name, sessionUser?.id));
     
+    socket.emit('get messages', channelId)
     setCount(0);
-    setShowModal(false);
+    return !updatedName?.errors && setShowModal(false);
   }
 
   const handleImage = async(e) => {
@@ -39,11 +42,12 @@ const NavDropdown = () => {
     formData.append('media_url', media_url);
     
     setImageLoading(true);
-    const back = await dispatch(updateUserImage(formData, sessionUser?.id));
+    const updatedImage = await dispatch(updateUserImage(formData, sessionUser?.id));
+    socket.emit('get messages', channelId);
     
     setImageLoading(false);
     setMedia_url(sessionUser?.media_url);
-    return !back?.errors && setShowModal(false);
+    return !updatedImage?.errors && setShowModal(false);
   }
   
   const handleClose = () => {
@@ -93,7 +97,7 @@ const NavDropdown = () => {
   </>)
 }
 
-const Navigation = () => {
+const Navigation = ({socket}) => {
   const history = useHistory();
 
   return (
@@ -112,7 +116,7 @@ const Navigation = () => {
       </div>
     
       <div id='right-nav'>
-        <NavDropdown />
+        <NavDropdown socket={socket}/>
       </div>
     </div>
   )

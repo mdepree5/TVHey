@@ -36,12 +36,10 @@ const Chat = ({socket}) => {
   useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
 
 
-  useEffect(() => {
-    
+  useEffect(() => {  
     // socket = io({ auth: {token: 'abc'} });
-    
     console.log(`%c ————————————————————————————————————————————————`, `color:yellow`)
-    console.log(`%c socket!!:`, `color:yellow`, socket)
+    console.log(`%c socket in chat component:`, `color:yellow`, socket)
     console.log(`%c ————————————————————————————————————————————————`, `color:yellow`)
     
     socket.on('get all channels', response => console.log(`%c get all channels:`, `color:yellow`, response))
@@ -69,17 +67,15 @@ const Chat = ({socket}) => {
       setMezState([...messages]);
     })
 
-    return (() => socket.disconnect())
+    // return (() => socket.disconnect())
   }, [channelId])
 
 
   const sendChat = async (e) => {
     e.preventDefault();
-    console.log(`%c chatInput:`, `color:skyblue`, chatInput)
     socket.emit('create message', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
     socket.emit('get messages', channelId)
     // await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
-
     setChatInput('');
   }
   

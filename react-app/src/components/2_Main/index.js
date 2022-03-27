@@ -50,6 +50,10 @@ export const AuthenticatedApp = () => {
   const dispatch = useDispatch();
   useEffect(() => { dispatch(getChannels()) }, [dispatch]);
   
+  // let socket;
+  // useEffect(() => {
+  //   socket = io();
+  // }, [])
   const socket = io();
 
   return (
