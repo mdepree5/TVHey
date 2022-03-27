@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-import { io } from 'socket.io-client';
 import Chap from './chat';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import AuthForm from "../0_Session/AuthForm";
@@ -49,16 +48,10 @@ export const UnAuthenticatedApp = () => {
 export const AuthenticatedApp = () => {
   const dispatch = useDispatch();
   useEffect(() => { dispatch(getChannels()) }, [dispatch]);
-  
-  // let socket;
-  // useEffect(() => {
-  //   socket = io();
-  // }, [])
-  const socket = io();
 
   return (
     <div className='page-container'>
-      <Navigation socket={socket}/>
+      <Navigation />
       <Split className='row-list main-page'
         cursor="col-resize"
         direction="horizontal"
@@ -68,15 +61,15 @@ export const AuthenticatedApp = () => {
         dragInterval={2}
         snapOffset={20}
       >
-        <LeftNav socket={socket}/>
-        <RightPage socket={socket}/>
+        <LeftNav />
+        <RightPage />
       </Split>
     </div>
   )
 }
 
 
-const LeftNav = ({socket}) => {
+const LeftNav = () => {
   const channelstate = useSelector(state => state?.channel);
   const channels = Object.values(channelstate?.channels);
 

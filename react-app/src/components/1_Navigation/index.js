@@ -14,10 +14,10 @@ const UserDropDownForm = ({label, onSubmit, input, button}) => (
   </form>
 )
 
-const NavDropdown = ({socket}) => {
+const NavDropdown = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state?.session?.user);
-  const channelId = useSelector(state => state?.channel?.selected?.id);
+  // const channelId = useSelector(state => state?.channel?.selected?.id);
   const [imageLoading, setImageLoading] = useState(false);
   const [count, setCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -30,8 +30,6 @@ const NavDropdown = ({socket}) => {
   const handleDisplay = async(e) => {
     e.preventDefault();
     const updatedName = await dispatch(updateUserDisplayName(display_name, sessionUser?.id));
-    
-    socket.emit('get messages', channelId)
     setCount(0);
     return !updatedName?.errors && setShowModal(false);
   }
@@ -43,7 +41,6 @@ const NavDropdown = ({socket}) => {
     
     setImageLoading(true);
     const updatedImage = await dispatch(updateUserImage(formData, sessionUser?.id));
-    socket.emit('get messages', channelId);
     
     setImageLoading(false);
     setMedia_url(sessionUser?.media_url);
@@ -97,7 +94,7 @@ const NavDropdown = ({socket}) => {
   </>)
 }
 
-const Navigation = ({socket}) => {
+const Navigation = () => {
   const history = useHistory();
 
   return (
@@ -116,7 +113,7 @@ const Navigation = ({socket}) => {
       </div>
     
       <div id='right-nav'>
-        <NavDropdown socket={socket}/>
+        <NavDropdown />
       </div>
     </div>
   )
