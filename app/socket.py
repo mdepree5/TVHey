@@ -90,25 +90,11 @@ def get_messages(channelId):
 @socketio.on('create message')
 @authenticated_only
 def create_message(data):
-  form = MessageForm()
-  print('debugger———————————')
-  data['csrf_token'] = generate_csrf()
-  print('data', data)
-  print('debugger————')
-
-  # form['csrf_token'].data = data
-  form['csrf_token'].data = data
-  print('form.data', form.data)
-  print('debugger———————————')
-  
-  if form.validate_on_submit():
-    print('validated for real debugger')
   new_message = Message(author_id=data['author_id'], channel_id=data['channel_id'], content=data['content'], created_at=datetime.now(), updated_at=datetime.now())
   db.session.add(new_message)
   db.session.commit()
-  # print('validated! ———————————————— debugger')
-  nm = new_message.to_dict()
-  emit('message to front', [json.dumps(nm, default = defaultconverter)], broadcast=True)
+  new = new_message.to_dict()
+  emit('message to front', [json.dumps(new, default = defaultconverter)], broadcast=True)
   # return {**new_message.to_dict()}
   # return {'errors': validation_errors_to_error_messages(form.errors)}
 
@@ -118,11 +104,8 @@ def edit_message(data):
   message = Message.query.get(data['id'])
   message.content = data['content']
   db.session.commit()
-  em = message.to_dict()
-  emit('edited message to front', [json.dumps(em, default = defaultconverter)], broadcast=True)
-  print('edited! ———————————————— debugger')
-  # return {**new_message.to_dict()}
-  # return {'errors': validation_errors_to_error_messages(form.errors)}
+  edited = message.to_dict()
+  emit('edited message to front', [json.dumps(edited, default = defaultconverter)], broadcast=True)
 
 @socketio.on('delete message')
 @authenticated_only
@@ -133,6 +116,10 @@ def delete_message(id):
   emit('deleted message to front', id)
 
 # todo ——————————————————————————————————————————————————————————————————————————————————
-# todo                               CHannels
+# todo             MessageForm form validators
 # todo ——————————————————————————————————————————————————————————————————————————————————
-
+# form = MessageForm()
+  # data['csrf_token'] = generate_csrf()
+  # form['csrf_token'].data = data
+  # if form.validate_on_submit():
+  #   print('validated for real debugger')
