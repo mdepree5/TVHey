@@ -90,19 +90,16 @@ def get_messages(channelId):
 @socketio.on('create message')
 @authenticated_only
 def create_message(data):
-  
   form = MessageForm()
-  # form['csrf_token'].data = request.cookies['csrf_token']
-  # form.data = data
+  print('debugger———————————')
+  data['csrf_token'] = generate_csrf()
+  print('data', data)
   print('debugger————')
-  print(data['csrf_token'])
-  print('debugger————')
+
+  # form['csrf_token'].data = data
   form['csrf_token'].data = data
-  # print('validated! ———————————————— debugger')
-  print('form.data debugger')
-  print(form.data)
-  print('form.data debugger')
-  # print('validated! ———————————————— debugger')
+  print('form.data', form.data)
+  print('debugger———————————')
   
   if form.validate_on_submit():
     print('validated for real debugger')
