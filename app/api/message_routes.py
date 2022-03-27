@@ -22,6 +22,13 @@ def validation_errors_to_error_messages(validation_errors):
 def create_message():
   form = MessageForm()
   form['csrf_token'].data = request.cookies['csrf_token']
+  print('debugger ———————————————————————————')
+  print('request', request)
+  print('debugger ')
+  print('request.cookies', request.cookies)
+  print('debugger ')
+  print('request.cookies[\'csrf_token\']', request.cookies['csrf_token'])
+  print('debugger ———————————————————————————')
   
   if form.validate_on_submit():
     new_message = Message(
