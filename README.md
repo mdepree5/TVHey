@@ -31,19 +31,62 @@
   </p>
 </div>
 
+## Features
+### Users
+* Users can sign up, log in, and log out.
+* Users can log in with demo user credentials before creating their own profile.
+* Unauthenticated users will be directed to login/sign up page.
+* Authenticated users will have full access to site functionality.
+* Authenticated users can update their display name and profile image.
+
+### Channels
+* Authenticated users can write, read, update, and delete channels.
+
+### Messages
+* Authenticated users can write, read, update, and delete messages.
+
 <!-- Built With -->
-<h2 align="left">Built with </h2>
-<p align="left">
-    <a href="https://reactjs.org/"><strong>React</strong></a>
-    ·
-    <a href="https://redux.js.org/">Redux</a>
-    ·
-    <a href="https://flask.palletsprojects.com/en/2.0.x/">Flask</a>
-    ·
-    <a href="https://www.postgresql.org/">PostgresQL</a>
-    ·
-    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">Pure CSS</a>
-  </p>
+## Built With
+### Backend
+* <a href="https://www.postgresql.org/">PostgresQL</a>
+* <a href="https://flask.palletsprojects.com/en/2.0.x/">Flask</a>
+* <a href="https://flask-sqlalchemy.palletsprojects.com/en/2.x/">SQLAlchemy</a>
+* <a href="https://aws.amazon.com/s3/">AWS S3</a>
+### Frontend
+* <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">Pure CSS</a>
+* <a href="https://reactjs.org/"><strong>React</strong></a>
+* <a href="https://redux.js.org/">Redux</a>
+* <a href="https://docker-curriculum.com/">Deployed with Docker</a>
+  
+<!-- Future Implementation -->
+## Future Implementation
+* Websockets for live messaging
+* Direct Messages
+* Search
+
+## Site
+### Log in
+<img src="https://capstone-slack-clone.s3.amazonaws.com/live-site/login.png" width="600" height="400">
+
+### Sign up 
+<img src="https://capstone-slack-clone.s3.amazonaws.com/live-site/signup.png" width="600" height="400">
+
+### Home
+<img src="https://capstone-slack-clone.s3.amazonaws.com/live-site/home.png" width="600" height="400">
+<br />
+
+### New Channel
+<img src="https://capstone-slack-clone.s3.amazonaws.com/live-site/new-channel.png" width="600" height="400">
+<br />
+
+### Write Messages
+<img src="https://capstone-slack-clone.s3.amazonaws.com/live-site/write+messages.png" width="600" height="400">
+<br />
+
+### Update User Information
+<img src="https://capstone-slack-clone.s3.amazonaws.com/live-site/user+information.png" width="600" height="400">
+<br />
+
 
 <!-- GETTING STARTED -->
 <h1 align="center"></h1>
@@ -91,7 +134,7 @@ To get a local copy up and running follow these simple example steps.
 
 
 <!-- CONTACT -->
-<h1 align="center">Contact Us</h1>
+<h2 align="center">Get in touch</h2>
 <p align="center">
 <a href="https://github.com/mdepree5"><strong>Github »</strong></a>
 · 
