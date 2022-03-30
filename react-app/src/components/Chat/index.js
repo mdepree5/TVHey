@@ -1,6 +1,6 @@
 import { useRef, forwardRef, useImperativeHandle, useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import {Icon} from '../Utils/icons';
 import ChannelFormModal from '../Channel/channel_modal';
@@ -16,13 +16,15 @@ import './Chat.css';
 const Chat = () => {
   const messagesRef = useRef();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { channelId } = useParams();
-
   const [chatInput, setChatInput] = useState('');
 
   const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channel);
   const messagestate =  useSelector(state => state?.message);
+  
+  if (!channelstate?.selected) history.push('/')
 
   const thisChannel = channelstate?.selected;
   const messagesArr = Object.values(messagestate?.messages);
@@ -35,6 +37,7 @@ const Chat = () => {
     await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
     setChatInput('');
   }
+
   
   return (sessionUser && (
     <>
