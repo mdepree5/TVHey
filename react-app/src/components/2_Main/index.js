@@ -34,7 +34,7 @@ export const UnAuthenticatedApp = () => {
         <Switch>
           <Route exact path="/login"><AuthForm /></Route>
           <Route exact path="/sign-up"><AuthForm signup={true} /></Route>
-          <Route><Redirect to="/login" /></Route>
+          <Route path='*' ><Redirect to="/login" /></Route>
         </Switch>
       </div>
 
@@ -111,7 +111,7 @@ const RightPage = ({socket}) => {
       <Switch>
         <Route exact path="/" ><Home /></Route>
         <Route exact path="/channels/:channelId" ><Chat socket={socket}/></Route>
-        <Route><Redirect to='/' /></Route>
+        <Route path='*' ><Redirect to='/' /></Route>
       </Switch>
     </div>
   )

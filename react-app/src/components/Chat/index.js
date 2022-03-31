@@ -1,6 +1,6 @@
 import { useRef, forwardRef, useImperativeHandle, useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -19,8 +19,8 @@ let socket;
 const Chat = () => {
   const messagesRef = useRef();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { channelId } = useParams();
-
   const [chatInput, setChatInput] = useState('');
 
   const sessionUser = useSelector(state => state?.session?.user);
@@ -59,6 +59,7 @@ const Chat = () => {
     socket.emit('create message', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput});
     setChatInput('');
   }
+
   
   return (sessionUser && (
     <>
