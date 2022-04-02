@@ -14,7 +14,7 @@ const socketReducer = (state = {}, action) => {
     case SET: {
       const newState = {};
       newState.socket = action.socket;
-      console.log('SET NEW STATE', newState)
+      // console.log(`%c redux newState:`, `color:yellow`, newState)
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————

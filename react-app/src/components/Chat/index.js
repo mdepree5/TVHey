@@ -1,8 +1,9 @@
 import { useRef, forwardRef, useImperativeHandle, useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+// import { useParams, useHistory } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import {Icon} from '../Utils/icons';
 import ChannelFormModal from '../Channel/channel_modal';
@@ -14,19 +15,21 @@ import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               Chat
 // todo ——————————————————————————————————————————————————————————————————————————————————
-let socket;
 
 const Chat = () => {
   const messagesRef = useRef();
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
   const { channelId } = useParams();
   const [chatInput, setChatInput] = useState('');
 
   const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channel);
   const messagestate =  useSelector(state => state?.messageS);
+  const socket =  useSelector(state => state?.socket?.socket);
 
+
+  console.log(`%c messagestate:`, `color:yellow`, messagestate)
   // const socket = useSelector(state => state?.socket);
 
   const thisChannel = channelstate?.selected;
@@ -36,25 +39,21 @@ const Chat = () => {
   useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
 
 
+  console.log(`%c chat component:`, `color:yellow`, socket)
+  console.log(`%c chat component:`, `color:yellow`, socket.connected)
+
+  socket.on('message to front', async(message) => await dispatch(createMessage(JSON.parse(message))))
+  socket.on('edited message to front', async(message) => await dispatch(updateMessage(JSON.parse(message))))
+  socket.on('deleted message to front', async(id) => await dispatch(deleteMessage(id)))
+  
   useEffect(() => {
-    // socket = io({ auth: {token: 'abc'} });
-    socket = io();
-    console.log(`%c ————————————————————————————————————————————————`, `color:yellow`); console.log(`%c socket!!:`, `color:yellow`, socket); console.log(`%c ————————————————————————————————————————————————`, `color:yellow`)
-    // socket.on('get all channels', response => console.log(`%c get all channels:`, `color:yellow`, response))
-    socket.on('message to front', async(message) => await dispatch(createMessage(JSON.parse(message))))
-    socket.on('edited message to front', async(message) => await dispatch(updateMessage(JSON.parse(message))))
-    socket.on('deleted message to front', async(id) => await dispatch(deleteMessage(id)))
-    
     socket.emit('get messages', channelId)
     socket.on('get all messages', async(messages) => {
       const messageArr = [];
       messages.all_messages.forEach(message => messageArr.push(JSON.parse(message)))
       await dispatch(getMessages(messageArr))
     })
-
-    return (() => socket.disconnect())
-  }, [dispatch, channelId])
-
+  }, [dispatch, channelId, socket])
 
   const sendChat = async (e) => {
     e.preventDefault();
@@ -119,6 +118,8 @@ const MessageCard = ({message, sessionUser}) => {
   const [toggleEdit, setToggleEdit] = useState(false);
   const [input, setInput] = useState(existing);
 
+  const socket =  useSelector(state => state?.socket?.socket);
+
   const handleEdit = async(e) => {
     e.preventDefault();
     socket.emit('edit message', {...message, content:input});
@@ -130,6 +131,8 @@ const MessageCard = ({message, sessionUser}) => {
     setInput(existing);
     return setToggleEdit(false);
   }
+
+  const handleDelete = async () => socket.emit('delete message', message?.id);
 
   return toggleEdit ? (
   <form className='col-list message-card' onSubmit={handleEdit}>
@@ -165,7 +168,7 @@ const MessageCard = ({message, sessionUser}) => {
           {message?.author_id === sessionUser.id &&
             <div className='dropdown-content'>
               <Icon onClick={()=> setToggleEdit(true)} iconName='edit'/>
-              <DeleteMessage messageId={message?.id} channelId={channelId} />
+              <Icon onClick={handleDelete} iconName='delete'/>
             </div>
           }
         </div>
@@ -175,8 +178,3 @@ const MessageCard = ({message, sessionUser}) => {
 }
 
 export default Chat;
-
-export const DeleteMessage = ({ messageId }) => {
-  const handleDelete = async () => socket.emit('delete message', messageId);
-  return <Icon onClick={handleDelete} iconName='delete'/>
-}
