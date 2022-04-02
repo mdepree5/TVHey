@@ -1,7 +1,6 @@
 import { useRef, forwardRef, useImperativeHandle, useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
-// import { useParams, useHistory } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -17,9 +16,8 @@ import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 
 const Chat = () => {
-  const messagesRef = useRef();
   const dispatch = useDispatch();
-  // const history = useHistory();
+  const messagesRef = useRef();
   const { channelId } = useParams();
   const [chatInput, setChatInput] = useState('');
 
@@ -28,23 +26,21 @@ const Chat = () => {
   const messagestate =  useSelector(state => state?.messageS);
   const socket =  useSelector(state => state?.socket?.socket);
 
-
-  console.log(`%c messagestate:`, `color:yellow`, messagestate)
-  // const socket = useSelector(state => state?.socket);
-
   const thisChannel = channelstate?.selected;
   const messagesArr = Object.values(messagestate?.messages);
 
-  // useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
+
+  
+
+
   useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
 
+  // console.log(`%c chat component:`, `color:yellow`, socket)
+  // console.log(`%c chat component:`, `color:yellow`, socket.connected)
 
-  console.log(`%c chat component:`, `color:yellow`, socket)
-  console.log(`%c chat component:`, `color:yellow`, socket.connected)
-
-  socket.on('message to front', async(message) => await dispatch(createMessage(JSON.parse(message))))
-  socket.on('edited message to front', async(message) => await dispatch(updateMessage(JSON.parse(message))))
-  socket.on('deleted message to front', async(id) => await dispatch(deleteMessage(id)))
+  socket.on('message to front', message => dispatch(createMessage(JSON.parse(message))))
+  socket.on('edited message to front', message => dispatch(updateMessage(JSON.parse(message))))
+  socket.on('deleted message to front', id => dispatch(deleteMessage(id)))
   
   useEffect(() => {
     socket.emit('get messages', channelId)
@@ -53,7 +49,7 @@ const Chat = () => {
       messages.all_messages.forEach(message => messageArr.push(JSON.parse(message)))
       await dispatch(getMessages(messageArr))
     })
-  }, [dispatch, channelId, socket])
+  }, [dispatch, channelId])
 
   const sendChat = async (e) => {
     e.preventDefault();
@@ -112,7 +108,6 @@ const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
 // todo                               Message Card
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const MessageCard = ({message, sessionUser}) => {
-  const { channelId } = useParams();
   const dayjs = require('dayjs');
   const existing = message?.content;
   const [toggleEdit, setToggleEdit] = useState(false);
