@@ -100,17 +100,14 @@ const LeftNav = () => {
   )
 }
 
-const AboutLink = ({link, image}) => (
-  <img className='about' onClick={()=>window.open(link)} src={image} alt='about-link' />
-)
+const AboutLink = ({link, image}) => <img className='about' onClick={()=>window.open(link)} src={image} alt='about-link' />
 
-const RightPage = ({socket}) => {
-
+const RightPage = () => {
   return (
     <div className='right-page'>
       <Switch>
         <Route exact path="/" ><Home /></Route>
-        <Route exact path="/channels/:channelId" ><Chat socket={socket}/></Route>
+        <Route exact path="/channels/:channelId" ><Chat/></Route>
         <Route path='*' ><Redirect to='/' /></Route>
       </Switch>
     </div>
@@ -118,7 +115,6 @@ const RightPage = ({socket}) => {
 }
 
 const Home = () => {
-
   return (
     <div className='home'>
       <div className='header'></div>

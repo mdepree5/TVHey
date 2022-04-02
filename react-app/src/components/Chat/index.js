@@ -27,6 +27,8 @@ const Chat = () => {
   const channelstate = useSelector(state => state?.channel);
   const messagestate =  useSelector(state => state?.messageS);
 
+  // const socket = useSelector(state => state?.socket);
+
   const thisChannel = channelstate?.selected;
   const messagesArr = Object.values(messagestate?.messages);
 
