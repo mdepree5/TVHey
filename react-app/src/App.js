@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import { io } from 'socket.io-client';
@@ -21,9 +21,24 @@ const App = () => {
     })()
   }, [dispatch]);
 
+  // const webSocket = useRef(null);
+
+  // useEffect(() => {
+  //   if (!sessionUser) return;
+
+  //   const ws = new WebSocket('ws://localhost:3000/');
+  //   webSocket.current = ws;
+
+  //   ws.onopen = e => console.log(`Connection open: ${e}`)
+
+  //   console.log(`%c ws:`, `color:yellow`, ws)
+  // }, [sessionUser])
 
   useEffect(() => {
-    const socket = io({transports: ["websocket", "polling"]});
+    const socket = io(
+      'ws://localhost:3000/',
+      {transports: ["websocket", "polling"]}
+    );
     const sockstate = dispatch(setSocket(socket));
 
     socket.on('connect', () => {
