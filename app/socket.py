@@ -6,7 +6,7 @@ from json import dumps
 from flask import request
 from datetime import datetime
 from flask_login import current_user
-from flask_socketio import SocketIO, emit, disconnect
+from flask_socketio import SocketIO, Namespace, emit, disconnect
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 # todo ——————————————————————————————————————————————————————————————————————————————————
 from .models import Channel, Message, User, db
@@ -60,7 +60,7 @@ def authenticated_only(f):
 # todo ——————————————————————————————————————————————————————————————————————————————————
 # todo                 Connection / Disconnection
 # todo ——————————————————————————————————————————————————————————————————————————————————
-@socketio.on('connect')
+@socketio.on('connect', namespace='/')
 def test_connection(socket):
   print('Connected ———————————————————————————————————————————— debugger')
   print(socket)

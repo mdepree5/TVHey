@@ -19,12 +19,21 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const socket = io(
-      'ws://localhost:3000/',
+
+    // const homeSocket = io.of('/');
+    // homeSocket.on("connection", (socket) => {
+    //   console.log(`%c ———————————————————————————————————————————————————`, `color:yellow`);
+    //   console.log(`%c homesocket:`, `color:yellow`, socket)
+    //   console.log(`%c ———————————————————————————————————————————————————`, `color:yellow`);
+    // });
+
+
+    const socket = io('/',
+      // 'ws://localhost:3000/',
       {
         // {transports: ["websocket"]},
-        // transports: ["websocket", "polling"],
-        rememberUpgrade: true,
+        transports: ["websocket", "polling"],
+        // rememberUpgrade: true,
       },
     );
 
