@@ -37,31 +37,29 @@ const App = () => {
   useEffect(() => {
     const socket = io(
       'ws://localhost:3000/',
-      {transports: ["websocket", "polling"]}
+      {
+        // {transports: ["websocket"]},
+        transports: ["websocket", "polling"],
+        rememberUpgrade: true,
+      },
     );
-    const sockstate = dispatch(setSocket(socket));
 
+    console.log(`%c <App/> socket object:`, `color:orange`, socket)
+    
     socket.on('connect', () => {
       const engine = socket.io.engine;
+      console.log(`%c engine object:`, `color:orange`, engine)
+      
       console.log(`%c engine.transport.name:`, `color:yellow`, engine.transport.name)
-
+      
       engine.once("upgrade", () => {
         // called when the transport is upgraded (i.e. from HTTP long-polling to WebSocket)
         console.log(`%c engine.transport.name:`, `color:yellow`, engine.transport.name) // in most cases, prints "websocket"
       });
     })
 
-    socket.on("connect_error", () => {
-      // revert to classic upgrade
-      socket.io.opts.transports = ["polling", "websocket"];
-    });
-
-    
-    // console.log(`%c app socket:`, `color:yellow`, socket)
-    console.log(`%c sockstate:`, `color:yellow`, sockstate)
-
     return (() => socket.disconnect())
-  }, [dispatch])
+  }, [dispatch, sessionUser])
 
 
 

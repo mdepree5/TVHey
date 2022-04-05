@@ -23,7 +23,12 @@ else:
 
 # initialize your socket instance
 socketio = SocketIO(
-  logger=True, engineio_logger=True, cors_allowed_origins=origins
+  logger=True,
+  engineio_logger=True,
+  cors_allowed_origins=origins,
+  allow_upgrades=True,
+  always_connect=True,
+  async_mode='eventlet'
 )
 
 # todo ——————————————————————————————————————————————————————————————————————————————————
@@ -56,10 +61,12 @@ def authenticated_only(f):
 # todo                 Connection / Disconnection
 # todo ——————————————————————————————————————————————————————————————————————————————————
 @socketio.on('connect')
-def test_connection():
+def test_connection(socket):
   print('Connected ———————————————————————————————————————————— debugger')
-  all_channels = [json.dumps(channel, default = defaultconverter) for channel in [channel.to_dict() for channel in Channel.query.all()]]
-  emit('get all channels', {'all_channels': all_channels})
+  print(socket)
+  print('Connected ———————————————————————————————————————————— debugger')
+  # all_channels = [json.dumps(channel, default = defaultconverter) for channel in [channel.to_dict() for channel in Channel.query.all()]]
+  # emit('get all channels', {'all_channels': all_channels})
 
 @socketio.on('disconnect')
 def test_disconnection():

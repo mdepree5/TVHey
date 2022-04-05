@@ -8,7 +8,6 @@ from .socket import socketio
 # import eventlet
 # eventlet.monkey_patch()
 
-
 from .models import db, User
 
 from .api.user_routes import user_routes
@@ -46,12 +45,11 @@ app.register_blueprint(message_routes, url_prefix='/api/messages')
 db.init_app(app)
 Migrate(app, db)
 
-# Websocket
-socketio.init_app(app)
-
 # Application Security
 CORS(app)
 
+# Websocket
+socketio.init_app(app)
 
 # Since we are deploying with Docker and Flask,
 # we won't be using a buildpack when we deploy to Heroku.
@@ -65,7 +63,6 @@ def https_redirect():
       url = request.url.replace('http://', 'https://', 1)
       code = 301
       return redirect(url, code=code)
-
 
 @app.after_request
 def inject_csrf_token(response):

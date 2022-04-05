@@ -1,4 +1,17 @@
 // todo ——————————————————————————————————————————————————————————————————————————————————
+// todo                               App useEffect(() => {})
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// socket.on("connect_error", () => {
+  //   // revert to classic upgrade
+  //   socket.io.opts.transports = ["polling", "websocket"];
+  // });
+  
+  
+// const sockstate = dispatch(setSocket(socket));
+// console.log(`%c sockstate:`, `color:yellow`, sockstate)
+
+
+// todo ——————————————————————————————————————————————————————————————————————————————————
 // todo               openConnection, closeConnection buttons
 // todo ——————————————————————————————————————————————————————————————————————————————————
   // let socket
