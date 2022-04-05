@@ -1,6 +1,24 @@
 // todo ——————————————————————————————————————————————————————————————————————————————————
+// todo                               Javascript built in WebSocket object
+// todo ——————————————————————————————————————————————————————————————————————————————————
+
+  // const webSocket = useRef(null);
+
+  // useEffect(() => {
+  //   if (!sessionUser) return;
+
+  //   const ws = new WebSocket('ws://localhost:3000/');
+  //   webSocket.current = ws;
+
+  //   ws.onopen = e => console.log(`Connection open: ${e}`)
+  
+  //   console.log(`%c ws:`, `color:yellow`, ws)
+  // }, [sessionUser])
+
+// todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               App useEffect(() => {})
 // todo ——————————————————————————————————————————————————————————————————————————————————
+// import {setSocket} from './store/socket';
 // socket.on("connect_error", () => {
   //   // revert to classic upgrade
   //   socket.io.opts.transports = ["polling", "websocket"];

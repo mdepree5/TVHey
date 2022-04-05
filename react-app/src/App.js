@@ -5,9 +5,6 @@ import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import {UnAuthenticatedApp, AuthenticatedApp} from './components/2_Main';
 import {authenticate} from './store/session';
-import {setSocket} from './store/socket';
-
-
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const App = () => {
   const dispatch = useDispatch();
@@ -21,25 +18,12 @@ const App = () => {
     })()
   }, [dispatch]);
 
-  // const webSocket = useRef(null);
-
-  // useEffect(() => {
-  //   if (!sessionUser) return;
-
-  //   const ws = new WebSocket('ws://localhost:3000/');
-  //   webSocket.current = ws;
-
-  //   ws.onopen = e => console.log(`Connection open: ${e}`)
-
-  //   console.log(`%c ws:`, `color:yellow`, ws)
-  // }, [sessionUser])
-
   useEffect(() => {
     const socket = io(
       'ws://localhost:3000/',
       {
         // {transports: ["websocket"]},
-        transports: ["websocket", "polling"],
+        // transports: ["websocket", "polling"],
         rememberUpgrade: true,
       },
     );
@@ -47,16 +31,21 @@ const App = () => {
     console.log(`%c <App/> socket object:`, `color:orange`, socket)
     
     socket.on('connect', () => {
+      console.log(`%c ———————————————————————————————————————————————————`, `color:lime`);
+      console.log(`%c Connected`, `color:lime`);
+      
       const engine = socket.io.engine;
       console.log(`%c engine object:`, `color:orange`, engine)
-      
       console.log(`%c engine.transport.name:`, `color:yellow`, engine.transport.name)
       
       engine.once("upgrade", () => {
         // called when the transport is upgraded (i.e. from HTTP long-polling to WebSocket)
         console.log(`%c engine.transport.name:`, `color:yellow`, engine.transport.name) // in most cases, prints "websocket"
       });
+      console.log(`%c ———————————————————————————————————————————————————`, `color:lime`);
     })
+
+    socket.on('disconnect', () => socket.connect());
 
     return (() => socket.disconnect())
   }, [dispatch, sessionUser])
