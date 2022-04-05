@@ -65,6 +65,7 @@ def test_connection(socket):
   print('Connected ———————————————————————————————————————————— debugger')
   print(socket)
   print('Connected ———————————————————————————————————————————— debugger')
+  emit('my response', {'data': 'Connected'})
   # all_channels = [json.dumps(channel, default = defaultconverter) for channel in [channel.to_dict() for channel in Channel.query.all()]]
   # emit('get all channels', {'all_channels': all_channels})
 
