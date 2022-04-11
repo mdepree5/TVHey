@@ -74,6 +74,8 @@ const LeftNav = () => {
 
   const [display, setDisplay] = useState(true)
 
+  useEffect(() => setDisplay(channels?.length < 5), [])
+
   return (
     <div className='left-nav'>
       <div className='header' style={{justifyContent:'flex-end'}}>TVHey</div>
@@ -84,7 +86,7 @@ const LeftNav = () => {
         <h3 style={{paddingLeft:'1.2em', paddingRight: '1.2em'}} >Channels</h3>
       </div>
 
-      <div className={`col-list channels-container ${display ? 'hide-channels' : ''}`}>
+      <div className={`col-list channels-container ${display ? '' : 'hide-channels'}`}>
         {channels?.map(channel => (
           <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
         ))}

@@ -26,6 +26,8 @@ const App = () => {
 
     const socket = io()
     
+    console.log(`%c socket:`, `color:yellow`, socket)
+    
     websocket.current = socket;
 
     socket.on('connect', () => {
