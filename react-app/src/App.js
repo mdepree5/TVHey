@@ -24,12 +24,12 @@ const App = () => {
     socket.on('connect', () => {
       (async () => {
         await dispatch(setSocket(socket))
-        console.log(`%c connected:`, `color:lime`)
+        console.log(`%c socket connected`, `color:lime`)
       })()
     })
 
     return (() => socket.disconnect())
-  }, [dispatch, sessionUser])
+  }, [])
 
 
   return pageLoaded && <>{sessionUser ? <AuthenticatedApp/> : <UnAuthenticatedApp/>}</>
