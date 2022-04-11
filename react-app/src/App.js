@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -19,8 +19,15 @@ const App = () => {
     })()
   }, [dispatch]);
 
+  const websocket = useRef(null);
+
   useEffect(() => {
+    if (!sessionUser) return;
+
     const socket = io()
+    
+    websocket.current = socket;
+
     socket.on('connect', () => {
       (async () => {
         await dispatch(setSocket(socket))
@@ -28,8 +35,10 @@ const App = () => {
       })()
     })
 
-    return (() => socket.disconnect())
-  }, [])
+    return () => {
+      if(websocket.current !== null) websocket.current.disconnect();
+    }
+  }, [sessionUser])
 
 
   return pageLoaded && <>{sessionUser ? <AuthenticatedApp/> : <UnAuthenticatedApp/>}</>

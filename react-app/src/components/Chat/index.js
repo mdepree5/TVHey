@@ -24,13 +24,18 @@ const Chat = () => {
   const channelstate = useSelector(state => state?.channel);
   const messagestate =  useSelector(state => state?.message);
   
-  if (!channelstate?.selected) history.push('/')
-
   const thisChannel = channelstate?.selected;
   const messagesArr = Object.values(messagestate?.messages);
 
-  useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
-  useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
+  useEffect(() => {(async () => {
+    const messages = await dispatch(getMessages(channelId))
+    if(messages.status === 404) history.push('/')
+  })()}, [dispatch, history, channelId]);
+
+  useEffect(() => {(async () => {
+    const selectedChannel = await dispatch(getChannel(channelId))
+    if(selectedChannel.status === 404) history.push('/')
+  })()}, [dispatch, history, channelId]);
 
   const sendChat = async (e) => {
     e.preventDefault();
