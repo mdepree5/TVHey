@@ -74,7 +74,7 @@ const LeftNav = () => {
 
   const [display, setDisplay] = useState(true)
 
-  useEffect(() => setDisplay(channels?.length < 5), [])
+  useEffect(() => setDisplay(channels?.length < 8), [])
 
   return (
     <div className='left-nav'>

@@ -27,7 +27,7 @@ const App = () => {
     const socket = io()
     
     console.log(`%c socket:`, `color:yellow`, socket)
-    
+
     websocket.current = socket;
 
     socket.on('connect', () => {
@@ -37,10 +37,11 @@ const App = () => {
       })()
     })
     
-    return () => {
-      if(websocket.current !== null) websocket.current.disconnect();
-      console.log(`%c socket disconnected`, `color:red`)
-    }
+    socket.on('disconnect', () => socket.connect())
+    // return () => {
+    //   if(websocket.current !== null) websocket.current.disconnect();
+    //   console.log(`%c socket disconnected`, `color:red`)
+    // }
   }, [dispatch, sessionUser])
 
 

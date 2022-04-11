@@ -15,37 +15,38 @@ import './Chat.css';
 // todo                               Chat
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const Chat = () => {
-  const messagesRef = useRef();
   const dispatch = useDispatch();
   const history = useHistory();
+  const messagesRef = useRef();
   const { channelId } = useParams();
   const [chatInput, setChatInput] = useState('');
 
   const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channel);
-  const messagestate =  useSelector(state => state?.message);
+  const messagestate =  useSelector(state => state?.messageSocket);
   const socket =  useSelector(state => state?.socket?.socket);
   
   const thisChannel = channelstate?.selected;
   const messagesArr = Object.values(messagestate?.messages);
 
-  if (channelstate?.channels[channelId] === undefined) history.push('/')
-
+  setTimeout(() => {if (channelstate?.channels[channelId] === undefined) history.push('/')}, 100);
   useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
   // useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
 
-  socket.on('message to front', message => dispatch(createMessage(JSON.parse(message))))
-  socket.on('edited message to front', message => dispatch(updateMessage(JSON.parse(message))))
-  socket.on('deleted message to front', id => dispatch(deleteMessage(id)))
-
   useEffect(() => {
-    socket.emit('get messages', channelId)
-    socket.on('get all messages', async(messages) => {
-      const messageArr = [];
-      messages.all_messages.forEach(message => messageArr.push(JSON.parse(message)))
-      await dispatch(getMessages(messageArr))
-    })
-  }, [dispatch, channelId])
+    if(socket){
+      socket.emit('get messages', channelId)
+      socket.on('get all messages', async(messages) => {
+        const messageArr = [];
+        messages.all_messages.forEach(message => messageArr.push(JSON.parse(message)))
+        await dispatch(getMessages(messageArr))
+      })
+
+      socket.on('message to front', message => dispatch(createMessage(JSON.parse(message))))
+      socket.on('edited message to front', message => dispatch(updateMessage(JSON.parse(message))))
+      socket.on('deleted message to front', id => dispatch(deleteMessage(id)))
+    }
+  }, [dispatch, channelId, socket])
 
   const sendChat = async (e) => {
     e.preventDefault();
@@ -126,7 +127,10 @@ const MessageCard = ({message, sessionUser}) => {
     return setToggleEdit(false);
   }
   
-  const handleDelete = async () => socket.emit('delete message', message?.id);
+  const handleDelete = async () => {
+    socket.emit('delete message', message?.id)
+    socket.emit('delete message', message?.id)
+  };
 
   return toggleEdit ? (
   <form className='col-list message-card' onSubmit={handleEdit}>
