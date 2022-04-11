@@ -34,11 +34,12 @@ const App = () => {
         console.log(`%c socket connected`, `color:lime`)
       })()
     })
-
+    
     return () => {
       if(websocket.current !== null) websocket.current.disconnect();
+      console.log(`%c socket disconnected`, `color:red`)
     }
-  }, [sessionUser])
+  }, [dispatch, sessionUser])
 
 
   return pageLoaded && <>{sessionUser ? <AuthenticatedApp/> : <UnAuthenticatedApp/>}</>
