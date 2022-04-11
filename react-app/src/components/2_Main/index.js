@@ -47,6 +47,7 @@ export const AuthenticatedApp = () => {
   const dispatch = useDispatch();
   useEffect(() => { dispatch(getChannels()) }, [dispatch]);
 
+
   return (
     <div className='page-container'>
       <Navigation />

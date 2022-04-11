@@ -23,7 +23,8 @@ else:
 # initialize your socket instance
 socketio = SocketIO(
   # async_mode='eventlet',
-  logger=True, cors_allowed_origins=origins
+  logger=True, 
+  cors_allowed_origins=origins
   )
 
 def defaultconverter(o):
@@ -34,19 +35,16 @@ def defaultconverter(o):
 def test_connection():
   print('debugger ——————————————————————————————————————————————————————————————————————————————')
   print('Connected to websocket!')
-  print('Connected to websocket!')
-  print('Connected to websocket!')
-  print('debugger ——————————————————————————————————————————————————————————————————————————————')
-  all_users = User.query.all()
-  this = [user.to_dict() for user in all_users]
+  # all_users = User.query.all()
+  # this = [user.to_dict() for user in all_users]
   # print(this)
-  print('debugger ——————————————————————————————————————————————————————————————————————————————')
-  all_channels = Channel.query.all()
-  themser = [json.dumps(channel, default = defaultconverter) for channel in [channel.to_dict() for channel in all_channels]]
-  print('debugger ——————————————————————————————————————————————————————————————————————————————')
-  emit('response', {'message': 'Connection successful'})
-  emit('all_users', {'all_users': this})
-  emit('all_channels', {'all_channels': themser})
+  # print('debugger ——————————————————————————————————————————————————————————————————————————————')
+  # all_channels = Channel.query.all()
+  # themser = [json.dumps(channel, default = defaultconverter) for channel in [channel.to_dict() for channel in all_channels]]
+  # print('debugger ——————————————————————————————————————————————————————————————————————————————')
+  # emit('response', {'message': 'Connection successful'})
+  # emit('all_users', {'all_users': this})
+  # emit('all_channels', {'all_channels': themser})
   # return {"all_channels": [channel.to_dict() for channel in all_channels]}
 
 # handle chat messages
