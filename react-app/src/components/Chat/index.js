@@ -23,14 +23,17 @@ const Chat = () => {
   const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channel);
   const messagestate =  useSelector(state => state?.message);
+  const socket =  useSelector(state => state?.socket?.socket);
   
   const thisChannel = channelstate?.selected;
   const messagesArr = Object.values(messagestate?.messages);
 
   if (channelstate?.channels[channelId] === undefined) history.push('/')
 
-  useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
   useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
+  useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
+
+  
 
   const sendChat = async (e) => {
     e.preventDefault();
