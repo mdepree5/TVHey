@@ -7,7 +7,7 @@ import ChannelFormModal from '../Channel/channel_modal';
 import {DeleteChannelButton} from '../Utils/buttons';
 import {getChannel} from '../../store/channel';
 // import {createMessage, getMessages, updateMessage} from '../../store/message';
-import {createMessage, getMessages, updateMessage, deleteMessage} from '../../store/message-socket';
+import {createMessage, getMessages, updateMessage, deleteMessage} from '../../store/messageSocket';
 import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 
@@ -107,7 +107,7 @@ const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const MessageCard = ({message, sessionUser}) => {
   const dayjs = require('dayjs');
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const existing = message?.content;
   const [toggleEdit, setToggleEdit] = useState(false);
   const [input, setInput] = useState(existing);
@@ -128,7 +128,6 @@ const MessageCard = ({message, sessionUser}) => {
   }
   
   const handleDelete = async () => {
-    socket.emit('delete message', message?.id)
     socket.emit('delete message', message?.id)
   };
 

@@ -1,10 +1,10 @@
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Actions —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const CREATE = 'messages-s/create';
-const GET_ALL = 'messages-s/get_all';
-const UPDATE = 'messages-s/update';
-const DELETE = 'messages-s/delete';
+const CREATE = 'messageSocket/create';
+const GET_ALL = 'messageSocket/get_all';
+const UPDATE = 'messageSocket/update';
+const DELETE = 'messageSocket/delete';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Creators —
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -40,9 +40,11 @@ const messageSReducer = (state = {messages:{}}, action) => {
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case DELETE: {
       const newState = {...state};
-      console.log('redux newstate before', newState)
+      console.log(`%c before:`, `color:red`)
+      console.table(newState.messages)
       delete newState.messages[action.messageId];
-      console.log('redux newstate after', newState)
+      console.log(`%c after:`, `color:lime`)
+      console.table(newState.messages)
       return newState;
     }
 // ???? ——————————————————————————————————————————————————————————————————————————————————

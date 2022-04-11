@@ -120,7 +120,7 @@ def delete_message(id):
   message = Message.query.get(id)
   db.session.delete(message)
   db.session.commit()
-  emit('deleted message to front', id)
+  emit('deleted message to front', id, broadcast=True)
 
 # # todo ——————————————————————————————————————————————————————————————————————————————————
 # # todo             MessageForm form validators and csrf
