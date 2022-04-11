@@ -3,12 +3,14 @@ import thunk from 'redux-thunk';
 import session from './session';
 import channel from './channel';
 import message from './message';
+import messageSocket from './message-socket';
 import socket from './socket';
 
 const rootReducer = combineReducers({
   session,
   channel,
   message,
+  messageSocket,
   socket,
 });
 
