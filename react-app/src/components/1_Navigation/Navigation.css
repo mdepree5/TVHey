@@ -82,10 +82,7 @@
   position: absolute;
   top: 4em;
   
-  /* !!!! ——————————————————————————————————————————————————————————————————————————————— */
-  /* left: calc(1vw); */
   left: calc(80vw - 28em);
-  /* !!!! ——————————————————————————————————————————————————————————————————————————————— */
 
   width: 20em;
   height: 18em;
@@ -95,7 +92,14 @@
 }
 
 #search{
+  position: relative;
+  top: -24vh;
   left: 0;
+  width: 70%;
+
+  margin-left: auto;
+  margin-right: auto;
+
 }
 
 .dropdown-nav > * {
