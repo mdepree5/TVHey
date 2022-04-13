@@ -109,7 +109,8 @@ const RightPage = ({socket}) => {
     <div className='right-page'>
       <Switch>
         <Route exact path="/" ><Home /></Route>
-        <Route exact path="/channels/:channelId" ><Chat socket={socket}/></Route>
+        <Route exact path="/channels/:channelId" ><Chat/></Route>
+        {/* <Route exact path="/dms/:dmId" ><Chat/></Route> */}
         <Route path='*' ><Redirect to='/' /></Route>
       </Switch>
     </div>
