@@ -99,11 +99,7 @@ const Navigation = () => {
   return (
     <div className='nav-bar'>
       <div id='left-nav'>
-        <img
-          className='navicon'
-          onClick={() => history.push('/')}
-          src='https://capstone-slack-clone.s3.amazonaws.com/favicon.ico' alt='custom' 
-        />
+        <img className='navicon' onClick={() => history.push('/')} src='https://capstone-slack-clone.s3.amazonaws.com/favicon.ico' alt='custom' />
       </div>
     
       <div id='mid-nav'>
@@ -141,7 +137,7 @@ const Search = () => {
       <input placeholder='Search TVHey' value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
 
       {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}>
-        <div className='dropdown-nav'>
+        <div className='dropdown-nav' id='search'>
           <div className='col-list' >
             {searchInput && users?.map(user => <div key={user?.id} className='channel-list-item'>{user?.display_name}</div>)}
             {searchInput && channels?.map(channel => (
