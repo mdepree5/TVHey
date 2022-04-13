@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import { Modal } from '../../context/Modal';
@@ -123,21 +123,12 @@ const Search = () => {
   const [searchInput, setSearchInput] = useState('')
   const [showModal, setShowModal] = useState(false);
 
-
   const userstate = useSelector(state => state?.session)
   const channelstate = useSelector(state => state?.channel)
   const users = Object.values(userstate?.allUsers).filter(user => user.display_name.toLowerCase().includes(searchInput));
   const channels = Object.values(channelstate?.channels).filter(channel => channel.title.toLowerCase().includes(searchInput));
 
-  // const handleClose = () => {
-  //   return setShowModal(false);
-  // }
-
-  useEffect(() => {
-    if(searchInput.length > 0) setShowModal(true)
-    console.log(`%c showModal:`, `color:yellow`, showModal)
-    console.log(`%c searchInput:`, `color:yellow`, searchInput)
-  }, [searchInput])
+  useEffect(() => setShowModal(searchInput ? true : false), [searchInput])
 
   return (
     <div>
@@ -146,10 +137,12 @@ const Search = () => {
       {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}>
         <div className='dropdown-nav'>
           <div className='col-list' >
-            {users?.map(user => <div key={user?.id}>{user?.display_name}</div>)}
+            {searchInput && users?.map(user => <div key={user?.id}>{user?.display_name}</div>)}
           </div>
           <div className='col-list' >
-            {channels?.map(channel => <div key={channel?.id}>{channel?.title}</div>)}
+            {searchInput && channels?.map(channel => (
+              <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
+            ))}
           </div>
         
         </div>
