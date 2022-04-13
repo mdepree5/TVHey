@@ -40,11 +40,11 @@ const messageSReducer = (state = {messages:{}}, action) => {
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case DELETE: {
       const newState = {...state};
-      console.log(`%c before:`, `color:red`)
-      console.table(newState.messages)
+      // console.log(`%c before:`, `color:red`)
+      // console.table(newState.messages)
       delete newState.messages[action.messageId];
-      console.log(`%c after:`, `color:lime`)
-      console.table(newState.messages)
+      // console.log(`%c after:`, `color:lime`)
+      // console.table(newState.messages)
       return newState;
     }
 // ???? ——————————————————————————————————————————————————————————————————————————————————

@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import { Modal } from '../../context/Modal';
-import { updateUserImage, updateUserDisplayName } from '../../store/session';
+import { getUsers, updateUserImage, updateUserDisplayName } from '../../store/session';
 import LogoutButton from '../../components/0_Session/LogoutButton';
 import './Navigation.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -93,6 +93,10 @@ const NavDropdown = () => {
 
 const Navigation = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  useEffect(() => { dispatch(getUsers()) }, [dispatch]);
+  const users = useSelector(state => state?.session);
+  console.log(`%c users:`, `color:yellow`, users)
 
   return (
     <div className='nav-bar'>
@@ -116,6 +120,17 @@ const Navigation = () => {
   )
 }
 
+
+
+// const Search = () => {
+//   const users = useSelector(state => state?.)
+
+//   return (
+//     <div>
+//       {users?.map(user => <div>{user?.display_name}</div>)}
+//     </div>
+//   )
+// }
 
 
 
