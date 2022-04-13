@@ -11,6 +11,7 @@ import ChannelFormModal from '../Channel/channel_modal';
 import {Icon} from '../Utils/icons';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import {getChannels} from '../../store/channel';
+// import {getChannels} from '../../store/channelSocket';
 import {loginDemo} from '../../store/session';
 import './Main.css'
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -45,7 +46,24 @@ export const UnAuthenticatedApp = () => {
 
 export const AuthenticatedApp = () => {
   const dispatch = useDispatch();
+  const socket =  useSelector(state => state?.socket?.socket);
+
   useEffect(() => { dispatch(getChannels()) }, [dispatch]);
+
+  useEffect(() => {
+    if(socket){
+      socket.emit('get channels')
+      socket.on('get all channels', async(channels) => {
+        const channelsArr = [];
+        channels.all_channels.forEach(channel => channelsArr.push(JSON.parse(channel)))
+        await dispatch(getChannels(channelsArr))
+      })
+
+      // socket.on('message to front', message => dispatch(createMessage(JSON.parse(message))))
+      // socket.on('edited message to front', message => dispatch(updateMessage(JSON.parse(message))))
+      // socket.on('deleted message to front', id => dispatch(deleteMessage(id)))
+    }
+  }, [dispatch, socket])
 
 
   return (
@@ -71,8 +89,7 @@ export const AuthenticatedApp = () => {
 const LeftNav = () => {
   const channelstate = useSelector(state => state?.channel);
   const channels = Object.values(channelstate?.channels);
-
-  const [display, setDisplay] = useState(channels?.length < 8)
+  const [display, setDisplay] = useState(channels?.length < 8);
 
   return (
     <div className='left-nav'>
