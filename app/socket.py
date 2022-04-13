@@ -122,6 +122,44 @@ def delete_message(id):
   db.session.commit()
   emit('deleted message to front', id, broadcast=True)
 
+# todo ——————————————————————————————————————————————————————————————————————————————————
+# todo                   Channel Event Handlers
+# todo ——————————————————————————————————————————————————————————————————————————————————
+@socketio.on('get channels')
+@authenticated_only
+def get_channels():
+  channels = Channel.query.all()
+  all_channels = [json.dumps(channel, default = defaultconverter) for channel in [channel.to_dict() for channel in channels]]
+  emit('get all channels', {'all_channels': all_channels})
+
+@socketio.on('create channel')
+@authenticated_only
+def create_channel(data):
+  new_channel = Channel(host_id=data['host_id'], title=data['title'], topic=data['topic'], created_at=datetime.now(), updated_at=datetime.now())
+  db.session.add(new_channel)
+  db.session.commit()
+  new = new_channel.to_dict()
+  emit('channel to front', [json.dumps(new, default = defaultconverter)], broadcast=True)
+
+@socketio.on('edit channel')
+@authenticated_only
+def edit_channel(data):
+  channel = Channel.query.get(data['id'])
+  channel.title = data['title']
+  channel.topic = data['topic']
+  channel.updated_at = datetime.now()
+  db.session.commit()
+  edited = channel.to_dict()
+  emit('edited channel to front', [json.dumps(edited, default = defaultconverter)], broadcast=True)
+
+@socketio.on('delete channel')
+@authenticated_only
+def delete_channel(id):
+  channel = Channel.query.get(id)
+  db.session.delete(channel)
+  db.session.commit()
+  emit('deleted channel to front', id, broadcast=True)
+
 # # todo ——————————————————————————————————————————————————————————————————————————————————
 # # todo             MessageForm form validators and csrf
 # # todo ——————————————————————————————————————————————————————————————————————————————————
