@@ -72,9 +72,7 @@ const LeftNav = () => {
   const channelstate = useSelector(state => state?.channel);
   const channels = Object.values(channelstate?.channels);
 
-  const [display, setDisplay] = useState(true)
-
-  useEffect(() => setDisplay(channels?.length < 8), [])
+  const [display, setDisplay] = useState(channels?.length < 8)
 
   return (
     <div className='left-nav'>
