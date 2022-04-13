@@ -95,8 +95,6 @@ const Navigation = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => { dispatch(getUsers()) }, [dispatch]);
-  const users = useSelector(state => state?.session);
-  console.log(`%c users:`, `color:yellow`, users)
 
   return (
     <div className='nav-bar'>
@@ -109,6 +107,7 @@ const Navigation = () => {
       </div>
     
       <div id='mid-nav'>
+        <Search/>
         {/* <AboutLink link='https://github.com/mdepree5' image='https://capstone-slack-clone.s3.amazonaws.com/github.png' />
         <AboutLink link='https://www.linkedin.com/in/mitch-depree-4a5686155/' image='https://capstone-slack-clone.s3.amazonaws.com/linkedin.png' /> */}
       </div>
@@ -122,15 +121,16 @@ const Navigation = () => {
 
 
 
-// const Search = () => {
-//   const users = useSelector(state => state?.)
+const Search = () => {
+  const userstate = useSelector(state => state?.session)
+  const users = Object.values(userstate?.allUsers);
 
-//   return (
-//     <div>
-//       {users?.map(user => <div>{user?.display_name}</div>)}
-//     </div>
-//   )
-// }
+  return (
+    <div className='row-list' >
+      {users?.map(user => <div>{user?.display_name}</div>)}
+    </div>
+  )
+}
 
 
 
