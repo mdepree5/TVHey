@@ -108,8 +108,6 @@ const Navigation = () => {
     
       <div id='mid-nav'>
         <Search/>
-        {/* <AboutLink link='https://github.com/mdepree5' image='https://capstone-slack-clone.s3.amazonaws.com/github.png' />
-        <AboutLink link='https://www.linkedin.com/in/mitch-depree-4a5686155/' image='https://capstone-slack-clone.s3.amazonaws.com/linkedin.png' /> */}
       </div>
     
       <div id='right-nav'>
@@ -122,22 +120,43 @@ const Navigation = () => {
 
 
 const Search = () => {
+  const [searchInput, setSearchInput] = useState('')
+  const [showModal, setShowModal] = useState(false);
+
+
   const userstate = useSelector(state => state?.session)
-  const users = Object.values(userstate?.allUsers);
+  const channelstate = useSelector(state => state?.channel)
+  const users = Object.values(userstate?.allUsers).filter(user => user.display_name.toLowerCase().includes(searchInput));
+  const channels = Object.values(channelstate?.channels).filter(channel => channel.title.toLowerCase().includes(searchInput));
+
+  // const handleClose = () => {
+  //   return setShowModal(false);
+  // }
+
+  useEffect(() => {
+    if(searchInput.length > 0) setShowModal(true)
+    console.log(`%c showModal:`, `color:yellow`, showModal)
+    console.log(`%c searchInput:`, `color:yellow`, searchInput)
+  }, [searchInput])
 
   return (
-    <div className='row-list' >
-      {users?.map(user => <div>{user?.display_name}</div>)}
+    <div>
+      <input placeholder='Search TVHey' type="text" onChange={e => setSearchInput(e.target.value)}/>
+
+      {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}>
+        <div className='dropdown-nav'>
+          <div className='col-list' >
+            {users?.map(user => <div key={user?.id}>{user?.display_name}</div>)}
+          </div>
+          <div className='col-list' >
+            {channels?.map(channel => <div key={channel?.id}>{channel?.title}</div>)}
+          </div>
+        
+        </div>
+      </Modal>}
     </div>
   )
 }
-
-
-
-
-// const AboutLink = ({link, image}) => (
-//   <img className='about' onClick={()=>window.open(link)} src={image} alt='about-link' />
-// )
 
 
 export default Navigation;
