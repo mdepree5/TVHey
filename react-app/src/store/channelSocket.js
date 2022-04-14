@@ -9,11 +9,11 @@ const DELETE = 'channelSocket/delete';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Creators —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-export const create = channel => ({ type: CREATE, channel });
-export const getAll = channels => ({ type: GET_ALL, channels });
-export const getOne = channel => ({ type: GET_ONE, channel });
-export const update = channel => ({ type: UPDATE, channel });
-export const destroy = channelId => ({ type: DELETE, channelId });
+export const createChannel = channel => ({ type: CREATE, channel });
+export const getChannels = channels => ({ type: GET_ALL, channels });
+export const getOneChannel = channel => ({ type: GET_ONE, channel });
+export const updateChannel = channel => ({ type: UPDATE, channel });
+export const deleteChannel = channelId => ({ type: DELETE, channelId });
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Reducer —
 // todo ——————————————————————————————————————————————————————————————————————————————————

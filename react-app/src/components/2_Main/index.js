@@ -10,7 +10,7 @@ import Chat from "../../components/Chat";
 import ChannelFormModal from '../Channel/channel_modal';
 import {Icon} from '../Utils/icons';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-import {getChannels} from '../../store/channel';
+import {createChannel, getChannels, updateChannel, deleteChannel } from '../../store/channel';
 // import {getChannels} from '../../store/channelSocket';
 import {loginDemo} from '../../store/session';
 import './Main.css'
@@ -59,9 +59,9 @@ export const AuthenticatedApp = () => {
         await dispatch(getChannels(channelsArr))
       })
 
-      // socket.on('message to front', message => dispatch(createMessage(JSON.parse(message))))
-      // socket.on('edited message to front', message => dispatch(updateMessage(JSON.parse(message))))
-      // socket.on('deleted message to front', id => dispatch(deleteMessage(id)))
+      socket.on('channel to front', message => dispatch(createChannel(JSON.parse(message))))
+      socket.on('edited channel to front', message => dispatch(updateChannel(JSON.parse(message))))
+      socket.on('deleted channel to front', id => dispatch(deleteChannel(id)))
     }
   }, [dispatch, socket])
 
@@ -120,7 +120,7 @@ const AboutLink = ({link, image}) => (
   <img className='about' onClick={()=>window.open(link)} src={image} alt='about-link' />
 )
 
-const RightPage = ({socket}) => {
+const RightPage = () => {
 
   return (
     <div className='right-page'>
