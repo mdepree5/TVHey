@@ -48,7 +48,10 @@ const channelReducer = (state = {selected:null, channels:{}}, action) => {
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case DELETE: {
       const newState = {...state};
+      console.log(`%c redux`, `color:red`)
+      console.log(`%c newState:`, `color:yellow`, newState)
       delete newState.channels[action.channelId];
+      console.log(`%c newState:`, `color:green`, newState)
       return newState;
     }
 // ???? ——————————————————————————————————————————————————————————————————————————————————

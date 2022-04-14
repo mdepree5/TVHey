@@ -47,8 +47,7 @@ export const UnAuthenticatedApp = () => {
 export const AuthenticatedApp = () => {
   const dispatch = useDispatch();
   const socket =  useSelector(state => state?.socket?.socket);
-
-  useEffect(() => { dispatch(getChannels()) }, [dispatch]);
+  // useEffect(() => { dispatch(getChannels()) }, [dispatch]);
 
   useEffect(() => {
     if(socket){

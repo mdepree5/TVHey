@@ -156,6 +156,9 @@ def edit_channel(data):
 @authenticated_only
 def delete_channel(id):
   channel = Channel.query.get(id)
+  print('debugger ———————————————————————————')
+  print(channel)
+  print('debugger ———————————————————————————')
   db.session.delete(channel)
   db.session.commit()
   emit('deleted channel to front', id, broadcast=True)

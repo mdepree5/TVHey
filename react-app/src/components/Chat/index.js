@@ -55,7 +55,12 @@ const Chat = () => {
     setChatInput('');
   }
 
+  const handleDelete = async () => {
+    socket.emit('delete channel', Number(channelId))
+    return history.push('/');
+  }
   
+
   return (sessionUser && (
     <>
       <div className='header'>
@@ -64,7 +69,8 @@ const Chat = () => {
         </div>
         {sessionUser?.id === thisChannel?.host_id && <div className='flex-end'>
           <ChannelFormModal icon={true} edit={true} channel={thisChannel} />
-          <DeleteChannelButton channelId={thisChannel?.id}/>
+          {/* <DeleteChannelButton channelId={thisChannel?.id}/> */}
+          <Icon onClick={handleDelete} iconName='delete'/>
         </div>}
       </div>
 
