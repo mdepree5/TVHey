@@ -132,6 +132,11 @@ def get_channels():
   all_channels = [json.dumps(channel, default = defaultconverter) for channel in [channel.to_dict() for channel in channels]]
   emit('get all channels', {'all_channels': all_channels})
 
+@socketio.on('set channel')
+@authenticated_only
+def set_channel(id):
+  emit('set channel to front', [json.dumps(Channel.query.get(id).to_dict(), default = defaultconverter)], broadcast=True)
+
 @socketio.on('create channel')
 @authenticated_only
 def create_channel(data):
@@ -156,9 +161,7 @@ def edit_channel(data):
 @authenticated_only
 def delete_channel(id):
   channel = Channel.query.get(id)
-  print('debugger ———————————————————————————')
   print(channel)
-  print('debugger ———————————————————————————')
   db.session.delete(channel)
   db.session.commit()
   emit('deleted channel to front', id, broadcast=True)

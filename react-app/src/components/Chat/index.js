@@ -4,8 +4,9 @@ import { useParams, useHistory } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import {Icon} from '../Utils/icons';
 import ChannelFormModal from '../Channel/channel_modal';
-import {DeleteChannelButton} from '../Utils/buttons';
-import {getChannel} from '../../store/channel';
+// import {DeleteChannelButton} from '../Utils/buttons';
+// import {getChannel} from '../../store/channel';
+import {setChannel} from '../../store/channelSocket';
 // import {createMessage, getMessages, updateMessage} from '../../store/message';
 import {createMessage, getMessages, updateMessage, deleteMessage} from '../../store/messageSocket';
 import './Chat.css';
@@ -22,7 +23,8 @@ const Chat = () => {
   const [chatInput, setChatInput] = useState('');
 
   const sessionUser = useSelector(state => state?.session?.user);
-  const channelstate = useSelector(state => state?.channel);
+  // const channelstate = useSelector(state => state?.channel);
+  const channelstate = useSelector(state => state?.channelSocket);
   const messagestate =  useSelector(state => state?.messageSocket);
   const socket =  useSelector(state => state?.socket?.socket);
   
@@ -30,11 +32,10 @@ const Chat = () => {
   const messagesArr = Object.values(messagestate?.messages);
 
   setTimeout(() => {if (channelstate?.channels[channelId] === undefined) history.push('/')}, 100);
-  useEffect(() => dispatch(getChannel(channelId)), [dispatch, channelId]);
-  // useEffect(() => dispatch(getMessages(channelId)), [dispatch, channelId]);
-
+  
   useEffect(() => {
     if(socket){
+      socket.emit('set channel', channelId)
       socket.emit('get messages', channelId)
       socket.on('get all messages', async(messages) => {
         const messageArr = [];
@@ -42,11 +43,12 @@ const Chat = () => {
         await dispatch(getMessages(messageArr))
       })
 
+      socket.on('set channel to front', channel => dispatch(setChannel(JSON.parse(channel))))
       socket.on('message to front', message => dispatch(createMessage(JSON.parse(message))))
       socket.on('edited message to front', message => dispatch(updateMessage(JSON.parse(message))))
       socket.on('deleted message to front', id => dispatch(deleteMessage(id)))
     }
-  }, [dispatch, channelId, socket])
+  }, [channelId, socket])
 
   const sendChat = async (e) => {
     e.preventDefault();

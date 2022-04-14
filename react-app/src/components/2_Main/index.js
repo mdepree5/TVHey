@@ -10,7 +10,7 @@ import Chat from "../../components/Chat";
 import ChannelFormModal from '../Channel/channel_modal';
 import {Icon} from '../Utils/icons';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-import {createChannel, getChannels, updateChannel, deleteChannel } from '../../store/channel';
+import {createChannel, getChannels, updateChannel, deleteChannel } from '../../store/channelSocket';
 // import {getChannels} from '../../store/channelSocket';
 import {loginDemo} from '../../store/session';
 import './Main.css'
@@ -86,7 +86,8 @@ export const AuthenticatedApp = () => {
 
 
 const LeftNav = () => {
-  const channelstate = useSelector(state => state?.channel);
+  // const channelstate = useSelector(state => state?.channel);
+  const channelstate = useSelector(state => state?.channelSocket);
   const channels = Object.values(channelstate?.channels);
   const [display, setDisplay] = useState(channels?.length < 8);
 

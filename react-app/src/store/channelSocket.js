@@ -3,7 +3,7 @@
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const CREATE = 'channelSocket/create';
 const GET_ALL = 'channelSocket/get_all';
-const GET_ONE = 'channelSocket/get_one';
+const SET_ONE = 'channelSocket/set_one';
 const UPDATE = 'channelSocket/update';
 const DELETE = 'channelSocket/delete';
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -11,7 +11,7 @@ const DELETE = 'channelSocket/delete';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 export const createChannel = channel => ({ type: CREATE, channel });
 export const getChannels = channels => ({ type: GET_ALL, channels });
-export const getOneChannel = channel => ({ type: GET_ONE, channel });
+export const setChannel = channel => ({ type: SET_ONE, channel });
 export const updateChannel = channel => ({ type: UPDATE, channel });
 export const deleteChannel = channelId => ({ type: DELETE, channelId });
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -33,7 +33,7 @@ const channelReducer = (state = {selected:null, channels:{}}, action) => {
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————
-    case GET_ONE: {
+    case SET_ONE: {
       const newState = {...state};
       newState.selected = action.channel;
       return newState;
@@ -48,10 +48,7 @@ const channelReducer = (state = {selected:null, channels:{}}, action) => {
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case DELETE: {
       const newState = {...state};
-      console.log(`%c redux`, `color:red`)
-      console.log(`%c newState:`, `color:yellow`, newState)
       delete newState.channels[action.channelId];
-      console.log(`%c newState:`, `color:green`, newState)
       return newState;
     }
 // ???? ——————————————————————————————————————————————————————————————————————————————————
