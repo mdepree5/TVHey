@@ -120,7 +120,7 @@ const Search = () => {
   const [showModal, setShowModal] = useState(false);
 
   const userstate = useSelector(state => state?.session)
-  const channelstate = useSelector(state => state?.channel)
+  const channelstate = useSelector(state => state?.channelSocket)
   const users = Object.values(userstate?.allUsers).filter(user => user.display_name.toLowerCase().includes(searchInput));
   const channels = Object.values(channelstate?.channels).filter(channel => channel.title.toLowerCase().includes(searchInput));
 

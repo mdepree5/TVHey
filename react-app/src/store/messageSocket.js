@@ -26,8 +26,8 @@ const messageSReducer = (state = {messages:{}}, action) => {
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case GET_ALL: {
       const newState = {messages:{}};
-      action.messages.forEach(message => newState.messages[message.id] = message);
-      // console.log(`%c redux:`, `color:orange`, action)
+      action.messages.forEach(message => newState.messages[JSON.parse(message).id] = JSON.parse(message));
+      // action.messages.forEach(message => newState.messages[message.id] = message);
       // console.log('REDUX Get All', newState);
       return newState;
     };

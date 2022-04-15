@@ -37,11 +37,12 @@ const Chat = () => {
     if(socket){
       socket.emit('set channel', channelId)
       socket.emit('get messages', channelId)
-      socket.on('get all messages', async(messages) => {
-        const messageArr = [];
-        messages.all_messages.forEach(message => messageArr.push(JSON.parse(message)))
-        await dispatch(getMessages(messageArr))
-      })
+      socket.on('get all messages', async(messages) => await dispatch(getMessages(messages?.all_messages)))
+      // socket.on('get all messages', async(messages) => {
+      //   const messageArr = [];
+      //   messages.all_messages.forEach(message => messageArr.push(JSON.parse(message)))
+      //   await dispatch(getMessages(messageArr))
+      // })
 
       socket.on('set channel to front', channel => dispatch(setChannel(JSON.parse(channel))))
       socket.on('message to front', message => dispatch(createMessage(JSON.parse(message))))

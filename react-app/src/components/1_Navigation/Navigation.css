@@ -92,9 +92,8 @@
 }
 
 #search{
-  position: relative;
-  top: -24vh;
   left: 0;
+  right: 0;
   width: 70%;
 
   margin-left: auto;
