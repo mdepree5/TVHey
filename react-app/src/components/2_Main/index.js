@@ -88,8 +88,11 @@ export const AuthenticatedApp = () => {
 const LeftNav = () => {
   // const channelstate = useSelector(state => state?.channel);
   const channelstate = useSelector(state => state?.channelSocket);
+  const userstate = useSelector(state => state?.session);
+
   const channels = Object.values(channelstate?.channels);
-  const dms = Object.values(channelstate?.channels);
+  const dms = Object.values(userstate?.allUsers);
+
   const [displayChannels, setDisplayChannels] = useState(channels?.length < 8);
   const [display, setDisplay] = useState(channels?.length < 8);
 
@@ -119,7 +122,8 @@ const LeftNav = () => {
 
       <div className={`col-list channels-container ${display ? '' : 'hide-channels'}`}>
         {dms?.map(dm => (
-          <NavLink to={`/dms/${dm?.id}`} key={dm?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{dm?.privateStatus ? 'π' : '#'} {dm?.title}</NavLink>
+            <NavLink to={`/dms/${dm?.id}`} key={dm?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{dm?.privateStatus ? 'π' : '#'} {dm?.display_name} {'X'}
+            </NavLink>
         ))}
       </div>
 
