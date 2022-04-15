@@ -89,8 +89,10 @@ const LeftNav = () => {
   // const channelstate = useSelector(state => state?.channel);
   const channelstate = useSelector(state => state?.channelSocket);
   const channels = Object.values(channelstate?.channels);
+  const dms = Object.values(channelstate?.channels);
   const [displayChannels, setDisplayChannels] = useState(channels?.length < 8);
   const [display, setDisplay] = useState(channels?.length < 8);
+
 
   return (
     <div className='left-nav'>
@@ -116,8 +118,8 @@ const LeftNav = () => {
       </div>
 
       <div className={`col-list channels-container ${display ? '' : 'hide-channels'}`}>
-        {channels?.map(channel => (
-          <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
+        {dms?.map(dm => (
+          <NavLink to={`/dms/${dm?.id}`} key={dm?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{dm?.privateStatus ? 'π' : '#'} {dm?.title}</NavLink>
         ))}
       </div>
 
@@ -143,7 +145,7 @@ const RightPage = () => {
       <Switch>
         <Route exact path="/" ><Home /></Route>
         <Route exact path="/channels/:channelId" ><Chat/></Route>
-        {/* <Route exact path="/dms/:dmId" ><Chat/></Route> */}
+        <Route exact path="/dms/:dmId" ><div>Hey!</div></Route>
         <Route path='*' ><Redirect to='/' /></Route>
       </Switch>
     </div>
