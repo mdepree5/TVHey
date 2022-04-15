@@ -123,6 +123,11 @@ const LeftNav = () => {
       <div className={`col-list channels-container ${display ? '' : 'hide-channels'}`}>
         {dms?.map(dm => (
             <NavLink to={`/dms/${dm?.id}`} key={dm?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{dm?.privateStatus ? 'π' : '#'} {dm?.display_name} {'X'}
+            {/*
+              On hover display the 'X' for a given direct message
+              May need to create an element similar to how message edit-delete buttons are set up in messages
+              Will probably have a component for dm routing that will create a unique id for each session user and current user?
+            */}
             </NavLink>
         ))}
       </div>
