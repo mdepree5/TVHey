@@ -89,6 +89,7 @@ const LeftNav = () => {
   // const channelstate = useSelector(state => state?.channel);
   const channelstate = useSelector(state => state?.channelSocket);
   const channels = Object.values(channelstate?.channels);
+  const [displayChannels, setDisplayChannels] = useState(channels?.length < 8);
   const [display, setDisplay] = useState(channels?.length < 8);
 
   return (
@@ -97,8 +98,21 @@ const LeftNav = () => {
       <div style={{height:'200px'}}/>
       
       <div style={{paddingLeft: '.2em'}} className='row-list'>
-        <Icon onClick={()=> setDisplay(!display)} iconName='expand'/>
+        <Icon onClick={()=> setDisplayChannels(!displayChannels)} iconName='expand'/>
         <h3 style={{paddingLeft:'1.2em', paddingRight: '1.2em'}} >Channels</h3>
+      </div>
+
+      <div className={`col-list channels-container ${displayChannels ? '' : 'hide-channels'}`}>
+        {channels?.map(channel => (
+          <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
+        ))}
+      </div>
+
+      <br />
+      
+      <div style={{paddingLeft: '.2em'}} className='row-list'>
+        <Icon onClick={()=> setDisplay(!display)} iconName='expand'/>
+        <h3 style={{paddingLeft:'1.2em', paddingRight: '1.2em'}} >Direct messages</h3>
       </div>
 
       <div className={`col-list channels-container ${display ? '' : 'hide-channels'}`}>
@@ -106,6 +120,8 @@ const LeftNav = () => {
           <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
         ))}
       </div>
+
+
       <div style={{padding:'1.2em', paddingTop:'0'}}><ChannelFormModal name='+ Add Channel'/></div>
 
       <div className='row-list left-nav-about'>
