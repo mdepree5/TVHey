@@ -76,7 +76,8 @@ const Chat = () => {
         </div>
 
 
-      {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}>
+      {/* {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}> */}
+      {showModal && <Modal providedContent={true} onClose={() => setShowModal(false)}>
         <div className='dropdown-nav' id='search'>
           <div className='col-list' >
             HEY
