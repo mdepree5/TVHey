@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 import {Icon} from '../Utils/icons';
+import { Modal } from '../../context/Modal';
 import ChannelFormModal from '../Channel/channel_modal';
 // import {DeleteChannelButton} from '../Utils/buttons';
 // import {getChannel} from '../../store/channel';
@@ -21,6 +22,8 @@ const Chat = () => {
   const messagesRef = useRef();
   const { channelId } = useParams();
   const [chatInput, setChatInput] = useState('');
+
+  const [showModal, setShowModal] = useState(false);
 
   const sessionUser = useSelector(state => state?.session?.user);
   // const channelstate = useSelector(state => state?.channel);
@@ -67,12 +70,22 @@ const Chat = () => {
   return (sessionUser && (
     <>
       <div className='header'>
-        <div>
-          {thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}
+        <div className='chat-header row-list' onClick={() => setShowModal(true)} >
+          <div>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</div>
+          <Icon iconName='expand'/>
         </div>
+
+
+      {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}>
+        <div className='dropdown-nav' id='search'>
+          <div className='col-list' >
+            HEY
+          </div>        
+        </div>
+      </Modal>}
+
         {sessionUser?.id === thisChannel?.host_id && <div className='flex-end'>
           <ChannelFormModal icon={true} edit={true} channel={thisChannel} />
-          {/* <DeleteChannelButton channelId={thisChannel?.id}/> */}
           <Icon onClick={handleDelete} iconName='delete'/>
         </div>}
       </div>
