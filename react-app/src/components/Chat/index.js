@@ -85,11 +85,12 @@ const Chat = () => {
   useEffect(() => setTopic(thisChannel?.topic), [thisChannel?.topic])
 
   
-  const handleEdit = () => {
+  const handleEdit = async (e) => {
+    e.preventDefault();
     const channelData = {...thisChannel, topic}
     console.log(`%c channelData:`, `color:yellow`, channelData)
-    // socket.emit('edit channel', channelData)
-    return closeChannelModal();
+    socket.emit('edit channel', channelData)
+    return setToggleEdit(false);
   }
 
   return (sessionUser && (
@@ -115,16 +116,16 @@ const Chat = () => {
               <div style={{borderBottom:'solid 0.05em #ffffffa8'}}>
                 {toggleEdit ? 
                   <form className='col-list' onSubmit={handleEdit}>
-                    <textarea value={topic} onChange={e => setTopic(e.target.value)} style={{height:'100px'}} placeholder='Update Topic'/>
+                    <textarea value={topic} onChange={e => setTopic(e.target.value)} style={{height:'100px'}} placeholder='Add a Topic'/>
                     <div className='row-list edit-message-buttons'>
 
                       <button className='cancel-message-button' type='button' onClick={()=>setToggleEdit(false)}>Cancel</button>
-                      <button className='save-message-button' type="submit" >Save</button>
+                      <button className='save-message-button' style={{cursor:'pointer'}} type="submit" >Save</button>
 
                     </div>
                   </form> : <div className='col-list' onClick={() => setToggleEdit(true)} >
                     <strong>Topic </strong>
-                    {thisChannel?.topic}
+                    {thisChannel?.topic ? thisChannel?.topic : 'Add a topic'}
                 </div>
                 }
               </div>
