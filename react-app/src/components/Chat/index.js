@@ -72,6 +72,26 @@ const Chat = () => {
   const dayjs = require('dayjs');
   const [channelInfo, setChannelInfo] = useState('about')
   
+  const closeChannelModal = () => {
+    setChannelInfo('about');
+    setToggleEdit(false);
+    setShowModal(false);
+  }
+
+
+  const [toggleEdit, setToggleEdit] = useState(false);
+  const [topic, setTopic] = useState('');
+
+  useEffect(() => setTopic(thisChannel?.topic), [thisChannel?.topic])
+
+  
+  const handleEdit = () => {
+    const channelData = {...thisChannel, topic}
+    console.log(`%c channelData:`, `color:yellow`, channelData)
+    // socket.emit('edit channel', channelData)
+    return closeChannelModal();
+  }
+
   return (sessionUser && (
     <>
       <div className='header'>
@@ -80,7 +100,7 @@ const Chat = () => {
           <Icon iconName='expand'/>
         </div>
 
-      {showModal && <Modal providedContent={true} onClose={() => setShowModal(false)}>
+      {showModal && <Modal providedContent={true} onClose={closeChannelModal}>
         <div className='dropdown-nav' id='search'>
           <div className='col-list' >
             <h3>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</h3>
@@ -91,12 +111,28 @@ const Chat = () => {
               <div className={channelInfo === 'members' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('members')}>Members {users?.length}</div>
             </div>
 
-            {channelInfo === 'about' && <div>
-              <div>Topic</div>
-              <div>{thisChannel?.topic}</div>
+            {channelInfo === 'about' && <div className='channel-info-about'>
+              <div style={{borderBottom:'solid 0.05em #ffffffa8'}}>
+                {toggleEdit ? 
+                  <form className='col-list' onSubmit={handleEdit}>
+                    <textarea value={topic} onChange={e => setTopic(e.target.value)} style={{height:'100px'}} placeholder='Update Topic'/>
+                    <div className='row-list edit-message-buttons'>
 
-              <div>Created by</div>
-              <div>{users[thisChannel?.host_id - 1].display_name} on {dayjs(thisChannel?.created_at).format('MMMM D, YYYY')}</div>
+                      <button className='cancel-message-button' type='button' onClick={()=>setToggleEdit(false)}>Cancel</button>
+                      <button className='save-message-button' type="submit" >Save</button>
+
+                    </div>
+                  </form> : <div className='col-list' onClick={() => setToggleEdit(true)} >
+                    <strong>Topic </strong>
+                    {thisChannel?.topic}
+                </div>
+                }
+              </div>
+
+              <div onClick={closeChannelModal}>
+                <strong>Created by</strong>
+                {users[thisChannel?.host_id - 1].display_name} on {dayjs(thisChannel?.created_at).format('MMMM D, YYYY')}
+              </div>
             </div>}
 
             {channelInfo === 'members' && <div>

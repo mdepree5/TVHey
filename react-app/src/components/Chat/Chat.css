@@ -10,13 +10,32 @@
   cursor: pointer;
 }
 .channel-info > *:hover {
-  /* background-color: rgba(91, 92, 99, 0.212); */
+  background-color: rgba(91, 92, 99, 0.212);
   color: white;
 }
 
 .channel-info-selected{
   border-bottom: 2px solid rgb(60, 255, 255);
 }
+
+.channel-info-about{
+  border: solid 0.05em #ffffffa8;
+  border-radius: 1em;
+  overflow: hidden;
+}
+
+.channel-info-about > * {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  
+  padding: 1em;
+}
+
+.channel-info-about > *:hover {
+  background-color: rgba(91, 92, 99, 0.212);
+}
+
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Message Container                   */

@@ -56,7 +56,7 @@ const ChannelForm = ({ edit, channel, closeModal }) => {
   return (
     <form className='channel-form-container' onSubmit={handleSubmit}>
       <FormInput name='Title' show={true} validation={title.length} message='Provide a title' state={title} setState={setTitle} />
-      <FormInput name='Topic' show={true} message='Set a topic (optional)' required={false} state={topic} setState={setTopic} />
+      <FormInput textarea={true} name='Topic' show={true} message='Set a topic (optional)' required={false} state={topic} setState={setTopic} />
       
       {<small style={{fontSize:'0.8em', color:'#EC8642'}}>* = required</small>}
       
