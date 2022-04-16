@@ -45,7 +45,7 @@
 
 .channel-info-users{
   border: solid 0.05em #ffffffa8;
-  overflow: auto;
+  /* overflow: hidden; */
   /* height: 10em; */
 }
 

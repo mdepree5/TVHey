@@ -85,11 +85,12 @@
   left: calc(80vw - 28em);
 
   width: 20em;
-  height: 18em;
 
   padding: 1em;
   border-radius: 10px;
 }
+
+#nav-dropdown{ min-height: 18em; }
 
 #search{
   left: 0;
