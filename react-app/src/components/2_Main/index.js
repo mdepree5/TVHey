@@ -112,12 +112,14 @@ const LeftNav = () => {
           <NavLink to={`/channels/${channel?.id}`} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
         ))}
       </div>
+      
+      <div style={{padding:'1.2em', paddingTop:'0'}}><ChannelFormModal name='+ Add Channel'/></div>
 
       <br />
       
       <div style={{paddingLeft: '.2em'}} className='row-list'>
         <Icon onClick={()=> setDisplay(!display)} iconName='expand'/>
-        <h3 style={{paddingLeft:'1.2em', paddingRight: '1.2em'}} >Direct messages</h3>
+        <h3 style={{paddingLeft:'1.2em', paddingRight: '1.2em'}} >Direct messages </h3>
       </div>
 
       <div className={`col-list channels-container ${display ? '' : 'hide-channels'}`}>
@@ -132,13 +134,12 @@ const LeftNav = () => {
         ))}
       </div>
 
-
-      <div style={{padding:'1.2em', paddingTop:'0'}}><ChannelFormModal name='+ Add Channel'/></div>
-
       <div className='row-list left-nav-about'>
         <AboutLink link='https://github.com/mdepree5' image='https://capstone-slack-clone.s3.amazonaws.com/github.png' />
         <AboutLink link='https://www.linkedin.com/in/mitch-depree-4a5686155/' image='https://capstone-slack-clone.s3.amazonaws.com/linkedin.png' />
       </div>
+      <br />
+      <br />
     </div>
   )
 }

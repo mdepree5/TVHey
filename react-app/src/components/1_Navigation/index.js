@@ -139,7 +139,9 @@ const Search = () => {
       {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}>
         <div className='dropdown-nav' id='search'>
           <div className='col-list' >
-            {searchInput && users?.map(user => <div key={user?.id} className='channel-list-item'>{user?.display_name}</div>)}
+            {searchInput && users?.map(user => 
+              <NavLink to={`/dms/${user?.id}`} key={user?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{user?.privateStatus ? 'π' : '#'} {user?.display_name} {'X'}</NavLink>
+            )}
             {searchInput && channels?.map(channel => (
               <NavLink to={`/channels/${channel?.id}`} onClick={clickChannel} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
             ))}
