@@ -93,6 +93,13 @@ const Chat = () => {
     return setToggleEdit(false);
   }
 
+  const [showUserModal, setShowUserModal] = useState(false);
+
+  const closeUserModal = async(e) => {
+    e.preventDefault();
+    setShowUserModal(false);
+  }
+
   return (sessionUser && (
     <>
       <div className='header'>
@@ -103,18 +110,19 @@ const Chat = () => {
 
       {showModal && <Modal providedContent={true} onClose={closeChannelModal}>
         <div className='dropdown-nav' id='channel-info'>
-        
-            <h3>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</h3>
-            <br />
-            
-            <div className='channel-info row-list'>
-              <div className={channelInfo === 'about' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('about')}>About</div>
-              <div className={channelInfo === 'members' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('members')}>Members {users?.length}</div>
+            <div id='channel-info-top'>
+              <h3>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</h3>
+              <br />
+              
+              <div className='channel-info row-list'>
+                <div className={channelInfo === 'about' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('about')}>About</div>
+                <div className={channelInfo === 'members' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('members')}>Members {users?.length}</div>
+              </div>
             </div>
-            
-            <br />
 
-            {channelInfo === 'about' ? <div className='channel-info-about'>
+            {channelInfo === 'about' ? (
+            <div id='channel-info-bottom'>
+              <div className='channel-info-about'>
               <div style={{borderBottom:'solid 0.05em #ffffffa8'}}>
                 {toggleEdit ? 
                   <form className='col-list' onSubmit={handleEdit}>
@@ -137,18 +145,36 @@ const Chat = () => {
                 {users[thisChannel?.host_id - 1].display_name} on {dayjs(thisChannel?.created_at).format('MMMM D, YYYY')}
               </div>
             </div>
+            </div>
+            )
             : 
-            <>
-              <input placeholder='Find members' value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
-              
+            (<>
+              <div className='channel-info-search'>
+                <div>
+                  <input placeholder='Find members' value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
+                </div>
+              </div>
+
               <div className='channel-info-users col-list' >
                 {users?.map(user => 
-                  <NavLink to={`/dms/${user?.id}`} key={user?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{user?.privateStatus ? 'π' : '#'} {user?.display_name} {'X'}</NavLink>
+                  <>
+                  <div onClick={()=>setShowUserModal(true)} key={user?.id} className='channel-list-item row-list' style={{alignItems:'center', cursor:'pointer'}} >
+                    {user?.image_url === 'no image provided' ? <div className='nav-dropdown-image' >{user?.display_name[0].toUpperCase()}</div>
+                      : <img className='nav-dropdown-image' src={user?.image_url} alt='user' style={{marginRight:'1em'}}/>}
+                    <h3 className='nav-display-name'>{user?.display_name}</h3>
+                  </div>
+                  {showUserModal && <Modal providedId='show-user-modal' onClose={closeUserModal}>
+                    {user?.image_url === 'no image provided' ? <div className='nav-dropdown-image' >{user?.display_name[0].toUpperCase()}</div>
+                      : <img className='nav-dropdown-image' src={user?.image_url} alt='user' style={{marginRight:'1em'}}/>}
+                    <h3 className='nav-display-name'>{user?.display_name}</h3>
+                  </Modal>}
+                  </>
                 )}
               </div>
-            </>
+            </>)
 
             }
+            
 
         </div>
       </Modal>}

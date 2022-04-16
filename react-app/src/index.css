@@ -23,6 +23,8 @@ body, html{
 
 a{ color: #EC8642; text-decoration: none; }
 
+div{ margin: 0; }
+
 textarea, input{
   background-color: rgba(138, 149, 159, 0.212);
   border: solid 0.05em #EC8642;
