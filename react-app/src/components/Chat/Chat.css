@@ -6,6 +6,18 @@
   cursor: pointer;
 }
 
+.channel-info > *{
+  cursor: pointer;
+}
+.channel-info > *:hover {
+  /* background-color: rgba(91, 92, 99, 0.212); */
+  color: white;
+}
+
+.channel-info-selected{
+  border-bottom: 2px solid rgb(60, 255, 255);
+}
+
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Message Container                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */

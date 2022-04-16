@@ -66,7 +66,12 @@ const Chat = () => {
     return history.push('/');
   }
   
-
+  const userstate = useSelector(state => state?.session)
+  const [searchInput, setSearchInput] = useState('')
+  const users = Object.values(userstate?.allUsers).filter(user => user.display_name.toLowerCase().includes(searchInput));
+  const dayjs = require('dayjs');
+  const [channelInfo, setChannelInfo] = useState('about')
+  
   return (sessionUser && (
     <>
       <div className='header'>
@@ -75,12 +80,36 @@ const Chat = () => {
           <Icon iconName='expand'/>
         </div>
 
-
-      {/* {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}> */}
       {showModal && <Modal providedContent={true} onClose={() => setShowModal(false)}>
         <div className='dropdown-nav' id='search'>
           <div className='col-list' >
-            HEY
+            <h3>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</h3>
+            <br />
+            
+            <div className='channel-info row-list'>
+              <div className={channelInfo === 'about' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('about')}>About</div>
+              <div className={channelInfo === 'members' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('members')}>Members {users?.length}</div>
+            </div>
+
+            {channelInfo === 'about' && <div>
+              <div>Topic</div>
+              <div>{thisChannel?.topic}</div>
+
+              <div>Created by</div>
+              <div>{users[thisChannel?.host_id - 1].display_name} on {dayjs(thisChannel?.created_at).format('MMMM D, YYYY')}</div>
+            </div>}
+
+            {channelInfo === 'members' && <div>
+              <input placeholder='Find members' value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
+              
+              <div className='col-list' >
+                {users?.map(user => 
+                  <div key={user?.id} className='channel-list-item'>{user?.display_name}</div>
+                )}
+              </div>
+            </div>}
+
+            
           </div>        
         </div>
       </Modal>}
