@@ -41,6 +41,7 @@
 /* todo             Authenticated App                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .main-page{ height: calc(100vh - 4em) }
+/* 4em the height of nav bar */
 
 .main-page .header{
   display: flex;
@@ -113,6 +114,15 @@
 
   bottom: 0;
   position: absolute; */
+}
+
+.about{
+  height: 2em;
+  width: 2em;
+  cursor: pointer;
+  border-radius: 0.3em;
+  border: 0.06em solid black;
+  box-shadow: 0 0 10px white;
 }
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
