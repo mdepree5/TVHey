@@ -1,4 +1,4 @@
-from app.models.db import db
+from .db import db
 from datetime import datetime, date
 
 class DM(db.Model):

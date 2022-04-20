@@ -3,19 +3,22 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import Split from 'react-split';
-// todo ——————————————————————————————————————————————————————————————————————————————————
+// ???? ——————————————————————————————————————————————————————————————————————————————————
 import AuthForm from "../0_Session/AuthForm";
 import Navigation from '../1_Navigation/index';
 import Chat from "../../components/Chat";
 import ChannelFormModal from '../Channel/channel_modal';
 import {Icon} from '../Utils/icons';
-// todo ——————————————————————————————————————————————————————————————————————————————————
+// ???? ——————————————————————————————————————————————————————————————————————————————————
 import {createChannel, getChannels, updateChannel, deleteChannel } from '../../store/channelSocket';
 // import {getChannels} from '../../store/channelSocket';
 import {loginDemo} from '../../store/session';
 import './Main.css'
-// todo ——————————————————————————————————————————————————————————————————————————————————
+// ???? ——————————————————————————————————————————————————————————————————————————————————
 
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo                               UnAuthenticated App
+// todo ——————————————————————————————————————————————————————————————————————————————————
 export const UnAuthenticatedApp = () => {
   const dispatch = useDispatch();
 
@@ -43,7 +46,9 @@ export const UnAuthenticatedApp = () => {
   
 
 
-
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo                               Authenticated App
+// todo ——————————————————————————————————————————————————————————————————————————————————
 export const AuthenticatedApp = () => {
   const dispatch = useDispatch();
   const socket =  useSelector(state => state?.socket?.socket);
@@ -84,7 +89,9 @@ export const AuthenticatedApp = () => {
   )
 }
 
-
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo                               Left Nav
+// todo ——————————————————————————————————————————————————————————————————————————————————
 const LeftNav = () => {
   // const channelstate = useSelector(state => state?.channel);
   const channelstate = useSelector(state => state?.channelSocket);
@@ -144,10 +151,10 @@ const LeftNav = () => {
   )
 }
 
-const AboutLink = ({link, image}) => (
-  <img className='about' onClick={()=>window.open(link)} src={image} alt='about-link' />
-)
-
+const AboutLink = ({link, image}) => <img className='about' onClick={()=>window.open(link)} src={image} alt='about-link' />
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo                               Right Page
+// todo ——————————————————————————————————————————————————————————————————————————————————
 const RightPage = () => {
 
   return (
@@ -155,13 +162,16 @@ const RightPage = () => {
       <Switch>
         <Route exact path="/" ><Home /></Route>
         <Route exact path="/channels/:channelId" ><Chat/></Route>
-        <Route exact path="/dms/:dmId" ><div>Hey!</div></Route>
+        <Route exact path="/dms/:dmId" ><Chat dm={true}/></Route>
         <Route path='*' ><Redirect to='/' /></Route>
       </Switch>
     </div>
   )
 }
 
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// todo                               Home
+// todo ——————————————————————————————————————————————————————————————————————————————————
 const Home = () => (
   <div className='home'>
     <div className='header'></div>
