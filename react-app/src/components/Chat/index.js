@@ -14,15 +14,31 @@ import {createMessage, getMessages, updateMessage, deleteMessage} from '../../st
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               Chat
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const Chat = () => {
+const Chat = ({ dm=false }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const messagesRef = useRef();
   const { channelId } = useParams();
   
+  /* 
+  Chat component will either be: 1. channel or 2. dmstate
+
+  how can I abstract channel and dm in a way where I can make the chat component dynamically
+  
+  what direct children of Chat component actually need to know channel/dm distinction? ==> 
+    1. ChatHeader, for the modal 
+  
+  */
 
   const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channelSocket);
+
+  // todo ——————————————————————————————————————————————————————————————————————————————————
+  const dmstate = useSelector(state => state?.dmSocket);
+  const thisdm = dmstate?.selected;
+
+  // todo ——————————————————————————————————————————————————————————————————————————————————
+
   const messagestate =  useSelector(state => state?.messageSocket);
   const socket =  useSelector(state => state?.socket?.socket);
   
