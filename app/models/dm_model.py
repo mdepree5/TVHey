@@ -12,9 +12,13 @@ class DM(db.Model):
   created_at = db.Column(db.DateTime(), nullable=False, default=datetime.now())
   updated_at = db.Column(db.DateTime(), nullable=True, default=datetime.now())
 
-  users = db.relationship("User", back_populates="dms")
+  # users = db.relationship("User", back_populates="dms")
   messages = db.relationship("Message", back_populates="dms", cascade="all, delete")
 
+  host = db.relationship("User", foreign_keys=[host_id])
+  recipient = db.relationship("User", foreign_keys=[recipient_id])
+    
+    
   def to_dict(self):
     return {
       "id": self.id,
@@ -24,8 +28,8 @@ class DM(db.Model):
       "topic": self.topic,
       "created_at": self.created_at,
       "updated_at": self.updated_at,
-      'host': self.users.display_name if self.users.display_name else self.users.username,
-      'recipient': self.users.display_name if self.users.display_name else self.users.username,
+      'host': self.host.display_name if self.host.display_name else self.host.username,
+      'recipient': self.recipient.display_name if self.recipient.display_name else self.recipient.username,
     }
 
 
