@@ -13,8 +13,8 @@ class DM(db.Model):
   # users = db.relationship("User", back_populates="dms")
   messages = db.relationship("Message", back_populates="dms", cascade="all, delete")
 
-  host = db.relationship("User", foreign_keys=[host_id])
-  recipient = db.relationship("User", foreign_keys=[recipient_id])
+  dm_host = db.relationship("User", foreign_keys=[host_id], back_populates="dm_host")
+  dm_recipient = db.relationship("User", foreign_keys=[recipient_id], back_populates="dm_recipient")
   
   
   def to_dict(self):
@@ -24,8 +24,8 @@ class DM(db.Model):
       "recipient_id": self.recipient_id,
       "created_at": self.created_at,
       "updated_at": self.updated_at,
-      'host': self.host.display_name if self.host.display_name else self.host.username,
-      'recipient': self.recipient.display_name if self.recipient.display_name else self.recipient.username,
+      'host': self.dm_host.display_name if self.dm_host.display_name else self.dm_host.username,
+      'recipient': self.dm_recipient.display_name if self.dm_recipient.display_name else self.dm_recipient.username,
     }
 
 
