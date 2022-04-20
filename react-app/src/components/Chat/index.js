@@ -21,7 +21,7 @@ const Chat = ({ dm=false }) => {
   const { channelId } = useParams();
   
   console.log(`%c dm:`, `color:yellow`, dm)
-  
+
   /* 
   Chat component will either be: 1. channel or 2. dmstate
 
@@ -38,6 +38,8 @@ const Chat = ({ dm=false }) => {
   // todo ——————————————————————————————————————————————————————————————————————————————————
   const dmstate = useSelector(state => state?.dmSocket);
   const thisdm = dmstate?.selected;
+
+  console.log(`%c thisdm:`, `color:yellow`, thisdm)
 
   // todo ——————————————————————————————————————————————————————————————————————————————————
 

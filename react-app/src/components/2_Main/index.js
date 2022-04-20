@@ -51,6 +51,7 @@ export const UnAuthenticatedApp = () => {
 // todo ——————————————————————————————————————————————————————————————————————————————————
 export const AuthenticatedApp = () => {
   const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state?.session?.user);
   const socket =  useSelector(state => state?.socket?.socket);
   // useEffect(() => { dispatch(getChannels()) }, [dispatch]);
 
@@ -61,6 +62,13 @@ export const AuthenticatedApp = () => {
         const channelsArr = [];
         channels.all_channels.forEach(channel => channelsArr.push(JSON.parse(channel)))
         await dispatch(getChannels(channelsArr))
+      })
+      
+      socket.emit('get dms', sessionUser?.id)
+      socket.on('get all dms', async(dms) => {
+        const dmsArr = [];
+        dms.all_dms.forEach(dm => dmsArr.push(JSON.parse(dm)))
+        await dispatch(getDMs(dmsArr))
       })
 
       socket.on('channel to front', message => dispatch(createChannel(JSON.parse(message))))

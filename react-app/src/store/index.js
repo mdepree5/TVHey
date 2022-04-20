@@ -5,6 +5,7 @@ import channel from './channel';
 import channelSocket from './channelSocket';
 import message from './message';
 import messageSocket from './messageSocket';
+import dmSocket from './dmSocket';
 import socket from './socket';
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   channelSocket,
   message,
   messageSocket,
+  dmSocket,
   socket,
 });
 
