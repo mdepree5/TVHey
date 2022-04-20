@@ -11,7 +11,7 @@ import ChannelFormModal from '../Channel/channel_modal';
 import {Icon} from '../Utils/icons';
 // ???? ——————————————————————————————————————————————————————————————————————————————————
 import { createChannel, getChannels, updateChannel, deleteChannel } from '../../store/channelSocket';
-import { createDM, getDMs } from '../../store/channelSocket';
+import { createDM, getDMs } from '../../store/dmSocket';
 import { loginDemo } from '../../store/session';
 import './Main.css'
 // ???? ——————————————————————————————————————————————————————————————————————————————————

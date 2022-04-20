@@ -9,6 +9,7 @@ users = [
   User(username='nocap2022', email='cap@tain.usa', password='@mericasB0TT0M', display_name='Steve Rogers', image_url='https://capstone-slack-clone.s3.amazonaws.com/users/steve.png'),
   User(username='paparedwing', email='the@fal.con', password='Sm1l1ngT1ger?', display_name='Sam Wilson', image_url='https://capstone-slack-clone.s3.amazonaws.com/users/sam.png'),
   User(username='romanoff', email='natasha@black.widow', password='d@ughterOf1van', display_name='Natasha Romanoff', image_url='https://capstone-slack-clone.s3.amazonaws.com/users/natasha.png'),
+  User(username='oscar', email='oscar@isinthe.mcu', password='Only1finn!', display_name='Steven Grant', image_url='https://capstone-slack-clone.s3.amazonaws.com/users/stevenwithav.png'),
 ]
 
 def seed_users():
