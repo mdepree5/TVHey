@@ -6,6 +6,7 @@ class DM(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   host_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+  recipient_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   title = db.Column(db.String(100), nullable=False)
   topic = db.Column(db.String(255), nullable=False)
   created_at = db.Column(db.DateTime(), nullable=False, default=datetime.now())
@@ -18,11 +19,13 @@ class DM(db.Model):
     return {
       "id": self.id,
       "host_id": self.host_id,
+      "recipient_id": self.recipient_id,
       "title": self.title,
       "topic": self.topic,
       "created_at": self.created_at,
       "updated_at": self.updated_at,
-      'owner': self.users.display_name if self.users.display_name else self.users.username,
+      'host': self.users.display_name if self.users.display_name else self.users.username,
+      'recipient': self.users.display_name if self.users.display_name else self.users.username,
     }
 
 
