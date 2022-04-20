@@ -1,17 +1,15 @@
-import { useRef, forwardRef, useImperativeHandle, useState, useEffect, useLayoutEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, useParams, useHistory } from 'react-router-dom';
-// todo ——————————————————————————————————————————————————————————————————————————————————
-import {Icon} from '../Utils/icons';
-import { Modal } from '../../context/Modal';
-import ChannelFormModal from '../Channel/channel_modal';
-// import {DeleteChannelButton} from '../Utils/buttons';
-// import {getChannel} from '../../store/channel';
+import { useParams, useHistory } from 'react-router-dom';
+// ???? ——————————————————————————————————————————————————————————————————————————————————
+import {ChatHeader} from './1_ChatHeader';
+import {MessagesContainer} from './2_MessagesContainer.js';
+import {MessageInput} from './3_MessageInput.js';
+
 import {setChannel} from '../../store/channelSocket';
-// import {createMessage, getMessages, updateMessage} from '../../store/message';
 import {createMessage, getMessages, updateMessage, deleteMessage} from '../../store/messageSocket';
-import './Chat.css';
-// todo ——————————————————————————————————————————————————————————————————————————————————
+// import './Chat.css';
+// ???? ——————————————————————————————————————————————————————————————————————————————————
 
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               Chat
@@ -21,12 +19,9 @@ const Chat = () => {
   const history = useHistory();
   const messagesRef = useRef();
   const { channelId } = useParams();
-  const [chatInput, setChatInput] = useState('');
-
-  const [showModal, setShowModal] = useState(false);
+  
 
   const sessionUser = useSelector(state => state?.session?.user);
-  // const channelstate = useSelector(state => state?.channel);
   const channelstate = useSelector(state => state?.channelSocket);
   const messagestate =  useSelector(state => state?.messageSocket);
   const socket =  useSelector(state => state?.socket?.socket);
@@ -54,241 +49,14 @@ const Chat = () => {
     }
   }, [channelId, socket])
 
-  const sendChat = async (e) => {
-    e.preventDefault();
-    // await dispatch(createMessage({author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput}))
-    socket.emit('create message', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput})
-    setChatInput('');
-  }
-
-  const handleDelete = async () => {
-    socket.emit('delete channel', Number(channelId))
-    return history.push('/');
-  }
-  
-  const userstate = useSelector(state => state?.session)
-  const [searchInput, setSearchInput] = useState('')
-  const users = Object.values(userstate?.allUsers).filter(user => user.display_name.toLowerCase().includes(searchInput));
-  const dayjs = require('dayjs');
-  const [channelInfo, setChannelInfo] = useState('about')
-  
-  const closeChannelModal = () => {
-    setChannelInfo('about');
-    setToggleEdit(false);
-    setShowModal(false);
-  }
-
-
-  const [toggleEdit, setToggleEdit] = useState(false);
-  const [topic, setTopic] = useState('');
-
-  useEffect(() => setTopic(thisChannel?.topic), [thisChannel?.topic])
-
-  
-  const handleEdit = async (e) => {
-    e.preventDefault();
-    const channelData = {...thisChannel, topic}
-    console.log(`%c channelData:`, `color:yellow`, channelData)
-    socket.emit('edit channel', channelData)
-    return setToggleEdit(false);
-  }
-
-  const [showUserModal, setShowUserModal] = useState(false);
-
-  const closeUserModal = async(e) => {
-    e.preventDefault();
-    setShowUserModal(false);
-  }
-
   return (sessionUser && (
     <>
-      <div className='header'>
-        <div className='chat-header row-list' onClick={() => setShowModal(true)} >
-          <div>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</div>
-          <Icon iconName='expand'/>
-        </div>
-
-      {showModal && <Modal providedContent={true} onClose={closeChannelModal}>
-        <div className='dropdown-nav' id='channel-info'>
-            <div id='channel-info-top'>
-              <h3>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</h3>
-              <br />
-              
-              <div className='channel-info row-list'>
-                <div className={channelInfo === 'about' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('about')}>About</div>
-                <div className={channelInfo === 'members' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('members')}>Members {users?.length}</div>
-              </div>
-            </div>
-
-            {channelInfo === 'about' ? (
-            <div id='channel-info-bottom'>
-              <div className='channel-info-about'>
-              <div style={{borderBottom:'solid 0.05em #ffffffa8'}}>
-                {toggleEdit ? 
-                  <form className='col-list' onSubmit={handleEdit}>
-                    <textarea value={topic} onChange={e => setTopic(e.target.value)} style={{height:'100px'}} placeholder='Add a Topic'/>
-                    <div className='row-list edit-message-buttons'>
-
-                      <button className='cancel-message-button' type='button' onClick={()=>setToggleEdit(false)}>Cancel</button>
-                      <button className='save-message-button' style={{cursor:'pointer'}} type="submit" >Save</button>
-
-                    </div>
-                  </form> : <div className='col-list' onClick={() => setToggleEdit(true)} >
-                    <strong>Topic </strong>
-                    {thisChannel?.topic ? thisChannel?.topic : 'Add a topic'}
-                </div>
-                }
-              </div>
-
-              <div onClick={closeChannelModal}>
-                <strong>Created by</strong>
-                {users[thisChannel?.host_id - 1].display_name} on {dayjs(thisChannel?.created_at).format('MMMM D, YYYY')}
-              </div>
-            </div>
-            </div>
-            )
-            : 
-            (<>
-              <div className='channel-info-search'>
-                <div>
-                  <input placeholder='Find members' value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
-                </div>
-              </div>
-
-              <div className='channel-info-users col-list' >
-                {users?.map(user => 
-                  <>
-                  <div onClick={()=>setShowUserModal(true)} key={user?.id} className='channel-list-item row-list' style={{alignItems:'center', cursor:'pointer'}} >
-                    {user?.image_url === 'no image provided' ? <div className='nav-dropdown-image' >{user?.display_name[0].toUpperCase()}</div>
-                      : <img className='nav-dropdown-image' src={user?.image_url} alt='user' style={{marginRight:'1em'}}/>}
-                    <h3 className='nav-display-name'>{user?.display_name}</h3>
-                  </div>
-                  {showUserModal && <Modal providedId='show-user-modal' onClose={closeUserModal}>
-                    {user?.image_url === 'no image provided' ? <div className='nav-dropdown-image' >{user?.display_name[0].toUpperCase()}</div>
-                      : <img className='nav-dropdown-image' src={user?.image_url} alt='user' style={{marginRight:'1em'}}/>}
-                    <h3 className='nav-display-name'>{user?.display_name}</h3>
-                  </Modal>}
-                  </>
-                )}
-              </div>
-            </>)
-
-            }
-            
-
-        </div>
-      </Modal>}
-
-        {sessionUser?.id === thisChannel?.host_id && <div className='flex-end'>
-          <ChannelFormModal icon={true} edit={true} channel={thisChannel} />
-          <Icon onClick={handleDelete} iconName='delete'/>
-        </div>}
-      </div>
+      <ChatHeader socket={socket} thisChannel={thisChannel} channelId={channelId} sessionUser={sessionUser} />
 
       <MessagesContainer messagesArr={messagesArr} sessionUser={sessionUser} ref={messagesRef} />
 
-      <form id='message-writer' className='col-list' onSubmit={sendChat} >
-        <input value={chatInput} onChange={e => setChatInput(e.target.value)}
-          id='writer-input'
-          placeholder={`  Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`}
-        />
-        <button className={'submit-message-button'} id={chatInput && 'send-it'} type="submit" disabled={!chatInput}>
-          <img style={{width:'1.2em', height:'1.2em'}} src='https://capstone-slack-clone.s3.amazonaws.com/icons-gray/send.png' alt='icon' />
-        </button>
-      </form>
+      <MessageInput socket={socket} thisChannel={thisChannel} channelId={channelId} sessionUser={sessionUser} />
     </>)
   )
 };
-// todo ——————————————————————————————————————————————————————————————————————————————————
-// todo                               Messages Container
-// todo ——————————————————————————————————————————————————————————————————————————————————
-const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
-  const messageContainerRef = useRef();
-  const scrollToBottom = () => messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
-
-  useLayoutEffect(()=>{scrollToBottom()});
-  useImperativeHandle(ref, () => ({ scrollToBottom }))
-
-  return (
-    <div ref={messageContainerRef} role='log' className='message-container' >
-      <br />
-      {messagesArr?.map((message, ind) => (
-        <MessageCard key={ind} message={message} sessionUser={sessionUser}/>
-      ))}
-      <br />
-    </div>
-  )
-})
-// todo ——————————————————————————————————————————————————————————————————————————————————
-// todo                               Message Card
-// todo ——————————————————————————————————————————————————————————————————————————————————
-const MessageCard = ({message, sessionUser}) => {
-  const dayjs = require('dayjs');
-  // const dispatch = useDispatch();
-  const existing = message?.content;
-  const [toggleEdit, setToggleEdit] = useState(false);
-  const [input, setInput] = useState(existing);
-
-  const socket =  useSelector(state => state?.socket?.socket);
-
-  const handleEdit = async(e) => {
-    e.preventDefault();
-    socket.emit('edit message', {...message, content:input})
-    // await dispatch(updateMessage({...message, content: input}, message?.id))
-    return setToggleEdit(false);
-  }
-  
-  const handleCancel = e => {
-    e.preventDefault();
-    setInput(existing);
-    return setToggleEdit(false);
-  }
-  
-  const handleDelete = async () => {
-    socket.emit('delete message', message?.id)
-  };
-
-  return toggleEdit ? (
-  <form className='col-list message-card' onSubmit={handleEdit}>
-    <input value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}} placeholder='Update message'/>
-    <div className='row-list edit-message-buttons'>
-      
-      <button className='cancel-message-button' type='button' onClick={handleCancel}>Cancel</button>
-      <button className='save-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}>
-        {input ? 'Save' : 'Message cannot be empty'}
-      </button>
-
-    </div>
-  </form>
-  ) : (
-    <div className='message-card'>
-      <div className='message-card-header row-list'>
-        <div className='message-header-left'>
-          {message?.author_image === 'no image provided' ? 
-            <div className='message-card-icon' >{message?.author[0].toUpperCase()}</div>
-            :
-            <img className='message-card-image' src={message?.author_image} alt="user"/>
-          }
-        </div>
-
-        <div className='message-header-mid'>
-          <div><strong>{message?.author} </strong>{
-            dayjs(message?.created_at).format('h:mm A')
-          }</div>
-          {message?.content}
-        </div>
-
-        <div className='message-header-right'>
-          {message?.author_id === sessionUser.id &&
-            <div className='dropdown-content'>
-              <Icon onClick={()=> setToggleEdit(true)} iconName='edit'/>
-              <Icon onClick={handleDelete} iconName='delete'/>
-            </div>
-          }
-        </div>
-    </div>
-  </div>
-  )
-}
-
 export default Chat;
