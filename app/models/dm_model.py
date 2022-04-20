@@ -25,3 +25,21 @@ class DM(db.Model):
       'owner': self.users.display_name if self.users.display_name else self.users.username,
     }
 
+
+
+""" 
+* frontend == websockets ==>  backend: const participantsArr = '[1, 2, 3]'
+
+what needs to happen is: I need to know which users in the backend are involved
+I need to know which users to notify/to broadcast to... I think...? 
+  |
+  L-------------> actually maybe not. broadcast true doesn't matter if users don't have access to certain dms on the frontend in the first place.
+
+
+
+* backend: 
+
+
+* backend == websockets ==> frontend:
+
+"""

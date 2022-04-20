@@ -14,6 +14,7 @@ class Message(db.Model):
 
   users = db.relationship("User", back_populates="messages")
   channels = db.relationship("Channel", back_populates="messages")
+  dms = db.relationship("DM", back_populates="messages")
 
   def to_dict(self):
     return {
