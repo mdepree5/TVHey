@@ -174,11 +174,12 @@ def delete_channel(id):
 def get_dms(userId):
   # **** ——————————————————————————————————————————————————————————————————————————————————
   
-  # dms = DM.query.all()
   # dms = DM.query()
-  dms = DM.query.filter(DM.host_id == int(userId) or DM.recipient_id == int(userId)).all()
+  # dms = DM.query.filter(DM.host_id == int(userId) or DM.recipient_id == int(userId)).all()
+  dms = DM.query.all()
   
   print('get dms ————————————————————————————————————————————— debugger ')
+  print(userId)
   print(dms)
   print('get dms ————————————————————————————————————————————— debugger ')
   

@@ -9,14 +9,14 @@ seed_commands = AppGroup('seed')
 @seed_commands.command('all')
 def seed():
   seed_users()
+  seed_dms()
   seed_channels()
   seed_messages()
-  seed_dms()
 
 
 @seed_commands.command('undo')
 def undo():
   undo_users()
   undo_channels()
-  undo_messages()
   undo_dms()
+  undo_messages()
