@@ -16,10 +16,9 @@ class User(db.Model, UserMixin):
   
   channels = db.relationship('Channel', back_populates='users', cascade="all, delete")
   messages = db.relationship('Message', back_populates="users", cascade="all, delete")
-  dms = db.relationship('DM', back_populates="users", cascade="all, delete")
 
-  dm_host = db.relationship('DM', foreign_keys=[DM.host_id], back_populates='dm_host')
-  dm_recipient = db.relationship('DM', foreign_keys=[DM.recipient_id], back_populates='dm_recipient')
+  dm_host = db.relationship('DM', foreign_keys=[DM.host_id], back_populates='host')
+  dm_recipient = db.relationship('DM', foreign_keys=[DM.recipient_id], back_populates='recipient')
 
   @property
   def password(self):
