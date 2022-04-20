@@ -6,6 +6,7 @@ import functools
 import eventlet
 # eventlet.monkey_patch()
 from json import dumps
+from sqlalchemy import or_
 # from flask import request
 from datetime import datetime
 from flask_login import current_user
@@ -175,13 +176,13 @@ def get_dms(userId):
   # **** ——————————————————————————————————————————————————————————————————————————————————
   
   # dms = DM.query()
-  # dms = DM.query.filter(DM.host_id == int(userId) or DM.recipient_id == int(userId)).all()
-  dms = DM.query.all()
+  # dms = DM.query.all()
+  dms = DM.query.filter(or_(DM.host_id == int(userId), DM.recipient_id == int(userId))).all()
   
-  print('get dms ————————————————————————————————————————————— debugger ')
-  print(userId)
-  print(dms)
-  print('get dms ————————————————————————————————————————————— debugger ')
+  # print('get dms ————————————————————————————————————————————— debugger ')
+  # print(userId)
+  # print(dms)
+  # print('get dms ————————————————————————————————————————————— debugger ')
   
   #? .order_by(DM.recipient)
   #* maybe try frontend ordering alphabetically, rather than trying to query AND filter AND order in the backend??
