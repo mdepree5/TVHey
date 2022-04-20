@@ -10,9 +10,9 @@ import Chat from "../../components/Chat";
 import ChannelFormModal from '../Channel/channel_modal';
 import {Icon} from '../Utils/icons';
 // ???? ——————————————————————————————————————————————————————————————————————————————————
-import {createChannel, getChannels, updateChannel, deleteChannel } from '../../store/channelSocket';
-// import {getChannels} from '../../store/channelSocket';
-import {loginDemo} from '../../store/session';
+import { createChannel, getChannels, updateChannel, deleteChannel } from '../../store/channelSocket';
+import { createDM, getDMs } from '../../store/channelSocket';
+import { loginDemo } from '../../store/session';
 import './Main.css'
 // ???? ——————————————————————————————————————————————————————————————————————————————————
 
@@ -71,9 +71,10 @@ export const AuthenticatedApp = () => {
         await dispatch(getDMs(dmsArr))
       })
 
-      socket.on('channel to front', message => dispatch(createChannel(JSON.parse(message))))
-      socket.on('edited channel to front', message => dispatch(updateChannel(JSON.parse(message))))
+      socket.on('channel to front', channel => dispatch(createChannel(JSON.parse(channel))))
+      socket.on('edited channel to front', channel => dispatch(updateChannel(JSON.parse(channel))))
       socket.on('deleted channel to front', id => dispatch(deleteChannel(id)))
+      socket.on('dm to front', dm => dispatch(createDM(JSON.parse(dm))))
     }
   }, [dispatch, socket])
 

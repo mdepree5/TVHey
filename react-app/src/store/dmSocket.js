@@ -4,16 +4,12 @@
 const CREATE = 'dmSocket/create';
 const GET_ALL = 'dmSocket/get_all';
 const SET_ONE = 'dmSocket/set_one';
-const UPDATE = 'dmSocket/update';
-const DELETE = 'dmSocket/delete';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Creators —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-export const createDm = dm => ({ type: CREATE, dm });
+export const createDM = dm => ({ type: CREATE, dm });
 export const getDMs = dms => ({ type: GET_ALL, dms });
-export const setDm = dm => ({ type: SET_ONE, dm });
-export const updateDm = dm => ({ type: UPDATE, dm });
-export const deleteDm = dmId => ({ type: DELETE, dmId });
+export const setDM = dm => ({ type: SET_ONE, dm });
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Reducer —
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -51,6 +47,11 @@ export default dmReducer;
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
 // !!!!                               Deprecated
 // !!!! ——————————————————————————————————————————————————————————————————————————————————
+// const UPDATE = 'dmSocket/update';
+// const DELETE = 'dmSocket/delete';
+// todo ——————————————————————————————————————————————————————————————————————————————————
+// export const updateDm = dm => ({ type: UPDATE, dm });
+// export const deleteDm = dmId => ({ type: DELETE, dmId });
 // ???? ——————————————————————————————————————————————————————————————————————————————————
 //     case UPDATE: {
 //       const newState = {...state};
