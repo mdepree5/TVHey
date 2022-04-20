@@ -174,7 +174,18 @@ def delete_channel(id):
 def get_dms(userId):
   # **** ——————————————————————————————————————————————————————————————————————————————————
   
-  dms = DM.query.all()
+  # dms = DM.query.all()
+  # dms = DM.query()
+  dms = DM.query.filter(DM.host_id == int(userId) or DM.recipient_id == int(userId)).all()
+  
+  print('get dms ————————————————————————————————————————————— debugger ')
+  print(dms)
+  print('get dms ————————————————————————————————————————————— debugger ')
+  
+  #? .order_by(DM.recipient)
+  #* maybe try frontend ordering alphabetically, rather than trying to query AND filter AND order in the backend??
+  #* since frontend will be unopinionated with owner/host
+  #* frontend filter: const theNameToDisplay = DM?.host_id === sessionUser.id ? DM?.recipient : DM?.host
   
   
   # **** ——————————————————————————————————————————————————————————————————————————————————
