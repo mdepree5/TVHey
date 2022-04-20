@@ -13,9 +13,9 @@ class User(db.Model, UserMixin):
   image_url = db.Column(db.String(255), nullable=True)
   hashed_password = db.Column(db.String(255), nullable=False)
   
-  channels = db.relationship('Channel', back_populates='users', cascade="all, delete")
-  messages = db.relationship('Message', back_populates="users", cascade="all, delete")
-  dms = db.relationship('DM', back_populates="users", cascade="all, delete")
+  # channels = db.relationship('Channel', back_populates='users', cascade="all, delete")
+  # messages = db.relationship('Message', back_populates="users", cascade="all, delete")
+  # dms = db.relationship('DM', back_populates="users", cascade="all, delete")
 
   @property
   def password(self):

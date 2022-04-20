@@ -12,7 +12,7 @@ from flask_login import current_user
 from flask_socketio import SocketIO, Namespace, emit, disconnect
 # from flask_wtf.csrf import CSRFProtect, generate_csrf
 # todo ——————————————————————————————————————————————————————————————————————————————————
-from .models import Channel, Message, User, db
+from .models import Channel, Message, User, DM, db
 # from app.forms.message_form import MessageForm
 # todo ——————————————————————————————————————————————————————————————————————————————————
 # configure cors_allowed_origins
@@ -165,6 +165,51 @@ def delete_channel(id):
   db.session.delete(channel)
   db.session.commit()
   emit('deleted channel to front', id, broadcast=True)
+
+# todo ——————————————————————————————————————————————————————————————————————————————————
+# todo                   DM Event Handlers
+# todo ——————————————————————————————————————————————————————————————————————————————————
+@socketio.on('get dms')
+@authenticated_only
+def get_dms(userId):
+  # **** ——————————————————————————————————————————————————————————————————————————————————
+  
+  dms = DM.query.all()
+  
+  
+  # **** ——————————————————————————————————————————————————————————————————————————————————
+  all_DMs = [json.dumps(dm, default = defaultconverter) for dm in [dm.to_dict() for dm in dms]]
+  emit('get all dms', {'all_dms': all_DMs})
+
+@socketio.on('set dm')
+@authenticated_only
+def set_dm(id):
+  emit('set dm to front', [json.dumps(DM.query.get(id).to_dict(), default = defaultconverter)], broadcast=True)
+
+@socketio.on('create dm')
+@authenticated_only
+def create_dm(data):
+  new_dm = DM(host_id=data['host_id'], recipient_id=data['recipient_id'], created_at=datetime.now(), updated_at=datetime.now())
+  db.session.add(new_dm)
+  db.session.commit()
+  new = new_dm.to_dict()
+  emit('dm to front', [json.dumps(new, default = defaultconverter)], broadcast=True)
+
+""" 
+UI/UX perspective: 
+* edit dm: 
+doesn't make sense because there aren't 'editable' variables the same way a channel does (title, topic)
+
+* delete dm: 
+doesn't make sense because 'shared ownership' between the two users involved
+"""
+# @socketio.on('delete dm')
+# @authenticated_only
+# def delete_dm(id):
+#   dm = DM.query.get(id)
+#   db.session.delete(dm)
+#   db.session.commit()
+#   emit('deleted dm to front', id, broadcast=True)
 
 # # todo ——————————————————————————————————————————————————————————————————————————————————
 # # todo             MessageForm form validators and csrf
