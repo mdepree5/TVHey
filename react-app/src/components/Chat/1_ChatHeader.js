@@ -1,6 +1,6 @@
-import { useRef, forwardRef, useImperativeHandle, useState, useEffect, useLayoutEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { NavLink, useParams, useHistory } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom';
 // ???? ——————————————————————————————————————————————————————————————————————————————————
 import {Icon} from '../Utils/icons';
 import { Modal } from '../../context/Modal';
@@ -14,8 +14,6 @@ import './Chat.css';
 const ChatHeader = ({socket, thisChannel, channelId, sessionUser}) => {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
-
-
 
   const handleDelete = async () => {
     socket.emit('delete channel', Number(channelId))
@@ -33,7 +31,6 @@ const ChatHeader = ({socket, thisChannel, channelId, sessionUser}) => {
     setToggleEdit(false);
     setShowModal(false);
   }
-
 
   const [toggleEdit, setToggleEdit] = useState(false);
   const [topic, setTopic] = useState('');
