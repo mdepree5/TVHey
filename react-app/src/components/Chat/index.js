@@ -2,9 +2,9 @@ import { useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from 'react-router-dom';
 // ???? ——————————————————————————————————————————————————————————————————————————————————
-import {ChatHeader} from './1_ChatHeader';
-import {MessagesContainer} from './2_MessagesContainer.js';
-import {MessageInput} from './3_MessageInput.js';
+import ChatHeader from './1_ChatHeader';
+import MessagesContainer from './2_MessagesContainer.js';
+import MessageInput from './3_MessageInput.js';
 
 import {setChannel} from '../../store/channelSocket';
 import {createMessage, getMessages, updateMessage, deleteMessage} from '../../store/messageSocket';
