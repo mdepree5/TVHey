@@ -17,6 +17,6 @@ def seed():
 @seed_commands.command('undo')
 def undo():
   undo_users()
-  undo_channels()
   undo_dms()
+  undo_channels()
   undo_messages()
