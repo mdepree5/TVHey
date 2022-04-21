@@ -8,7 +8,7 @@ import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               2. Messages Container
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
+const MessagesContainer = forwardRef(({messagesArr, sessionUser, dmUser=null}, ref) => {
   const messageContainerRef = useRef();
   const scrollToBottom = () => messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
 
@@ -18,9 +18,18 @@ const MessagesContainer = forwardRef(({messagesArr, sessionUser}, ref) => {
   return (
     <div ref={messageContainerRef} role='log' className='message-container' >
       <br />
-      {messagesArr?.map((message, ind) => (
+      {messagesArr?.length ? messagesArr?.map((message, ind) => (
         <MessageCard key={ind} message={message} sessionUser={sessionUser}/>
-      ))}
+      ))
+      : 
+      <div className='empty-messages-container row-list'>
+        {dmUser ? 
+          <div> Here lies the unquestionable inception of your direct message history with 
+            <strong style={{color: `rgb(0, 162, 255)`}}> {` ${dmUser}`}</strong>
+          </div>
+        : ''}
+      </div>
+      }
       <br />
     </div>
   )

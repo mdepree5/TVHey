@@ -111,6 +111,18 @@
   overflow-y: auto;
 }
 
+.empty-messages-container {
+  border: 0.08em solid #EC8642;
+  border-radius: 0.4em;
+  
+  width: calc(100% - 2.6em);
+  min-height: 3em;
+
+  padding: 1em;
+  margin-left: 1.3em;
+  margin-right: 1.3em;
+}
+
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /*                  3. Message Input                                                    */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */

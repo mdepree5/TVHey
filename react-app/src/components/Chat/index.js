@@ -63,22 +63,20 @@ const Chat = ({ dm=false }) => {
   return (sessionUser && (
     <>
       <ChatHeader
-        socket={socket}
-        sessionUser={sessionUser}
-        dm={dm}
-        thisChannel={thisChannel}
-        channelId={channelId}
-        thisDM={thisDM}
+        socket={socket} sessionUser={sessionUser}
+        thisChannel={thisChannel} channelId={channelId}
+        dm={dm} thisDM={thisDM}
       />
 
-      <MessagesContainer messagesArr={messagesArr} sessionUser={sessionUser} ref={messagesRef} />
+      <MessagesContainer 
+        ref={messagesRef} messagesArr={messagesArr}
+        sessionUser={sessionUser} dmUser={thisDM?.host_id === sessionUser?.id ? thisDM?.recipient : thisDM?.host}
+      />
 
       <MessageInput
-        socket={socket}
-        sessionUser={sessionUser}
-        dm={dm}
+        socket={socket} sessionUser={sessionUser}
         thisChannel={thisChannel}
-        thisDM={thisDM}
+        dm={dm} thisDM={thisDM}
       />
     </>)
   )
