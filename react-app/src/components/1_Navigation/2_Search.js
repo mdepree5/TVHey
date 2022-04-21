@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 // ???? ——————————————————————————————————————————————————————————————————————————————————
 import { Modal } from '../../context/Modal';
@@ -68,7 +68,9 @@ const Search = () => {
                   
                   PERHAPS: Rather than use a modal...
                   1. Create a custom div/component that has a [toggleClick, setToggleClick] = useState(false)
-                  2. {'toggleClick' && <div>Show the pseudo chat component form</div>}
+                  2. {'toggleClick' && <div>
+                      Show the pseudo chat component form
+                    </div>}
                   3. This way the thing is 'in-line' with each search-barred "user" component in the search dropdown
 
                   1. OnClick - Open a modal to send a message
@@ -93,6 +95,7 @@ const Search = () => {
                     </div>
                   }
                 </div>
+                <UserSearchComponent key={user.id} user={user} />
                 <NavLink to={`/dms/${user?.id}`} key={user?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{user?.privateStatus ? 'π' : '#'} {user?.display_name} {'X'}</NavLink>
               </>
             )}
@@ -102,6 +105,47 @@ const Search = () => {
           </div>        
         </div>
       </Modal>}
+    </div>
+  )
+}
+
+
+const UserSearchComponent = ({user}) => {
+  const history = useHistory();
+  const [userIsSelected, setUserIsSelected] = useState(false)
+  const [chatInput, setChatInput] = useState('');
+
+  const socket =  useSelector(state => state?.socket?.socket);
+  const sessionUser = useSelector(state => state?.session?.user);
+
+  const sendMessage = async(e) => {
+    e.preventDefault();
+
+    let newDMId;
+    
+    const dmData = {host_id: sessionUser?.id, recipient_id: user?.id}
+    socket.emit('create dm', dmData)
+    /* 
+      * this line should run from main.js: socket.on('dm to front', dm => dispatch(createDM(JSON.parse(dm))))
+      * then, state should update..
+      * 
+    */
+    socket.on('dm to front', dm => newDMId = JSON.parse(dm).id)
+
+    socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: newDM?.id, content: chatInput})
+
+    history.push(`/dms/${newDMId}`)
+  }
+
+  return (
+    <div onClick={setUserIsSelected(true)} >
+      <div>{user?.display_name}</div>
+      <NavLink to={``} key={user?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{user?.privateStatus ? 'π' : '#'} {user?.display_name} {'X'}</NavLink>
+      {userIsSelected && 
+        <div>
+          Form
+        </div>
+      }
     </div>
   )
 }
