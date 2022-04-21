@@ -118,23 +118,38 @@ const UserSearchComponent = ({user}) => {
   const socket =  useSelector(state => state?.socket?.socket);
   const sessionUser = useSelector(state => state?.session?.user);
 
+  const dmstate = useSelector(state => state?.dmSocket);
+  const selectedUsersDMs = dmstate?.selectedUsersDMs
+
+
   const sendMessage = async(e) => {
     e.preventDefault();
 
-    let newDMId;
+    if (selectedUsersDMs[user?.id] === undefined) {
+      let newDMId;
+      const dmData = {host_id: sessionUser?.id, recipient_id: user?.id}
+      socket.emit('create dm', dmData)
+      /* 
+        * this line should run from main.js: socket.on('dm to front', dm => dispatch(createDM(JSON.parse(dm))))
+        * then, state should update..
+        * 
+      */
+      socket.on('dm to front', dm => newDMId = JSON.parse(dm).id)
+      socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: newDMId, content: input})
+
+      history.push(`/dms/${newDMId}`)
+    } else {
+      const existingDMId = selectedUsersDMs[user?.id];
+
+      console.log(`%c existingDMId:`, `color:yellow`, existingDMId)
+
+      socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: existingDMId, content: input})
+  
+      history.push(`/dms/${existingDMId}`)
+    }
     
-    const dmData = {host_id: sessionUser?.id, recipient_id: user?.id}
-    socket.emit('create dm', dmData)
-    /* 
-      * this line should run from main.js: socket.on('dm to front', dm => dispatch(createDM(JSON.parse(dm))))
-      * then, state should update..
-      * 
-    */
-    socket.on('dm to front', dm => newDMId = JSON.parse(dm).id)
-
-    socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: newDMId, content: input})
-
-    history.push(`/dms/${newDMId}`)
+    setInput('');
+    return setToggleForm(false);
   }
 
   const handleCancel = e => {
