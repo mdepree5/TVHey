@@ -78,7 +78,7 @@ const Chat = ({ dm=false }) => {
       socket.on('edited message to front', message => dispatch(updateMessage(JSON.parse(message))))
       socket.on('deleted message to front', id => dispatch(deleteMessage(id)))
     }
-  }, [channelId, socket])
+  }, [channelId, dmId, socket])
 
   return (sessionUser && (
     <>
