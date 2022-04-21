@@ -77,9 +77,7 @@ const UserSearchComponent = ({user, closeModal}) => {
     return closeModal();
   }
 
-  const sendMessage = async(e) => {
-    e.preventDefault();
-
+  const sendMessage = () => {
     if (selectedUsersDMs[user?.id] === undefined) {
       const dmData = {host_id: sessionUser?.id, recipient_id: user?.id}  
       
@@ -88,19 +86,18 @@ const UserSearchComponent = ({user, closeModal}) => {
         const newDM = JSON.parse(dm)
         socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: Number(newDM?.id), content: input})
         history.push(`/dms/${newDM?.id}`)
-        return closeParentModal()
+        return closeParentModal();
       })
-    }
+    } else {
+      const existingDMId = selectedUsersDMs[user?.id];
+      socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: Number(existingDMId), content: input})
     
-    const existingDMId = selectedUsersDMs[user?.id];
-    socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: Number(existingDMId), content: input})
-  
-    history.push(`/dms/${existingDMId}`)
-    return closeParentModal();
+      history.push(`/dms/${existingDMId}`)
+      return closeParentModal();
+    }
   }
 
-  const handleCancel = async(e) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setInput('');
     return setToggleForm(false);
   }
@@ -108,21 +105,20 @@ const UserSearchComponent = ({user, closeModal}) => {
   return (
     <div className='channel-list-item' >
       <div onClick={() => setToggleForm(!toggleForm)} style={{cursor:'pointer'}}>
-      {user?.display_name} {user?.id === sessionUser?.id && '(You)'}
+      {user?.display_name} {user?.id === sessionUser?.id ? '(You)' : ''}
       </div>
       
       {toggleForm &&
         <form className='col-list' onSubmit={sendMessage}>
           <textarea value={input} onChange={e => setInput(e.target.value)} 
             style={{minHeight:'3em'}}
-            placeholder={`  Message ${user?.display_name} ${user?.id === sessionUser?.id && '(You)'}`}/>
+            placeholder={`  Message ${user?.display_name} ${user?.id === sessionUser?.id ? '(You)' : ''}`}/>
           
           <div className='row-list edit-message-buttons'>
       
             <button className='cancel-message-button' type='button' onClick={handleCancel}>Cancel</button>
-            {/* <button className='save-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}> */}
             <button className='submit-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}>
-              {input ? 'Send' : 'Message cannot be empty'}
+              {input ? 'Send' : ''}
             </button>
       
           </div>

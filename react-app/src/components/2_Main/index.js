@@ -143,7 +143,7 @@ const LeftNav = () => {
       <div className={`col-list channels-container ${display ? '' : 'hide-channels'}`}>
         {dms?.map(dm => (
             <NavLink to={`/dms/${dm?.id}`} key={dm?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >
-              {dm?.host_id === sessionUser?.id ? dm?.recipient : dm?.host} {dm?.recipient_id === sessionUser?.id && '(You)'}
+              {dm?.host_id === sessionUser?.id ? dm?.recipient : dm?.host} {dm?.recipient_id === sessionUser?.id ? '(You)' : ''}
             </NavLink>
         ))}
       </div>
