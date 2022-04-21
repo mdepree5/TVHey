@@ -40,16 +40,17 @@ const Search = () => {
       {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}>
         <div className='dropdown-nav' id='search'>
           <div className='col-list' >
-            {searchInput && users?.map(user => 
-              <div key={user?.id}>
-                
-                <UserSearchComponent key={user?.id} user={user} />
-                {/* <NavLink to={`/dms/${user?.id}`} key={user?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{user?.privateStatus ? 'π' : '#'} {user?.display_name} {'X'}</NavLink> */}
-              </div>
-            )}
+            {searchInput && users?.length ? <div>Users</div> : ''}
+            {searchInput && users?.map(user => (
+              <UserSearchComponent key={user?.id} user={user} />
+            ))}
+            {searchInput && channels?.length ? <div>Channels</div> : ''}
             {searchInput && channels?.map(channel => (
               <NavLink to={`/channels/${channel?.id}`} onClick={clickChannel} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
             ))}
+            {searchInput && !users?.length && !channels?.length ? <strong style={{color:'#EC8642'}} >
+              No matches. Try a new search!
+            </strong>: ''}
           </div>        
         </div>
       </Modal>}
