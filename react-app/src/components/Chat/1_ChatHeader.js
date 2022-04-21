@@ -73,23 +73,20 @@ const ChatHeader = ({socket, sessionUser, dm=false, thisChannel, channelId, this
 
             <div id='channel-info-bottom'>
               <div className='channel-info-about' style={{width:'70%', marginLeft:'auto', marginRight:'auto'}} >
-
                 <div className='channel-list-item row-list' style={{alignItems:'center', cursor:'default'}} >
-                {userstate?.allUsers[thisDM?.host_id === sessionUser?.id ? thisDM?.recipient_id : thisDM?.host_id].image_url === 'no image provided' ? 
-                  <div className='nav-dropdown-image' >
-                    {userstate?.allUsers[thisDM?.host_id === sessionUser?.id ? thisDM?.recipient_id : thisDM?.host_id].display_name[0].toUpperCase()}
-                  </div>
+                  {userstate?.allUsers[thisDM?.host_id === sessionUser?.id ? thisDM?.recipient_id : thisDM?.host_id].image_url === 'no image provided' ? 
+                    <div className='nav-dropdown-image' >
+                      {userstate?.allUsers[thisDM?.host_id === sessionUser?.id ? thisDM?.recipient_id : thisDM?.host_id].display_name[0].toUpperCase()}
+                    </div>
                   :
-                  <img className='nav-dropdown-image' alt='user' style={{marginRight:'1em'}}
-                    src={userstate?.allUsers[thisDM?.host_id === sessionUser?.id ? thisDM?.recipient_id : thisDM?.host_id].image_url}
-                  />}
-
-                    <h3 className='nav-display-name'>
-                      {userstate?.allUsers[thisDM?.host_id === sessionUser?.id ? thisDM?.recipient_id : thisDM?.host_id].display_name}
-                    </h3>
-                  </div>
-
-
+                    <img className='nav-dropdown-image' alt='user' style={{marginRight:'1em'}}
+                      src={userstate?.allUsers[thisDM?.host_id === sessionUser?.id ? thisDM?.recipient_id : thisDM?.host_id].image_url}
+                    />
+                  }
+                  <h3 className='nav-display-name'>
+                    {userstate?.allUsers[thisDM?.host_id === sessionUser?.id ? thisDM?.recipient_id : thisDM?.host_id].display_name}
+                  </h3>
+                </div>
               </div>
             </div>
 
@@ -109,8 +106,8 @@ const ChatHeader = ({socket, sessionUser, dm=false, thisChannel, channelId, this
           {channelInfo === 'about' ? (
             <div id='channel-info-bottom'>
               <div className='channel-info-about'>
-                <div style={{borderBottom:'solid 0.05em #ffffffa8'}}>
-                  {toggleEdit ? 
+                <div id={sessionUser?.id === thisChannel?.host_id ? '' : 'default-cursor'} style={{borderBottom:'solid 0.05em #ffffffa8'}}>
+                  {toggleEdit && sessionUser?.id === thisChannel?.host_id ? 
                     <form className='col-list' onSubmit={handleEdit}>
                       <textarea value={topic} onChange={e => setTopic(e.target.value)} style={{height:'100px'}} placeholder='Add a Topic'/>
                       <div className='row-list edit-message-buttons'>

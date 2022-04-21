@@ -17,6 +17,8 @@ body, html{
   font-size: 30px;
 } */
 
+#default-cursor{ cursor: default }
+
 .row-list{ display: flex; flex-direction: row; }
 .col-list{ display: flex; flex-direction: column; }
 .flex-end{ display: flex; flex-direction: row; justify-content: flex-end; }
