@@ -74,8 +74,7 @@ const UserSearchComponent = ({user, closeModal}) => {
   const closeParentModal = () => {
     setInput('');
     setToggleForm(false);
-    closeModal();
-    return;
+    return closeModal();
   }
 
   const sendMessage = async(e) => {
@@ -89,8 +88,7 @@ const UserSearchComponent = ({user, closeModal}) => {
         const newDM = JSON.parse(dm)
         socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: Number(newDM?.id), content: input})
         history.push(`/dms/${newDM?.id}`)
-        closeParentModal()
-        return;
+        return closeParentModal()
       })
     }
     
@@ -98,39 +96,37 @@ const UserSearchComponent = ({user, closeModal}) => {
     socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: Number(existingDMId), content: input})
   
     history.push(`/dms/${existingDMId}`)
-    closeParentModal();
+    return closeParentModal();
   }
 
   const handleCancel = async(e) => {
     e.preventDefault();
     setInput('');
-    setToggleForm(false)
-    return ;
+    return setToggleForm(false);
   }
 
   return (
-    <div className='channel-list-item' onClick={() => setToggleForm(true)} >
-      {user?.display_name}
+    <div className='channel-list-item' >
+      <div onClick={() => setToggleForm(!toggleForm)} style={{cursor:'pointer'}}>
+      {user?.display_name} {user?.id === sessionUser?.id && '(You)'}
+      </div>
       
-      {toggleForm && 
-        <>
-          {/* <form className='col-list message-card' onSubmit={sendMessage}> */}
-          <form className='col-list' onSubmit={sendMessage}>
-            <textarea value={input} onChange={e => setInput(e.target.value)} 
-              style={{minHeight:'3em'}}
-              placeholder={`  Message ${user?.display_name}`}/>
-            
-            <div className='row-list edit-message-buttons'>
-        
-              <button className='cancel-message-button' type='button' onClick={handleCancel}>Cancel</button>
-              {/* <button className='save-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}> */}
-              <button className='submit-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}>
-                {input ? 'Send' : 'Message cannot be empty'}
-              </button>
-        
-            </div>
-          </form>
-        </>
+      {toggleForm &&
+        <form className='col-list' onSubmit={sendMessage}>
+          <textarea value={input} onChange={e => setInput(e.target.value)} 
+            style={{minHeight:'3em'}}
+            placeholder={`  Message ${user?.display_name} ${user?.id === sessionUser?.id && '(You)'}`}/>
+          
+          <div className='row-list edit-message-buttons'>
+      
+            <button className='cancel-message-button' type='button' onClick={handleCancel}>Cancel</button>
+            {/* <button className='save-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}> */}
+            <button className='submit-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}>
+              {input ? 'Send' : 'Message cannot be empty'}
+            </button>
+      
+          </div>
+        </form>
       }
     </div>
   )
