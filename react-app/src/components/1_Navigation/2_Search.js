@@ -13,17 +13,9 @@ const Search = () => {
 
   const userstate = useSelector(state => state?.session)
   const channelstate = useSelector(state => state?.channelSocket)
-  // const dmstate = useSelector(state => state?.dmSocket);
   
   const users = Object.values(userstate?.allUsers).filter(user => user.display_name.toLowerCase().includes(searchInput));
   const channels = Object.values(channelstate?.channels).filter(channel => channel.title.toLowerCase().includes(searchInput));
-
-  // const selectedUsersDMs = dmstate?.selectedUsersDMs
-
-  // console.log(`%c ——————————————————————————————————————————:`, `color:green`)
-  // console.log(`%c selectedUsersDMs:`, `color:yellow`, selectedUsersDMs)
-  // console.log(`%c ——————————————————————————————————————————:`, `color:green`)
-
 
   useEffect(() => setShowModal(searchInput ? true : false), [searchInput])
 
@@ -37,7 +29,7 @@ const Search = () => {
     <div>
       <input placeholder='Search TVHey' value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
 
-      {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}>
+      {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={closeModal}>
         <div className='dropdown-nav' id='search'>
           <div className='col-list' >
             {searchInput && users?.length ? <strong style={{color:'white'}}>Users</strong> : ''}
@@ -115,12 +107,8 @@ const UserSearchComponent = ({user, closeModal}) => {
             placeholder={`  Message ${user?.display_name} ${user?.id === sessionUser?.id ? '(You)' : ''}`}/>
           
           <div className='row-list edit-message-buttons'>
-      
             <button className='cancel-message-button' type='button' onClick={handleCancel}>Cancel</button>
-            <button className='submit-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}>
-              {input ? 'Send' : ''}
-            </button>
-      
+            {input && <button className='submit-message-button' id='send-it' type="submit">Send</button>}
           </div>
         </form>
       }

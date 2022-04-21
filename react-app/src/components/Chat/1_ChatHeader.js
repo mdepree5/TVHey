@@ -54,52 +54,81 @@ const ChatHeader = ({socket, sessionUser, dm=false, thisChannel, channelId, this
   }
   
   return (<div className='header'>
-        <div className='chat-header row-list' onClick={() => setShowModal(true)} >
-          {dm ? 
-            <div>{thisDM?.host_id === sessionUser?.id ? thisDM?.recipient : thisDM?.host}</div>
-          : 
-            <div>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</div>
-          }
-          <Icon iconName='expand'/>
-        </div>
+    <div className='chat-header row-list' onClick={() => setShowModal(true)} >
+      {dm ? 
+        <div>{thisDM?.host_id === sessionUser?.id ? thisDM?.recipient : thisDM?.host}</div>
+      :
+        <div>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</div>
+      }
+      <Icon iconName='expand'/>
+    </div>
 
       {showModal && <Modal providedContent={true} onClose={closeChannelModal}>
-        <div className='dropdown-nav' id='channel-info'>
+        {dm ? 
+          <div className='dropdown-nav' id='channel-info'>
             <div id='channel-info-top'>
-              <h3>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</h3>
+              <h3>{thisDM?.host_id === sessionUser?.id ? thisDM?.recipient : thisDM?.host}</h3>
               <br />
-              
-              <div className='channel-info row-list'>
-                <div className={channelInfo === 'about' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('about')}>About</div>
-                <div className={channelInfo === 'members' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('members')}>Members {users?.length}</div>
+            </div>
+
+            <div id='channel-info-bottom'>
+              <div className='channel-info-about' style={{width:'70%', marginLeft:'auto', marginRight:'auto'}} >
+
+                <div className='channel-list-item row-list' style={{alignItems:'center', cursor:'default'}} >
+                {userstate?.allUsers[thisDM?.host_id === sessionUser?.id ? thisDM?.recipient_id : thisDM?.host_id].image_url === 'no image provided' ? 
+                  <div className='nav-dropdown-image' >
+                    {userstate?.allUsers[thisDM?.host_id === sessionUser?.id ? thisDM?.recipient_id : thisDM?.host_id].display_name[0].toUpperCase()}
+                  </div>
+                  :
+                  <img className='nav-dropdown-image' alt='user' style={{marginRight:'1em'}}
+                    src={userstate?.allUsers[thisDM?.host_id === sessionUser?.id ? thisDM?.recipient_id : thisDM?.host_id].image_url}
+                  />}
+
+                    <h3 className='nav-display-name'>
+                      {userstate?.allUsers[thisDM?.host_id === sessionUser?.id ? thisDM?.recipient_id : thisDM?.host_id].display_name}
+                    </h3>
+                  </div>
+
+
               </div>
             </div>
 
-            {channelInfo === 'about' ? (
+          </div>
+        
+        : <div className='dropdown-nav' id='channel-info'>
+          <div id='channel-info-top'>
+            <h3>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</h3>
+            <br />
+            
+            <div className='channel-info row-list'>
+              <div className={channelInfo === 'about' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('about')}>About</div>
+              <div className={channelInfo === 'members' ? 'channel-info-selected' : ''} onClick={()=> setChannelInfo('members')}>Members {users?.length}</div>
+            </div>
+          </div>
+
+          {channelInfo === 'about' ? (
             <div id='channel-info-bottom'>
               <div className='channel-info-about'>
-              <div style={{borderBottom:'solid 0.05em #ffffffa8'}}>
-                {toggleEdit ? 
-                  <form className='col-list' onSubmit={handleEdit}>
-                    <textarea value={topic} onChange={e => setTopic(e.target.value)} style={{height:'100px'}} placeholder='Add a Topic'/>
-                    <div className='row-list edit-message-buttons'>
-
-                      <button className='cancel-message-button' type='button' onClick={()=>setToggleEdit(false)}>Cancel</button>
-                      <button className='save-message-button' style={{cursor:'pointer'}} type="submit" >Save</button>
-
-                    </div>
-                  </form> : <div className='col-list' onClick={() => setToggleEdit(true)} >
-                    <strong>Topic </strong>
-                    {thisChannel?.topic ? thisChannel?.topic : 'Add a topic'}
+                <div style={{borderBottom:'solid 0.05em #ffffffa8'}}>
+                  {toggleEdit ? 
+                    <form className='col-list' onSubmit={handleEdit}>
+                      <textarea value={topic} onChange={e => setTopic(e.target.value)} style={{height:'100px'}} placeholder='Add a Topic'/>
+                      <div className='row-list edit-message-buttons'>
+                        <button className='cancel-message-button' type='button' onClick={()=>setToggleEdit(false)}>Cancel</button>
+                        <button className='save-message-button' style={{cursor:'pointer'}} type="submit" >Save</button>
+                      </div>
+                    </form> : <div className='col-list' onClick={() => setToggleEdit(true)} >
+                      <strong>Topic </strong>
+                      {thisChannel?.topic ? thisChannel?.topic : 'Add a topic'}
+                  </div>
+                  }
                 </div>
-                }
-              </div>
 
-              <div onClick={closeChannelModal}>
-                <strong>Created by</strong>
-                {users[thisChannel?.host_id - 1].display_name} on {dayjs(thisChannel?.created_at).format('MMMM D, YYYY')}
+                <div onClick={closeChannelModal}>
+                  <strong>Created by</strong>
+                  {users[thisChannel?.host_id - 1].display_name} on {dayjs(thisChannel?.created_at).format('MMMM D, YYYY')}
+                </div>
               </div>
-            </div>
             </div>
             )
             : 
@@ -129,6 +158,7 @@ const ChatHeader = ({socket, sessionUser, dm=false, thisChannel, channelId, this
             </>)
             }
         </div>
+        }
       </Modal>}
 
         {dm === false && sessionUser?.id === thisChannel?.host_id && <div className='flex-end'>

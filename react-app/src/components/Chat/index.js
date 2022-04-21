@@ -36,11 +36,8 @@ const Chat = ({ dm=false }) => {
   console.log(`%c thisDM:`, `color:yellow`, thisDM)
 
   setTimeout(() => {
-    if (dm) {
-      if (dmstate?.dms[dmId] === undefined) history.push('/')
-    } else {
-      if (channelstate?.channels[channelId] === undefined) history.push('/')
-    }
+    if (dm) { if (dmstate?.dms[dmId] === undefined) history.push('/')}
+    else { if (channelstate?.channels[channelId] === undefined) history.push('/') }
   }, 100);
   
   useEffect(() => {
