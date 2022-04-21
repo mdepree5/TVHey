@@ -132,7 +132,7 @@ const UserSearchComponent = ({user}) => {
     */
     socket.on('dm to front', dm => newDMId = JSON.parse(dm).id)
 
-    socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: newDM?.id, content: chatInput})
+    socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: newDMId, content: chatInput})
 
     history.push(`/dms/${newDMId}`)
   }
