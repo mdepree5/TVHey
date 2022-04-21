@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 // todo ——————————————————————————————————————————————————————————————————————————————————
-// import { createChannel, updateChannel } from '../../store/channel';
 import {FormInput, FormButton, FormErrors} from '../Utils/forms';
 import './Channel.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
@@ -18,6 +17,7 @@ const ChannelForm = ({ edit, channel, closeModal }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const channelData = {...channel, host_id, title, topic}
+    setErrors([]) //! => future build: implement websocket error handling
 
     if (edit) {
       socket.emit('edit channel', channelData)
@@ -30,8 +30,7 @@ const ChannelForm = ({ edit, channel, closeModal }) => {
       return closeModal();
     })
     return 'Failed to Create';
-    }
-
+  }
 
 
   return (
