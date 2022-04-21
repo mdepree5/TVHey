@@ -78,9 +78,7 @@ const Chat = ({ dm=false }) => {
         sessionUser={sessionUser}
         dm={dm}
         thisChannel={thisChannel}
-        // channelId={channelId}
         thisDM={thisDM}
-        // dmId={dmId}
       />
     </>)
   )

@@ -1,8 +1,16 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* ****             1. Header                                                           */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
+.chat-header {
+  display: flex;
+  align-items: center;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border-radius: 0.4em;
+  cursor: pointer;
+}
 .chat-header:hover {
-  background-color: rgba(91, 92, 99, 0.212);
+  background-color: #5b5c6336;
   cursor: pointer;
 }
 
