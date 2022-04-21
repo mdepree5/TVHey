@@ -7,6 +7,7 @@ import MessagesContainer from './2_MessagesContainer.js';
 import MessageInput from './3_MessageInput.js';
 
 import {setChannel} from '../../store/channelSocket';
+import {setDM} from '../../store/dmSocket';
 import {createMessage, getMessages, updateMessage, deleteMessage} from '../../store/messageSocket';
 // import './Chat.css';
 // ???? ——————————————————————————————————————————————————————————————————————————————————
@@ -19,8 +20,10 @@ const Chat = ({ dm=false }) => {
   const history = useHistory();
   const messagesRef = useRef();
   const { channelId } = useParams();
-  
+  const { dmId } = useParams();
+
   console.log(`%c dm:`, `color:yellow`, dm)
+  console.log(`%c dmId:`, `color:yellow`, dmId)
 
   /* 
   Chat component will either be: 1. channel or 2. dmstate
@@ -34,27 +37,34 @@ const Chat = ({ dm=false }) => {
 
   const sessionUser = useSelector(state => state?.session?.user);
   const channelstate = useSelector(state => state?.channelSocket);
-
-  // todo ——————————————————————————————————————————————————————————————————————————————————
   const dmstate = useSelector(state => state?.dmSocket);
-  const thisdm = dmstate?.selected;
-
-  console.log(`%c thisdm:`, `color:yellow`, thisdm)
-
-  // todo ——————————————————————————————————————————————————————————————————————————————————
-
   const messagestate =  useSelector(state => state?.messageSocket);
   const socket =  useSelector(state => state?.socket?.socket);
   
+  const thisDM = dmstate?.selected;
   const thisChannel = channelstate?.selected;
   const messagesArr = Object.values(messagestate?.messages);
+  
+  console.log(`%c thisDM:`, `color:yellow`, thisDM)
 
-  setTimeout(() => {if (channelstate?.channels[channelId] === undefined) history.push('/')}, 100);
+  setTimeout(() => {
+    if (dm) {
+      if (dmstate?.dms[dmId] === undefined) history.push('/')
+    } else {
+      if (channelstate?.channels[channelId] === undefined) history.push('/')
+    }
+  }, 100);
   
   useEffect(() => {
     if(socket){
-      socket.emit('set channel', channelId)
-      socket.emit('get messages', channelId)
+      if (dm) {
+        socket.emit('set dm', dmId)
+        socket.emit('get messages', dmId)
+      } else {
+        socket.emit('set channel', channelId)
+        socket.emit('get messages', channelId)
+      }
+      
       socket.on('get all messages', async(messages) => await dispatch(getMessages(messages?.all_messages)))
       // socket.on('get all messages', async(messages) => {
       //   const messageArr = [];
@@ -62,6 +72,7 @@ const Chat = ({ dm=false }) => {
       //   await dispatch(getMessages(messageArr))
       // })
 
+      socket.on('set dm to front', dm => dispatch(setDM(JSON.parse(dm))))
       socket.on('set channel to front', channel => dispatch(setChannel(JSON.parse(channel))))
       socket.on('message to front', message => dispatch(createMessage(JSON.parse(message))))
       socket.on('edited message to front', message => dispatch(updateMessage(JSON.parse(message))))
@@ -71,11 +82,26 @@ const Chat = ({ dm=false }) => {
 
   return (sessionUser && (
     <>
-      <ChatHeader socket={socket} thisChannel={thisChannel} channelId={channelId} sessionUser={sessionUser} />
+      <ChatHeader
+        socket={socket}
+        sessionUser={sessionUser}
+        dm={dm}
+        thisChannel={thisChannel}
+        channelId={channelId}
+        thisDM={thisDM}
+      />
 
       <MessagesContainer messagesArr={messagesArr} sessionUser={sessionUser} ref={messagesRef} />
 
-      <MessageInput socket={socket} thisChannel={thisChannel} channelId={channelId} sessionUser={sessionUser} />
+      <MessageInput
+        socket={socket}
+        sessionUser={sessionUser}
+        dm={dm}
+        thisChannel={thisChannel}
+        // channelId={channelId}
+        thisDM={thisDM}
+        // dmId={dmId}
+      />
     </>)
   )
 };

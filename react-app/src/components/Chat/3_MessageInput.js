@@ -5,13 +5,19 @@ import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               3. Message Input
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const MessageInput = ({socket, thisChannel, channelId, sessionUser}) => {
+// const MessageInput = ({socket, sessionUser, dm=false, thisChannel, channelId, }) => {
+const MessageInput = ({socket, sessionUser, dm=false, thisChannel, thisDM}) => {
   
   const [chatInput, setChatInput] = useState('');
 
   const sendChat = async (e) => {
     e.preventDefault();
-    socket.emit('create message', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput})
+    // socket.emit('create message', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput})
+    if (dm) {
+      socket.emit('create message', {author_id: sessionUser?.id, dm_id: thisDM?.id, content: chatInput})
+    } else {
+      socket.emit('create message', {author_id: sessionUser?.id, channel_id: thisChannel?.id, content: chatInput})
+    }
     setChatInput('');
   }
 
@@ -19,7 +25,11 @@ const MessageInput = ({socket, thisChannel, channelId, sessionUser}) => {
     <form id='message-writer' className='col-list' onSubmit={sendChat} >
       <input value={chatInput} onChange={e => setChatInput(e.target.value)}
         id='writer-input'
-        placeholder={`  Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`}
+        placeholder={dm ? 
+          `  Message ${thisDM?.host_id === sessionUser?.id ? thisDM?.recipient : thisDM?.host}`
+        :
+          `  Message ${thisChannel?.privateStatus ? 'π' : '#'} ${thisChannel?.title}`
+        }
       />
       <button className={'submit-message-button'} id={chatInput && 'send-it'} type="submit" disabled={!chatInput}>
         <img style={{width:'1.2em', height:'1.2em'}} src='https://capstone-slack-clone.s3.amazonaws.com/icons-gray/send.png' alt='icon' />

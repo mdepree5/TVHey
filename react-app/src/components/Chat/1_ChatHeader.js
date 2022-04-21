@@ -11,7 +11,7 @@ import './Chat.css';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               1. Chat Header
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const ChatHeader = ({socket, thisChannel, channelId, sessionUser}) => {
+const ChatHeader = ({socket, sessionUser, dm=false, thisChannel, channelId, thisDM}) => {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
 
@@ -55,7 +55,11 @@ const ChatHeader = ({socket, thisChannel, channelId, sessionUser}) => {
   
   return (<div className='header'>
         <div className='chat-header row-list' onClick={() => setShowModal(true)} >
-          <div>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</div>
+          {dm ? 
+            <div>{thisDM?.host_id === sessionUser?.id ? thisDM?.recipient : thisDM?.host}</div>
+          : 
+            <div>{thisChannel?.privateStatus ? 'π' : '#'} {thisChannel?.title}</div>
+          }
           <Icon iconName='expand'/>
         </div>
 
@@ -127,7 +131,7 @@ const ChatHeader = ({socket, thisChannel, channelId, sessionUser}) => {
         </div>
       </Modal>}
 
-        {sessionUser?.id === thisChannel?.host_id && <div className='flex-end'>
+        {dm === false && sessionUser?.id === thisChannel?.host_id && <div className='flex-end'>
           <ChannelFormModal icon={true} edit={true} channel={thisChannel} />
           <Icon onClick={handleDelete} iconName='delete'/>
         </div>}
