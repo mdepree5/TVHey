@@ -78,7 +78,6 @@ export const AuthenticatedApp = () => {
     }
   }, [dispatch, socket])
 
-
   return (
     <div className='page-container'>
       <Navigation />

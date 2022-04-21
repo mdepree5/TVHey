@@ -20,6 +20,11 @@ const Search = () => {
 
   const selectedUsersDMs = dmstate?.selectedUsersDMs
 
+  console.log(`%c ——————————————————————————————————————————:`, `color:green`)
+  console.log(`%c selectedUsersDMs:`, `color:yellow`, selectedUsersDMs)
+  console.log(`%c ——————————————————————————————————————————:`, `color:green`)
+
+
   useEffect(() => setShowModal(searchInput ? true : false), [searchInput])
 
   const clickChannel = () => {
@@ -58,6 +63,25 @@ const Search = () => {
                     3. If 
 
                  */}
+                <div>
+                  Component with User's Display Name that opens a modal to send a message
+                  {selectedUsersDMs[user?.id] === undefined ? 
+                    <div>
+                      Open modal
+                      1. dispatch create new DM
+                      2. dispatch create new Message
+                      3. Route to newly created DM/newlyCreatedDM.id
+                      Return close modal
+                    </div>
+                  :
+                    <div>
+                      Open modal
+                      1. dispatch create new Message
+                      2. Route to existing DM/selectedUsersDMs[user?.id]
+                      Return close modal
+                    </div>
+                  }
+                </div>
                 <NavLink to={`/dms/${user?.id}`} key={user?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{user?.privateStatus ? 'π' : '#'} {user?.display_name} {'X'}</NavLink>
               </>
             )}
