@@ -1,14 +1,8 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // ???? ——————————————————————————————————————————————————————————————————————————————————
 import { Modal } from '../../context/Modal';
-import { getUsers, updateUserImage, updateUserDisplayName } from '../../store/session';
-import LogoutButton from '../../components/0_Session/LogoutButton';
-
-import HomeIcon from './1_HomeIcon';
-import MessagesContainer from './2_MessagesContainer.js';
-import MessageInput from './3_MessageInput.js';
 
 import './Navigation.css'
 // ???? ——————————————————————————————————————————————————————————————————————————————————
@@ -19,8 +13,12 @@ const Search = () => {
 
   const userstate = useSelector(state => state?.session)
   const channelstate = useSelector(state => state?.channelSocket)
+  const dmstate = useSelector(state => state?.dmSocket);
+  
   const users = Object.values(userstate?.allUsers).filter(user => user.display_name.toLowerCase().includes(searchInput));
   const channels = Object.values(channelstate?.channels).filter(channel => channel.title.toLowerCase().includes(searchInput));
+
+  const selectedUsersDMs = dmstate?.selectedUsersDMs
 
   useEffect(() => setShowModal(searchInput ? true : false), [searchInput])
 

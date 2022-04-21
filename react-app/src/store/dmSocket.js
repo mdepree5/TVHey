@@ -13,12 +13,19 @@ export const setDM = dm => ({ type: SET_ONE, dm });
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Reducer —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const dmReducer = (state = {selected:null, dms:{}}, action) => {
+const dmReducer = (state = {selected:null, dms:{}, selectedUsersDMs:{}}, action) => {
   switch (action.type) {
     case CREATE: {
       const newState = {...state};
       newState.dms[action.dm.id] = action.dm;
       newState.selected = action.dm;
+      
+      newState.selectedUsersDMs[action.dm.recipient_id] = action.dm.id;
+      /*
+        * If we CREATE, we guarantee that the recipient_id belongs to NOT us.
+        * Thus, we can safely add to selectedUsersDMs using recipient_id
+      */
+
       // console.log('REDUX STATECREATE NEWSTATE', newState)
       return newState;
     };

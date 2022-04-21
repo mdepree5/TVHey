@@ -15,17 +15,11 @@ const Navigation = () => {
 
   return (
     <div className='nav-bar'>
-      <div id='left-nav'>
-        <HomeIcon/>
-      </div>
+      <div id='left-nav'><HomeIcon/></div>
     
-      <div id='mid-nav'>
-        <Search/>
-      </div>
+      <div id='mid-nav'><Search/></div>
     
-      <div id='right-nav'>
-        <NavDropdown/>
-      </div>
+      <div id='right-nav'><NavDropdown/></div>
     </div>
   )
 }
