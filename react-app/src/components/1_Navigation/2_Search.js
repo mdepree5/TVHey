@@ -147,7 +147,7 @@ const UserSearchComponent = ({user}) => {
   
       history.push(`/dms/${existingDMId}`)
     }
-    
+
     setInput('');
     return setToggleForm(false);
   }
@@ -163,20 +163,23 @@ const UserSearchComponent = ({user}) => {
       {user?.display_name}
       
       {toggleForm && 
-        <form className='col-list message-card' onSubmit={sendMessage}>
-          <input value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}}
-            placeholder={`  Message ${user?.display_name}`}/>
-          
-          <div className='row-list edit-message-buttons'>
-
-            <button className='cancel-message-button' type='button' onClick={handleCancel}>Cancel</button>
-            {/* <button className='save-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}> */}
-            <button className='submit-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}>
-              {input ? 'Save' : 'Message cannot be empty'}
-            </button>
-
-          </div>
-        </form>
+        <>
+          {/* <form className='col-list message-card' onSubmit={sendMessage}> */}
+          <form className='col-list' onSubmit={sendMessage}>
+            <input value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}}
+              placeholder={`  Message ${user?.display_name}`}/>
+            
+            <div className='row-list edit-message-buttons'>
+        
+              <button className='cancel-message-button' type='button' onClick={handleCancel}>Cancel</button>
+              {/* <button className='save-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}> */}
+              <button className='submit-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}>
+                {input ? 'Save' : 'Message cannot be empty'}
+              </button>
+        
+            </div>
+          </form>
+        </>
       }
     </div>
   )
