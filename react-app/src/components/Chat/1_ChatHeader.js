@@ -45,13 +45,6 @@ const ChatHeader = ({socket, sessionUser, dm=false, thisChannel, channelId, this
     socket.emit('edit channel', channelData)
     return setToggleEdit(false);
   }
-
-  const [showUserModal, setShowUserModal] = useState(false);
-
-  const closeUserModal = async(e) => {
-    e.preventDefault();
-    setShowUserModal(false);
-  }
   
   return (<div className='header'>
     <div className='chat-header row-list' onClick={() => setShowModal(true)} >
@@ -138,18 +131,11 @@ const ChatHeader = ({socket, sessionUser, dm=false, thisChannel, channelId, this
 
               <div className='channel-info-users col-list' >
                 {users?.map(user => 
-                  <>
-                  <div onClick={()=>setShowUserModal(true)} key={user?.id} className='channel-list-item row-list' style={{alignItems:'center', cursor:'pointer'}} >
+                  <div key={user?.id} className='channel-list-item row-list' style={{alignItems:'center', cursor:'default'}} >
                     {user?.image_url === 'no image provided' ? <div className='nav-dropdown-image' >{user?.display_name[0].toUpperCase()}</div>
                       : <img className='nav-dropdown-image' src={user?.image_url} alt='user' style={{marginRight:'1em'}}/>}
                     <h3 className='nav-display-name'>{user?.display_name}</h3>
                   </div>
-                  {showUserModal && <Modal providedId='show-user-modal' onClose={closeUserModal}>
-                    {user?.image_url === 'no image provided' ? <div className='nav-dropdown-image' >{user?.display_name[0].toUpperCase()}</div>
-                      : <img className='nav-dropdown-image' src={user?.image_url} alt='user' style={{marginRight:'1em'}}/>}
-                    <h3 className='nav-display-name'>{user?.display_name}</h3>
-                  </Modal>}
-                  </>
                 )}
               </div>
             </>)
