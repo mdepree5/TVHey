@@ -65,6 +65,12 @@ const Search = () => {
                  */}
                 <div>
                   Component with User's Display Name
+                  
+                  PERHAPS: Rather than use a modal...
+                  1. Create a custom div/component that has a [toggleClick, setToggleClick] = useState(false)
+                  2. {'toggleClick' && <div>Show the pseudo chat component form</div>}
+                  3. This way the thing is 'in-line' with each search-barred "user" component in the search dropdown
+
                   1. OnClick - Open a modal to send a message
                   2. Chat component message input form
                     i. borrow all styling
