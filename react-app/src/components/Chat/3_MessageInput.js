@@ -14,9 +14,9 @@ const MessageInput = ({socket, sessionUser, dm=false, thisChannel, thisDM}) => {
     e.preventDefault();
     // socket.emit('create message', {author_id: sessionUser?.id, channel_id: Number(channelId), content: chatInput})
     if (dm) {
-      socket.emit('create message', {author_id: sessionUser?.id, dm_id: thisDM?.id, content: chatInput})
+      socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: thisDM?.id, content: chatInput})
     } else {
-      socket.emit('create message', {author_id: sessionUser?.id, channel_id: thisChannel?.id, content: chatInput})
+      socket.emit('create channel message', {author_id: sessionUser?.id, channel_id: thisChannel?.id, content: chatInput})
     }
     setChatInput('');
   }

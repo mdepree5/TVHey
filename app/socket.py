@@ -90,17 +90,33 @@ def test_disconnection():
 # todo ——————————————————————————————————————————————————————————————————————————————————
 # todo                   Message Event Handlers
 # todo ——————————————————————————————————————————————————————————————————————————————————
-@socketio.on('get messages')
+@socketio.on('get channel messages')
 @authenticated_only
-def get_messages(channelId):
+def get_channel_messages(channelId):
   messages = Message.query.filter(Message.channel_id == int(channelId)).all()
   all_messages = [json.dumps(message, default = defaultconverter) for message in [message.to_dict() for message in messages]]
   emit('get all messages', {'all_messages': all_messages})
 
-@socketio.on('create message')
+@socketio.on('get dm messages')
 @authenticated_only
-def create_message(data):
+def get_dm_messages(dmId):
+  messages = Message.query.filter(Message.dm_id == int(dmId)).all()
+  all_messages = [json.dumps(message, default = defaultconverter) for message in [message.to_dict() for message in messages]]
+  emit('get all messages', {'all_messages': all_messages})
+
+@socketio.on('create channel message')
+@authenticated_only
+def create_channel_message(data):
   new_message = Message(author_id=data['author_id'], channel_id=data['channel_id'], content=data['content'], created_at=datetime.now(), updated_at=datetime.now())
+  db.session.add(new_message)
+  db.session.commit()
+  new = new_message.to_dict()
+  emit('message to front', [json.dumps(new, default = defaultconverter)], broadcast=True)
+
+@socketio.on('create dm message')
+@authenticated_only
+def create_dm_message(data):
+  new_message = Message(author_id=data['author_id'], dm_id=data['dm_id'], content=data['content'], created_at=datetime.now(), updated_at=datetime.now())
   db.session.add(new_message)
   db.session.commit()
   new = new_message.to_dict()

@@ -102,12 +102,15 @@ export const AuthenticatedApp = () => {
 // todo                               Left Nav
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const LeftNav = () => {
+  const sessionUser = useSelector(state => state?.session?.user);
   // const channelstate = useSelector(state => state?.channel);
+  // const userstate = useSelector(state => state?.session);
   const channelstate = useSelector(state => state?.channelSocket);
-  const userstate = useSelector(state => state?.session);
+  const dmstate = useSelector(state => state?.dmSocket);
 
   const channels = Object.values(channelstate?.channels);
-  const dms = Object.values(userstate?.allUsers);
+  // const dms = Object.values(userstate?.allUsers);
+  const dms = Object.values(dmstate?.dms);
 
   const [displayChannels, setDisplayChannels] = useState(channels?.length < 8);
   const [display, setDisplay] = useState(channels?.length < 8);
@@ -140,7 +143,9 @@ const LeftNav = () => {
 
       <div className={`col-list channels-container ${display ? '' : 'hide-channels'}`}>
         {dms?.map(dm => (
-            <NavLink to={`/dms/${dm?.id}`} key={dm?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{dm?.privateStatus ? 'π' : '#'} {dm?.display_name} {'X'}
+            <NavLink to={`/dms/${dm?.id}`} key={dm?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >
+            {dm?.host_id === sessionUser?.id ? dm?.recipient : dm?.host}
+            {/* {dm?.privateStatus ? 'π' : '#'} {dm?.display_name} {'X'} */}
             {/*
               On hover display the 'X' for a given direct message
               May need to create an element similar to how message edit-delete buttons are set up in messages

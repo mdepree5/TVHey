@@ -59,10 +59,10 @@ const Chat = ({ dm=false }) => {
     if(socket){
       if (dm) {
         socket.emit('set dm', dmId)
-        socket.emit('get messages', dmId)
+        socket.emit('get dm messages', dmId)
       } else {
         socket.emit('set channel', channelId)
-        socket.emit('get messages', channelId)
+        socket.emit('get channel messages', channelId)
       }
       
       socket.on('get all messages', async(messages) => await dispatch(getMessages(messages?.all_messages)))
