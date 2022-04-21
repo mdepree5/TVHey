@@ -112,8 +112,8 @@ const Search = () => {
 
 const UserSearchComponent = ({user}) => {
   const history = useHistory();
-  const [userIsSelected, setUserIsSelected] = useState(false)
-  const [chatInput, setChatInput] = useState('');
+  const [toggleForm, setToggleForm] = useState(false)
+  const [input, setInput] = useState('');
 
   const socket =  useSelector(state => state?.socket?.socket);
   const sessionUser = useSelector(state => state?.session?.user);
@@ -132,19 +132,36 @@ const UserSearchComponent = ({user}) => {
     */
     socket.on('dm to front', dm => newDMId = JSON.parse(dm).id)
 
-    socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: newDMId, content: chatInput})
+    socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: newDMId, content: input})
 
     history.push(`/dms/${newDMId}`)
   }
 
+  const handleCancel = e => {
+    e.preventDefault();
+    setInput('');
+    return setToggleForm(false);
+  }
+
   return (
-    <div onClick={setUserIsSelected(true)} >
-      <div>{user?.display_name}</div>
-      <NavLink to={``} key={user?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{user?.privateStatus ? 'π' : '#'} {user?.display_name} {'X'}</NavLink>
-      {userIsSelected && 
-        <div>
-          Form
-        </div>
+    <div className='channel-list-item' onClick={setToggleForm(true)} >
+      {user?.display_name}
+      
+      {toggleForm && 
+        <form className='col-list message-card' onSubmit={sendMessage}>
+          <input value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}}
+            placeholder={`  Message ${user?.display_name}`}/>
+          
+          <div className='row-list edit-message-buttons'>
+
+            <button className='cancel-message-button' type='button' onClick={handleCancel}>Cancel</button>
+            {/* <button className='save-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}> */}
+            <button className='submit-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}>
+              {input ? 'Save' : 'Message cannot be empty'}
+            </button>
+
+          </div>
+        </form>
       }
     </div>
   )
