@@ -34,8 +34,8 @@ const Chat = ({ dm=false }) => {
   const { channelId } = useParams();
   const { dmId } = useParams();
 
-  console.log(`%c dm:`, `color:yellow`, dm)
-  console.log(`%c dmId:`, `color:yellow`, dmId)
+  // console.log(`%c dm:`, `color:yellow`, dm)
+  // console.log(`%c dmId:`, `color:yellow`, dmId)
 
   /* 
   Chat component will either be: 1. channel or 2. dmstate

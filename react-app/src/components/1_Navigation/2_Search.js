@@ -13,21 +13,21 @@ const Search = () => {
 
   const userstate = useSelector(state => state?.session)
   const channelstate = useSelector(state => state?.channelSocket)
-  const dmstate = useSelector(state => state?.dmSocket);
+  // const dmstate = useSelector(state => state?.dmSocket);
   
   const users = Object.values(userstate?.allUsers).filter(user => user.display_name.toLowerCase().includes(searchInput));
   const channels = Object.values(channelstate?.channels).filter(channel => channel.title.toLowerCase().includes(searchInput));
 
-  const selectedUsersDMs = dmstate?.selectedUsersDMs
+  // const selectedUsersDMs = dmstate?.selectedUsersDMs
 
-  console.log(`%c ——————————————————————————————————————————:`, `color:green`)
-  console.log(`%c selectedUsersDMs:`, `color:yellow`, selectedUsersDMs)
-  console.log(`%c ——————————————————————————————————————————:`, `color:green`)
+  // console.log(`%c ——————————————————————————————————————————:`, `color:green`)
+  // console.log(`%c selectedUsersDMs:`, `color:yellow`, selectedUsersDMs)
+  // console.log(`%c ——————————————————————————————————————————:`, `color:green`)
 
 
   useEffect(() => setShowModal(searchInput ? true : false), [searchInput])
 
-  const clickChannel = () => {
+  const closeModal = () => {
     setShowModal(false);
     setSearchInput('');
     return;
@@ -42,11 +42,11 @@ const Search = () => {
           <div className='col-list' >
             {searchInput && users?.length ? <strong style={{color:'white'}}>Users</strong> : ''}
             {searchInput && users?.map(user => (
-              <UserSearchComponent key={user?.id} user={user} />
+              <UserSearchComponent key={user?.id} user={user} closeModal={closeModal}/>
             ))}
             {searchInput && channels?.length ? <strong style={{color:'white'}}>Channels</strong> : ''}
             {searchInput && channels?.map(channel => (
-              <NavLink to={`/channels/${channel?.id}`} onClick={clickChannel} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
+              <NavLink to={`/channels/${channel?.id}`} onClick={closeModal} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
             ))}
             {searchInput && !users?.length && !channels?.length ? <strong style={{color:'#EC8642'}} >
               No matches. Try a new search!
@@ -59,7 +59,7 @@ const Search = () => {
 }
 
 
-const UserSearchComponent = ({user}) => {
+const UserSearchComponent = ({user, closeModal}) => {
   const history = useHistory();
   const [toggleForm, setToggleForm] = useState(false)
   const [input, setInput] = useState('');
@@ -70,36 +70,35 @@ const UserSearchComponent = ({user}) => {
   const dmstate = useSelector(state => state?.dmSocket);
   const selectedUsersDMs = dmstate?.selectedUsersDMs
 
+
+  const closeParentModal = () => {
+    setInput('');
+    setToggleForm(false);
+    closeModal();
+    return;
+  }
+
   const sendMessage = async(e) => {
     e.preventDefault();
 
     if (selectedUsersDMs[user?.id] === undefined) {
-      let newDMId;
-      const dmData = {host_id: sessionUser?.id, recipient_id: user?.id}
-      console.log(`%c newDMId:`, `color:yellow`, newDMId)
+      const dmData = {host_id: sessionUser?.id, recipient_id: user?.id}  
       
-      socket.emit('create dm message', dmData)
-      /* 
-        * this line should run from main.js: socket.on('dm to front', dm => dispatch(createDM(JSON.parse(dm))))
-        * then, state should update..
-        * 
-      */
-      socket.on('dm to front', dm => newDMId = JSON.parse(dm).id)
-      socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: Number(newDMId), content: input})
-
-      history.push(`/dms/${newDMId}`)
-    } else {
-      const existingDMId = selectedUsersDMs[user?.id];
-
-      console.log(`%c existingDMId:`, `color:yellow`, existingDMId)
-
-      socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: Number(existingDMId), content: input})
-  
-      history.push(`/dms/${existingDMId}`)
+      socket.emit('create dm', dmData)
+      socket.on('dm to front', dm => {
+        const newDM = JSON.parse(dm)
+        socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: Number(newDM?.id), content: input})
+        history.push(`/dms/${newDM?.id}`)
+        closeParentModal()
+        return;
+      })
     }
-
-    setInput('');
-    return setToggleForm(false);
+    
+    const existingDMId = selectedUsersDMs[user?.id];
+    socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: Number(existingDMId), content: input})
+  
+    history.push(`/dms/${existingDMId}`)
+    closeParentModal();
   }
 
   const handleCancel = async(e) => {
