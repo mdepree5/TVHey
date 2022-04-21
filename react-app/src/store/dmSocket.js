@@ -8,7 +8,7 @@ const SET_ONE = 'dmSocket/set_one';
 // todo                               — Creators —
 // todo ——————————————————————————————————————————————————————————————————————————————————
 export const createDM = dm => ({ type: CREATE, dm });
-export const getDMs = dms => ({ type: GET_ALL, dms });
+export const getDMs = (dms, userId) => ({ type: GET_ALL, dms, userId });
 export const setDM = dm => ({ type: SET_ONE, dm });
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Reducer —
@@ -32,7 +32,12 @@ const dmReducer = (state = {selected:null, dms:{}, selectedUsersDMs:{}}, action)
 // ???? ——————————————————————————————————————————————————————————————————————————————————
     case GET_ALL: {
       const newState = {...state};
-      action.dms.forEach(dm => newState.dms[dm.id] = dm);
+      action.dms.forEach(dm => {
+        newState.dms[dm.id] = dm
+        
+        const recipientId = dm.host_id === action.userId ? dm?.recipient_id : dm?.host_id
+        newState.selectedUsersDMs[recipientId] = dm.id;
+      });
       return newState;
     };
 // ???? ——————————————————————————————————————————————————————————————————————————————————

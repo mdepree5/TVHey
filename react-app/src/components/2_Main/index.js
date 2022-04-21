@@ -68,7 +68,7 @@ export const AuthenticatedApp = () => {
       socket.on('get all dms', async(dms) => {
         const dmsArr = [];
         dms.all_dms.forEach(dm => dmsArr.push(JSON.parse(dm)))
-        await dispatch(getDMs(dmsArr))
+        await dispatch(getDMs(dmsArr, sessionUser?.id))
       })
 
       socket.on('channel to front', channel => dispatch(createChannel(JSON.parse(channel))))
