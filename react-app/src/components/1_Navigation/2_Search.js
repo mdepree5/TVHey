@@ -40,11 +40,11 @@ const Search = () => {
       {showModal && <Modal providedId='nav-dropdown' providedContent={true} onClose={() => setShowModal(false)}>
         <div className='dropdown-nav' id='search'>
           <div className='col-list' >
-            {searchInput && users?.length ? <div>Users</div> : ''}
+            {searchInput && users?.length ? <strong style={{color:'white'}}>Users</strong> : ''}
             {searchInput && users?.map(user => (
               <UserSearchComponent key={user?.id} user={user} />
             ))}
-            {searchInput && channels?.length ? <div>Channels</div> : ''}
+            {searchInput && channels?.length ? <strong style={{color:'white'}}>Channels</strong> : ''}
             {searchInput && channels?.map(channel => (
               <NavLink to={`/channels/${channel?.id}`} onClick={clickChannel} key={channel?.id} className='channel-list-item' activeStyle={{backgroundColor:'#EC8642', color: 'white', display: 'unset'}} >{channel?.privateStatus ? 'π' : '#'} {channel?.title}</NavLink>
             ))}
@@ -76,14 +76,16 @@ const UserSearchComponent = ({user}) => {
     if (selectedUsersDMs[user?.id] === undefined) {
       let newDMId;
       const dmData = {host_id: sessionUser?.id, recipient_id: user?.id}
-      socket.emit('create dm', dmData)
+      console.log(`%c newDMId:`, `color:yellow`, newDMId)
+      
+      socket.emit('create dm message', dmData)
       /* 
         * this line should run from main.js: socket.on('dm to front', dm => dispatch(createDM(JSON.parse(dm))))
         * then, state should update..
         * 
       */
       socket.on('dm to front', dm => newDMId = JSON.parse(dm).id)
-      socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: newDMId, content: input})
+      socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: Number(newDMId), content: input})
 
       history.push(`/dms/${newDMId}`)
     } else {
@@ -91,7 +93,7 @@ const UserSearchComponent = ({user}) => {
 
       console.log(`%c existingDMId:`, `color:yellow`, existingDMId)
 
-      socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: existingDMId, content: input})
+      socket.emit('create dm message', {author_id: sessionUser?.id, dm_id: Number(existingDMId), content: input})
   
       history.push(`/dms/${existingDMId}`)
     }
@@ -115,7 +117,8 @@ const UserSearchComponent = ({user}) => {
         <>
           {/* <form className='col-list message-card' onSubmit={sendMessage}> */}
           <form className='col-list' onSubmit={sendMessage}>
-            <input value={input} onChange={e => setInput(e.target.value)} style={{height:'100px'}}
+            <textarea value={input} onChange={e => setInput(e.target.value)} 
+              style={{minHeight:'3em'}}
               placeholder={`  Message ${user?.display_name}`}/>
             
             <div className='row-list edit-message-buttons'>
@@ -123,7 +126,7 @@ const UserSearchComponent = ({user}) => {
               <button className='cancel-message-button' type='button' onClick={handleCancel}>Cancel</button>
               {/* <button className='save-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}> */}
               <button className='submit-message-button' id={input ? 'send-it' : 'message-empty'} type="submit" disabled={!input}>
-                {input ? 'Save' : 'Message cannot be empty'}
+                {input ? 'Send' : 'Message cannot be empty'}
               </button>
         
             </div>
