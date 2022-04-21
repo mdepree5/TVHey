@@ -64,7 +64,12 @@ const Search = () => {
 
                  */}
                 <div>
-                  Component with User's Display Name that opens a modal to send a message
+                  Component with User's Display Name
+                  1. OnClick - Open a modal to send a message
+                  2. Chat component message input form
+                    i. borrow all styling
+                    ii. modify handleSubmit to accommodate for below logic
+
                   {selectedUsersDMs[user?.id] === undefined ? 
                     <div>
                       Open modal
