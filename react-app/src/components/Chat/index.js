@@ -15,6 +15,18 @@ import {createMessage, getMessages, updateMessage, deleteMessage} from '../../st
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               Chat
 // todo ——————————————————————————————————————————————————————————————————————————————————
+/* 
+if a DM exists where user exists, direct to that. if not, then create a new one.
+
+frontend filter, similar to the display name logic.. contingent on the host/recipient logic. 
+
+create will pass in a host id and recipient id.
+
+the ability to click on a user and go to a DM of theirs will be from Search primarily.
+
+*/
+
+
 const Chat = ({ dm=false }) => {
   const dispatch = useDispatch();
   const history = useHistory();
