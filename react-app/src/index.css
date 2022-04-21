@@ -17,19 +17,24 @@ body, html{
   font-size: 30px;
 } */
 
+#default-cursor{ cursor: default }
+
 .row-list{ display: flex; flex-direction: row; }
 .col-list{ display: flex; flex-direction: column; }
 .flex-end{ display: flex; flex-direction: row; justify-content: flex-end; }
 
 a{ color: #EC8642; text-decoration: none; }
 
-input{
+div{ margin: 0; }
+
+textarea, input{
   background-color: rgba(138, 149, 159, 0.212);
   border: solid 0.05em #EC8642;
   border-radius: 0.5em;
   color: white;
+  resize: none;
 }
-input:focus{ outline: none; }
+textarea:focus, input:focus{ outline: none; }
 
 form > button {margin-top: 0.4em;}
 

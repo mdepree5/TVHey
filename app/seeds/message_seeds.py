@@ -65,10 +65,30 @@ winter_soldier_messages = [
   Message(author_id=7, channel_id=2, content='No you can\'t')
 ]
 
+laters_messages = [
+  Message(author_id=9, dm_id=1, content='Laters, gators'),
+  Message(author_id=2, dm_id=1, content='Ok Steven, talk to you later'),
+]
+lokis_messages = [
+  Message(author_id=3, dm_id=2, content='Hang on, you\'re a Loki too?'),
+  Message(author_id=2, dm_id=2, content='Oh yes.'),
+  Message(author_id=3, dm_id=2, content='Okay, fine. Willing to accept that'),
+]
+thor_messages = [
+  Message(author_id=4, dm_id=3, content='Loki, is that you?'),
+  Message(author_id=2, dm_id=3, content='.....yup, it\'s me'),
+]
+
 def seed_messages():
   for message in ragnarok_messages:
     db.session.add(message)
   for message in winter_soldier_messages:
+    db.session.add(message)
+  for message in laters_messages:
+    db.session.add(message)
+  for message in lokis_messages:
+    db.session.add(message)
+  for message in thor_messages:
     db.session.add(message)
 
   db.session.commit()

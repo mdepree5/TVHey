@@ -2,11 +2,14 @@
 // todo                               — Actions —
 // todo ——————————————————————————————————————————————————————————————————————————————————
 const SET_USER = 'session/SET_USER';
+const GET_USERS = 'session/GET_USERS';
 const REMOVE_USER = 'session/REMOVE_USER';
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Creators —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const setUser = (user) => ({ type: SET_USER, payload: user });
+// const setUser = user => ({ type: SET_USER, payload: user });
+const setUser = user => ({ type: SET_USER, user });
+const getAll = users => ({ type: GET_USERS, users });
 const removeUser = () => ({ type: REMOVE_USER })
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Thunks —
@@ -19,6 +22,16 @@ export const authenticate = () => async (dispatch) => {
     dispatch(setUser(data));
   }
   return;
+}
+
+export const getUsers = () => async (dispatch) => {
+  const response = await fetch('/api/users/');
+  if (response.ok){
+    const data = await response.json();
+    await dispatch(getAll(data))
+    return data;
+  }
+  return response;
 }
 
 export const login = (email, password) => async (dispatch) => {
@@ -104,14 +117,28 @@ export const updateUserDisplayName = (display_name, userId) => async (dispatch) 
 // todo ——————————————————————————————————————————————————————————————————————————————————
 // todo                               — Reducer —
 // todo ——————————————————————————————————————————————————————————————————————————————————
-const initialState = { user: null };
+const initialState = { user: null, allUsers:{} };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case SET_USER:
-      return { user: action.payload }
-    case REMOVE_USER:
-      return { user: null }
+    case SET_USER:{
+      const newState = {...state};
+      newState.user = action.user
+      return newState;
+      // return { user: action.payload }
+    }
+    case GET_USERS:{
+      const newState = {...state};
+      action.users['all_users'].forEach(user => newState.allUsers[user.id] = user);
+      return newState;
+      // return { user: action.payload }
+    }
+    case REMOVE_USER: {
+      const newState = {...state}
+      newState.user = null;
+      return newState;
+      // return { user: null }
+    }
     default:
       return state;
   }

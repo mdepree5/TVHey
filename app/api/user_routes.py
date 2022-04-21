@@ -19,7 +19,7 @@ def validation_errors_to_error_messages(validation_errors):
 @login_required
 def users():
   users = User.query.all()
-  return {'users': [user.to_dict() for user in users]}
+  return {'all_users': [user.to_dict() for user in users]}
 # todo ——————————————————————————————————————————————————————————————————————————————————
 @user_routes.route('/<int:userId>')
 @login_required

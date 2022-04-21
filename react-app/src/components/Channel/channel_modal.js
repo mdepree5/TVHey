@@ -16,7 +16,7 @@ function ChannelFormModal({icon=false, name='Create', edit=false, channel=null})
     }
     {showModal && (
       <Modal onClose={() => setShowModal(false)}>
-        <ChannelForm name={name} edit={edit} channel={channel} closeModal={() => setShowModal(false)} />
+        <ChannelForm edit={edit} channel={channel} closeModal={() => setShowModal(false)} />
       </Modal>
     )}
   </>);

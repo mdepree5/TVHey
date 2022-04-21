@@ -29,15 +29,6 @@
   border-radius: 2em;
   box-shadow: 0 0 10px white;
 }
-
-.about{
-  height: 2em;
-  width: 2em;
-  cursor: pointer;
-  border-radius: 0.3em;
-  border: 0.06em solid black;
-  box-shadow: 0 0 10px white;
-}
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Nav Bar Layout                   */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
@@ -57,30 +48,18 @@
   color: white;
 }
 
-#left-nav{
+.nav-bar > * {
   width: 33%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
   padding: 0;
-}
-#mid-nav{
-  width: 33%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   text-align: center;
-  padding: 0;
 }
-#right-nav{
-  width: 33%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0;
-}
+
+#left-nav{ justify-content: flex-start; }
+#mid-nav{ justify-content: center; }
+#right-nav{ justify-content: flex-end; }
 
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* todo             Dropdown                   */
@@ -94,16 +73,24 @@
   position: absolute;
   top: 4em;
   
-  /* !!!! ——————————————————————————————————————————————————————————————————————————————— */
-  /* left: calc(1vw); */
   left: calc(80vw - 28em);
-  /* !!!! ——————————————————————————————————————————————————————————————————————————————— */
 
   width: 20em;
-  height: 18em;
 
   padding: 1em;
   border-radius: 10px;
+}
+
+#nav-dropdown{ min-height: 18em; }
+
+#search{
+  left: 0;
+  right: 0;
+  width: 70%;
+
+  margin-left: auto;
+  margin-right: auto;
+
 }
 
 .dropdown-nav > * {
