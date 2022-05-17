@@ -2,10 +2,8 @@
 /* ****             1. Header                                                           */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 .chat-header {
-  display: flex;
-  align-items: center;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  display: flex; align-items: center;
+  padding-left: 0.5em; padding-right: 0.5em;
   border-radius: 0.4em;
   cursor: pointer;
 }
@@ -17,15 +15,8 @@
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
 /* ****             1. Channel-info: about/members                                      */
 /* todo ——————————————————————————————————————————————————————————————————————————————— */
-.channel-info{
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  /* border-bottom: solid 0.05em #ffffffa8; */
-}
+.channel-info{ width: 50%; margin-left: auto; margin-right: auto; }
 #channel-info-top{
-  /* border-top: solid 0.05em #ffffffa8; */
-  /* background-color:#232529; */
   padding: 2em;
   padding-top: 1em;
   padding-bottom: 0;
